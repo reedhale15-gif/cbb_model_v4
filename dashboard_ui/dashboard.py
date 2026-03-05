@@ -203,7 +203,7 @@ display:inline-block;
 
     border = "2px solid #ef4444" if lock else "1px solid rgba(150,150,150,0.25)"
     shadow = "0 0 15px rgba(239,68,68,0.6)" if lock else "0 4px 12px rgba(0,0,0,0.08)"
-    background = "rgba(239,68,68,0.05)" if lock else "white"
+    background = "rgba(239,68,68,0.08)" if lock else "transparent"
 
     st.markdown(
         f"""
