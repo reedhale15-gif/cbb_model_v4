@@ -11,11 +11,10 @@ st.title("CBB Model v4")
 
 engine = pd.read_csv("data/engine.csv")
 
-# Only keep games with market odds
+# keep only games with odds
 engine = engine[engine["Spread"].notna()].copy()
 
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
-
 
 # =========================
 # CONFIDENCE FUNCTIONS
@@ -51,7 +50,27 @@ def total_confidence(edge):
 
 
 # =========================
-# BUILD BET TABLES
+# CONFIDENCE COLORS
+# =========================
+
+def confidence_color(conf):
+
+    colors = {
+        "A+": "#16a34a",
+        "A": "#22c55e",
+        "A-": "#4ade80",
+        "B+": "#facc15",
+        "B": "#fbbf24",
+        "B-": "#f59e0b",
+        "C+": "#fb923c",
+        "C": "#f97316"
+    }
+
+    return colors.get(conf, "#9ca3af")
+
+
+# =========================
+# BUILD SPREAD BET TABLE
 # =========================
 
 spread = engine.copy()
@@ -72,6 +91,10 @@ spread_bets = spread_bets.sort_values(
     ascending=False
 )
 
+
+# =========================
+# BUILD TOTAL BET TABLE
+# =========================
 
 totals = engine.copy()
 
@@ -115,35 +138,55 @@ with tab1:
     col1, col2 = st.columns(2)
 
     # =====================
-    # LEFT — SPREAD BETS
+    # SPREAD BETS
     # =====================
 
     with col1:
 
         st.subheader("🔥 Top 5 Spread Bets")
 
-        top_spreads = spread_bets.sort_values(
-            by="Spread Edge",
-            ascending=False
-        ).head(5)
+        top_spreads = spread_bets.head(5)
+
+        best_edge = None
+        if not top_spreads.empty:
+            best_edge = top_spreads.iloc[0]["Spread Edge"]
 
         for _, r in top_spreads.iterrows():
+
+            border = "2px solid #16a34a" if r["Spread Edge"] == best_edge else "1px solid rgba(150,150,150,0.2)"
 
             st.markdown(
                 f"""
 <div style="
-border:1px solid #e6e6e6;
-border-radius:12px;
-padding:16px;
-margin-bottom:14px;
-background-color:#f9f9f9;
+border:{border};
+border-radius:14px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
 ">
 
-<b style="font-size:18px">{r['Game']}</b><br><br>
+<div style="font-size:20px;font-weight:600;margin-bottom:8px;">
+{r['Game']}
+</div>
 
-<b>Bet:</b> {r['Bet']}<br>
-<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
-<b>Confidence:</b> {r['Confidence']}
+<div style="font-size:16px;margin-bottom:6px;">
+<b>Bet:</b> {r['Bet']}
+</div>
+
+<div style="font-size:16px;margin-bottom:6px;color:#16a34a;">
+<b>Edge:</b> {r['Spread Edge']:+.2f}
+</div>
+
+<span style="
+background:{confidence_color(r['Confidence'])};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:13px;
+font-weight:600;
+">
+{r['Confidence']}
+</span>
 
 </div>
 """,
@@ -151,40 +194,61 @@ background-color:#f9f9f9;
             )
 
     # =====================
-    # RIGHT — TOTAL BETS
+    # TOTAL BETS
     # =====================
 
     with col2:
 
         st.subheader("🔥 Top 5 Total Bets")
 
-        top_totals = total_bets.sort_values(
-            by="Total Edge",
-            ascending=False
-        ).head(5)
+        top_totals = total_bets.head(5)
+
+        best_edge = None
+        if not top_totals.empty:
+            best_edge = top_totals.iloc[0]["Total Edge"]
 
         for _, r in top_totals.iterrows():
+
+            border = "2px solid #16a34a" if r["Total Edge"] == best_edge else "1px solid rgba(150,150,150,0.2)"
 
             st.markdown(
                 f"""
 <div style="
-border:1px solid #e6e6e6;
-border-radius:12px;
-padding:16px;
-margin-bottom:14px;
-background-color:#f9f9f9;
+border:{border};
+border-radius:14px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 2px 6px rgba(0,0,0,0.05);
 ">
 
-<b style="font-size:18px">{r['Game']}</b><br><br>
+<div style="font-size:20px;font-weight:600;margin-bottom:8px;">
+{r['Game']}
+</div>
 
-<b>Bet:</b> {r['Bet']}<br>
-<b>Edge:</b> {r['Total Edge']:+.2f}<br>
-<b>Confidence:</b> {r['Confidence']}
+<div style="font-size:16px;margin-bottom:6px;">
+<b>Bet:</b> {r['Bet']}
+</div>
+
+<div style="font-size:16px;margin-bottom:6px;color:#16a34a;">
+<b>Edge:</b> {r['Total Edge']:+.2f}
+</div>
+
+<span style="
+background:{confidence_color(r['Confidence'])};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:13px;
+font-weight:600;
+">
+{r['Confidence']}
+</span>
 
 </div>
 """,
                 unsafe_allow_html=True
             )
+
 
 # =========================
 # GAMES TAB
