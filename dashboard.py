@@ -321,20 +321,61 @@ with tab_objects[0]:
 # LOCKS TAB
 # =========================
 
+# =========================
+# LOCKS TAB
+# =========================
+
 if locks:
 
     with tab_objects[1]:
 
         st.header("🔒 Reed's Locks of the Day")
 
-        for pick in locks:
+        cols = st.columns(2)
+
+        for i, pick in enumerate(locks):
 
             game, bet = pick.split(" — ")
 
-            lines = f"<b>Play:</b> {bet}"
+            row = spread_bets[spread_bets["Game"] == game]
 
-            render_card(game, lines, lock=True)
+            if row.empty:
+                row = total_bets[total_bets["Game"] == game]
 
+            r = row.iloc[0]
+
+            edge = r["Spread Edge"] if "Spread Edge" in r else r["Total Edge"]
+            conf = r["Confidence"]
+
+            lines = f"""
+<b>Bet:</b> {bet}<br>
+<b style="color:#16a34a;">Edge:</b> {edge:+.2f}<br>
+<b>Confidence:</b> {conf}
+"""
+
+            with cols[i % 2]:
+
+                st.markdown(
+                    f"""
+<div style="
+border:2px solid #ef4444;
+border-radius:14px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 0 15px rgba(239,68,68,0.6);
+background:rgba(239,68,68,0.05);
+">
+
+<div style="font-size:20px;font-weight:600;margin-bottom:10px;">
+{game} 🔒
+</div>
+
+{lines}
+
+</div>
+""",
+                    unsafe_allow_html=True
+                )
 
 # =========================
 # GAMES
