@@ -42,18 +42,9 @@ if "admin" in query and query["admin"] == "1":
 engine = pd.read_csv("data/engine.csv")
 engine = engine[engine["Spread"].notna()].copy()
 
-# force Streamlit to always reload fresh data
-st.session_state["engine_loaded"] = True
-
-# Build Game column first
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
 
-# =========================
-# FORMAT GAME TIME
-# =========================
-
 engine["Game Time"] = pd.to_datetime(engine["Game Time"], errors="coerce")
-
 engine["Game Time"] = (
     engine["Game Time"]
     .dt.tz_convert("US/Central")
@@ -168,6 +159,7 @@ if admin_mode:
 
     locks = selected_locks
 
+
 # =========================
 # CARD RENDERER
 # =========================
@@ -209,12 +201,12 @@ display:inline-block;
 </span>
 """
 
-border = "2px solid #ef4444" if lock else "1px solid rgba(150,150,150,0.25)"
-shadow = "0 0 15px rgba(239,68,68,0.6)" if lock else "0 4px 12px rgba(0,0,0,0.08)"
-background = "rgba(239,68,68,0.05)" if lock else "white"
+    border = "2px solid #ef4444" if lock else "1px solid rgba(150,150,150,0.25)"
+    shadow = "0 0 15px rgba(239,68,68,0.6)" if lock else "0 4px 12px rgba(0,0,0,0.08)"
+    background = "rgba(239,68,68,0.05)" if lock else "white"
 
-st.markdown(
-    f"""
+    st.markdown(
+        f"""
 <div style="
 border:{border};
 border-radius:14px;
@@ -240,6 +232,7 @@ background:{background};
 """,
         unsafe_allow_html=True
     )
+
 
 # =========================
 # TABS
@@ -288,6 +281,7 @@ with tab_objects[0]:
 
             render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
 
+
 # =========================
 # LOCKS TAB
 # =========================
@@ -306,8 +300,6 @@ if locks:
 
             row = spread_bets[spread_bets["Game"] == game]
 
-            edge = None
-
             if not row.empty:
                 r = row.iloc[0]
                 edge = r["Spread Edge"]
@@ -317,13 +309,14 @@ if locks:
                 edge = r["Total Edge"]
 
             lines = f"""
-            <b>Bet:</b> {bet}<br>
-            <b style="color:#16a34a;">Edge:</b> {edge:+.2f}<br>
-            <b>Confidence:</b> {r['Confidence']}
-            """
+<b>Bet:</b> {bet}<br>
+<b style="color:#16a34a;">Edge:</b> {edge:+.2f}<br>
+<b>Confidence:</b> {r['Confidence']}
+"""
 
             with cols[i % 2]:
                 render_card(r["Game Time"], game, lines, r["Confidence"], True)
+
 
 # =========================
 # GAMES
@@ -346,6 +339,7 @@ with tab_objects[games_index]:
 
         with cols[i % 2]:
             render_card(r["Game Time"], r["Game"], lines)
+
 
 # =========================
 # SPREAD BETS
@@ -371,6 +365,7 @@ with tab_objects[spread_index]:
         with cols[i % 2]:
             render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
 
+
 # =========================
 # TOTAL BETS
 # =========================
@@ -395,6 +390,7 @@ with tab_objects[total_index]:
         with cols[i % 2]:
             render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
 
+
 # =========================
 # ENGINE
 # =========================
@@ -403,6 +399,7 @@ engine_index = total_index + 1
 
 with tab_objects[engine_index]:
     st.dataframe(engine, use_container_width=True)
+
 
 # =========================
 # RESULTS
