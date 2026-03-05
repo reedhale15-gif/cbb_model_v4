@@ -115,64 +115,74 @@ with tab1:
     col1, col2 = st.columns(2)
 
     # =====================
-    # SPREAD BETS
+    # LEFT — SPREAD BETS
     # =====================
 
     with col1:
 
         st.subheader("🔥 Top 5 Spread Bets")
 
-        for _, r in spread_bets.head(5).iterrows():
+        top_spreads = spread_bets.sort_values(
+            by="Spread Edge",
+            ascending=False
+        ).head(5)
+
+        for _, r in top_spreads.iterrows():
 
             st.markdown(
                 f"""
-                <div style="
-                    border:1px solid #ddd;
-                    border-radius:10px;
-                    padding:15px;
-                    margin-bottom:15px;
-                    background-color:#fafafa;
-                ">
+<div style="
+border:1px solid #e6e6e6;
+border-radius:12px;
+padding:16px;
+margin-bottom:14px;
+background-color:#f9f9f9;
+">
 
-                <h4 style="margin:0;">{r['Game']}</h4>
+<b style="font-size:18px">{r['Game']}</b><br><br>
 
-                <b>Bet:</b> {r['Bet']} <br>
-                <b>Edge:</b> {r['Spread Edge']:+.2f} <br>
-                <b>Confidence:</b> {r['Confidence']}
+<b>Bet:</b> {r['Bet']}<br>
+<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
+<b>Confidence:</b> {r['Confidence']}
 
-                </div>
-                """,
+</div>
+""",
                 unsafe_allow_html=True
             )
 
     # =====================
-    # TOTAL BETS
+    # RIGHT — TOTAL BETS
     # =====================
 
     with col2:
 
         st.subheader("🔥 Top 5 Total Bets")
 
-        for _, r in total_bets.head(5).iterrows():
+        top_totals = total_bets.sort_values(
+            by="Total Edge",
+            ascending=False
+        ).head(5)
+
+        for _, r in top_totals.iterrows():
 
             st.markdown(
                 f"""
-                <div style="
-                    border:1px solid #ddd;
-                    border-radius:10px;
-                    padding:15px;
-                    margin-bottom:15px;
-                    background-color:#fafafa;
-                ">
+<div style="
+border:1px solid #e6e6e6;
+border-radius:12px;
+padding:16px;
+margin-bottom:14px;
+background-color:#f9f9f9;
+">
 
-                <h4 style="margin:0;">{r['Game']}</h4>
+<b style="font-size:18px">{r['Game']}</b><br><br>
 
-                <b>Bet:</b> {r['Bet']} <br>
-                <b>Edge:</b> {r['Total Edge']:+.2f} <br>
-                <b>Confidence:</b> {r['Confidence']}
+<b>Bet:</b> {r['Bet']}<br>
+<b>Edge:</b> {r['Total Edge']:+.2f}<br>
+<b>Confidence:</b> {r['Confidence']}
 
-                </div>
-                """,
+</div>
+""",
                 unsafe_allow_html=True
             )
 
