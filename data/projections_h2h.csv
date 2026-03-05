@@ -1,0 +1,10 @@
+HOME,AWAY,HOME_PROJ,AWAY_PROJ,SPREAD_PROJ,TOTAL_PROJ,HOME_WIN_PROB,RECENCY_ADJ,H2H_USED,H2H_GAMES
+North Carolina,Louisville,85.6,85.6,4.5,169.5,0.631,0.06,True,6
+Kansas,Houston,84.4,86.5,0.6,170.9,0.519,-0.24,False,0
+McNeese St.,UT Rio Grande Valley,70.9,70.9,4.1,141.7,0.621,1.12,False,0
+Southeastern Louisiana,Texas A&M Corpus Chris,62.6,61.0,3.5,123.6,0.602,-1.04,False,0
+Stephen F. Austin,New Orleans,68.6,72.6,0.4,141.2,0.512,1.39,False,0
+Lamar,Nicholls St.,62.1,64.6,0.5,126.6,0.515,0.0,False,0
+Northwestern St.,Incarnate Word,56.5,62.2,-3.0,118.6,0.411,-0.27,False,0
+East Texas A&M,Houston Christian,56.7,61.4,-1.5,118.1,0.455,0.16,False,0
+Grambling St.,Mississippi Valley St.,54.1,55.6,3.1,109.7,0.591,1.58,False,0

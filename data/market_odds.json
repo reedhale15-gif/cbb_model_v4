@@ -1,0 +1,254 @@
+[
+  {
+    "HOME": "Florida Gulf Coast",
+    "AWAY": "North Alabama",
+    "SPREAD": -7.5,
+    "TOTAL": 139.43,
+    "HOME_ML": -387.14
+  },
+  {
+    "HOME": "Eastern Kentucky",
+    "AWAY": "Stetson",
+    "SPREAD": -4.5,
+    "TOTAL": 155.57,
+    "HOME_ML": -202.86
+  },
+  {
+    "HOME": "Butler",
+    "AWAY": "Creighton",
+    "SPREAD": -2.56,
+    "TOTAL": 155.38,
+    "HOME_ML": -148.38
+  },
+  {
+    "HOME": "James Madison",
+    "AWAY": "Louisiana",
+    "SPREAD": -6.5,
+    "TOTAL": 133.38,
+    "HOME_ML": -282.5
+  },
+  {
+    "HOME": "La Salle",
+    "AWAY": "Fordham",
+    "SPREAD": 2.79,
+    "TOTAL": 132.0,
+    "HOME_ML": 125.29
+  },
+  {
+    "HOME": "Indiana",
+    "AWAY": "Minnesota",
+    "SPREAD": -6.69,
+    "TOTAL": 136.44,
+    "HOME_ML": -315.0
+  },
+  {
+    "HOME": "Georgia Tech",
+    "AWAY": "California",
+    "SPREAD": 2.62,
+    "TOTAL": 155.31,
+    "HOME_ML": 124.88
+  },
+  {
+    "HOME": "Charlotte",
+    "AWAY": "UAB",
+    "SPREAD": 1.5,
+    "TOTAL": 144.75,
+    "HOME_ML": 77.5
+  },
+  {
+    "HOME": "LIU",
+    "AWAY": "Chicago St.",
+    "SPREAD": -11.42,
+    "TOTAL": 138.67,
+    "HOME_ML": -836.67
+  },
+  {
+    "HOME": "Wright St.",
+    "AWAY": "Cleveland St.",
+    "SPREAD": -14.56,
+    "TOTAL": 162.19,
+    "HOME_ML": -1481.25
+  },
+  {
+    "HOME": "Davidson",
+    "AWAY": "Saint Joseph's",
+    "SPREAD": -3.5,
+    "TOTAL": 136.44,
+    "HOME_ML": -170.75
+  },
+  {
+    "HOME": "Detroit Mercy",
+    "AWAY": "Milwaukee",
+    "SPREAD": -1.88,
+    "TOTAL": 151.5,
+    "HOME_ML": -138.0
+  },
+  {
+    "HOME": "Rhode Island",
+    "AWAY": "Duquesne",
+    "SPREAD": -2.38,
+    "TOTAL": 143.5,
+    "HOME_ML": -137.0
+  },
+  {
+    "HOME": "SIU Edwardsville",
+    "AWAY": "Eastern Illinois",
+    "SPREAD": -4.69,
+    "TOTAL": 128.0,
+    "HOME_ML": -217.5
+  },
+  {
+    "HOME": "Mercyhurst",
+    "AWAY": "Fairleigh Dickinson",
+    "SPREAD": -4.5,
+    "TOTAL": 132.36,
+    "HOME_ML": -201.43
+  },
+  {
+    "HOME": "Le Moyne",
+    "AWAY": "Stonehill",
+    "SPREAD": -6.5,
+    "TOTAL": 138.33,
+    "HOME_ML": -287.0
+  },
+  {
+    "HOME": "Providence",
+    "AWAY": "Marquette",
+    "SPREAD": -5.38,
+    "TOTAL": 161.56,
+    "HOME_ML": -231.62
+  },
+  {
+    "HOME": "Oakland",
+    "AWAY": "Northern Kentucky",
+    "SPREAD": -2.56,
+    "TOTAL": 162.0,
+    "HOME_ML": -149.12
+  },
+  {
+    "HOME": "Robert Morris",
+    "AWAY": "Youngstown St.",
+    "SPREAD": -4.38,
+    "TOTAL": 143.12,
+    "HOME_ML": -197.62
+  },
+  {
+    "HOME": "Arkansas",
+    "AWAY": "Texas",
+    "SPREAD": -6.94,
+    "TOTAL": 164.12,
+    "HOME_ML": -312.5
+  },
+  {
+    "HOME": "South Carolina",
+    "AWAY": "Gardner Webb",
+    "SPREAD": -11.21,
+    "TOTAL": 144.64,
+    "HOME_ML": -787.86
+  },
+  {
+    "HOME": "West Georgia",
+    "AWAY": "North Florida",
+    "SPREAD": -3.5,
+    "TOTAL": 159.64,
+    "HOME_ML": -177.57
+  },
+  {
+    "HOME": "DePaul",
+    "AWAY": "Villanova",
+    "SPREAD": 2.62,
+    "TOTAL": 135.56,
+    "HOME_ML": 126.5
+  },
+  {
+    "HOME": "Wisconsin",
+    "AWAY": "Maryland",
+    "SPREAD": -14.38,
+    "TOTAL": 154.25,
+    "HOME_ML": -1406.25
+  },
+  {
+    "HOME": "North Texas",
+    "AWAY": "Rice",
+    "SPREAD": -7.5,
+    "TOTAL": 137.19,
+    "HOME_ML": -345.0
+  },
+  {
+    "HOME": "Oral Roberts",
+    "AWAY": "UMKC",
+    "SPREAD": -8.25,
+    "TOTAL": 148.81,
+    "HOME_ML": -398.75
+  },
+  {
+    "HOME": "Georgia Southern",
+    "AWAY": "Old Dominion",
+    "SPREAD": -2.38,
+    "TOTAL": 157.69,
+    "HOME_ML": -141.12
+  },
+  {
+    "HOME": "Northwestern",
+    "AWAY": "Purdue",
+    "SPREAD": 10.62,
+    "TOTAL": 146.56,
+    "HOME_ML": 435.88
+  },
+  {
+    "HOME": "Houston",
+    "AWAY": "Baylor",
+    "SPREAD": -15.25,
+    "TOTAL": 142.0,
+    "HOME_ML": -1693.75
+  },
+  {
+    "HOME": "Pittsburgh",
+    "AWAY": "Florida St.",
+    "SPREAD": 2.5,
+    "TOTAL": 143.62,
+    "HOME_ML": 124.62
+  },
+  {
+    "HOME": "Notre Dame",
+    "AWAY": "Stanford",
+    "SPREAD": 1.31,
+    "TOTAL": 146.81,
+    "HOME_ML": -52.88
+  },
+  {
+    "HOME": "New Mexico",
+    "AWAY": "Colorado St.",
+    "SPREAD": -8.31,
+    "TOTAL": 150.62,
+    "HOME_ML": -397.5
+  },
+  {
+    "HOME": "Washington",
+    "AWAY": "USC",
+    "SPREAD": -6.12,
+    "TOTAL": 150.69,
+    "HOME_ML": -264.75
+  },
+  {
+    "HOME": "Iowa",
+    "AWAY": "Michigan",
+    "SPREAD": 9.5,
+    "TOTAL": 145.5,
+    "HOME_ML": 382.5
+  },
+  {
+    "HOME": "Michigan St.",
+    "AWAY": "Rutgers",
+    "SPREAD": -19.5,
+    "TOTAL": 142.5,
+    "HOME_ML": -7250.0
+  },
+  {
+    "HOME": "Ohio",
+    "AWAY": "Miami OH",
+    "SPREAD": 5.5,
+    "TOTAL": 158.5,
+    "HOME_ML": 230.0
+  }
+]
