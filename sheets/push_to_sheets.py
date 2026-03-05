@@ -5,7 +5,7 @@ from datetime import datetime
 
 SHEET_NAME = "CBB Model v4"
 
-EDGE_THRESHOLD_SPREAD = 4.0
+EDGE_THRESHOLD_SPREAD = 6.0
 EDGE_THRESHOLD_TOTAL = 6.0
 
 TODAY = datetime.now().strftime("%Y-%m-%d")

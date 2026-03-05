@@ -1,8 +1,12 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pandas as pd
 import json
-from team_normalizer import team_key
+from teams.team_normalizer import team_key
 
-EDGE_THRESHOLD_SPREAD = 4.0
+EDGE_THRESHOLD_SPREAD = 6.0
 EDGE_THRESHOLD_TOTAL = 6.0
 
 
@@ -83,7 +87,7 @@ def run_edge_engine():
                 "Total Edge": total_edge,
                 "Model Total": proj["TOTAL_PROJ"]
             })
-            
+
         spread_ok = not pd.isna(spread_edge) and abs(spread_edge) >= EDGE_THRESHOLD_SPREAD
         total_ok = not pd.isna(total_edge) and abs(total_edge) >= EDGE_THRESHOLD_TOTAL
 

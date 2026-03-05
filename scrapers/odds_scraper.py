@@ -1,8 +1,10 @@
-import requests
+import sys
 import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import requests
 import json
-import pandas as pd
-from team_normalizer import team_key
+from teams.team_name_normalizer import normalize_team, report_unknown
 
 API_KEY = os.getenv("ODDS_API_KEY")
 
@@ -15,35 +17,6 @@ MARKETS = "spreads,totals,h2h"
 ODDS_FORMAT = "american"
 
 
-def load_projection_teams():
-    df = pd.read_csv("data/efficiency_table.csv")
-    df["KEY"] = df["TEAM"].apply(team_key)
-    return df.set_index("KEY")["TEAM"].to_dict()
-
-
-def clean_api_name(raw_name, team_map):
-
-    parts = raw_name.split()
-
-    key = team_key(raw_name)
-    if key in team_map:
-        return team_map[key]
-
-    if len(parts) > 1:
-        trimmed = " ".join(parts[:-1])
-        key = team_key(trimmed)
-        if key in team_map:
-            return team_map[key]
-
-    if len(parts) > 2:
-        trimmed = " ".join(parts[:-2])
-        key = team_key(trimmed)
-        if key in team_map:
-            return team_map[key]
-
-    return None
-
-
 def get_consensus(values):
     nums = [v for v in values if v is not None]
     if not nums:
@@ -54,8 +27,6 @@ def get_consensus(values):
 def scrape_odds():
 
     print("Pulling NCAA odds from The Odds API...")
-
-    team_map = load_projection_teams()
 
     url = f"https://api.the-odds-api.com/v4/sports/{SPORT}/odds"
     params = {
@@ -78,11 +49,8 @@ def scrape_odds():
         home_raw = event["home_team"]
         away_raw = event["away_team"]
 
-        home = clean_api_name(home_raw, team_map)
-        away = clean_api_name(away_raw, team_map)
-
-        if not home or not away:
-            continue
+        home = normalize_team(home_raw)
+        away = normalize_team(away_raw)
 
         spreads = []
         totals = []
@@ -132,3 +100,4 @@ def scrape_odds():
 
 if __name__ == "__main__":
     scrape_odds()
+    report_unknown()

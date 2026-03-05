@@ -10,14 +10,14 @@ LEAGUE_AVG = 109.55
 BASE_HOME_COURT = 3.0
 LOGISTIC_K = 0.18
 
-RECENCY_WEIGHT = 0.25
+RECENCY_WEIGHT = 0.18
 MAX_RECENCY_IMPACT = 2.0
 
 # FINAL WEIGHT ADJUSTMENT
-BETA_BASE = 0.60
-BETA_NET  = 0.30
+BETA_BASE = 0.72
+BETA_NET  = 0.18
 
-TEMPO_INFLATION = 1.03
+TEMPO_INFLATION = 1.01
 
 
 # =========================
@@ -66,7 +66,10 @@ def load_market_data():
 def run_projection():
 
     ratings = pd.read_csv("data/efficiency_table.csv")
-    schedule = pd.read_csv("data/bart_schedule_clean.csv")
+
+    # ❗ CHANGE 1: load games from odds instead of Bart schedule
+    with open("data/market_odds.json") as f:
+        schedule = pd.DataFrame(json.load(f))
 
     results = []
     raw_spreads = []
@@ -98,10 +101,6 @@ def run_projection():
         total = home_pts + away_pts
         base_spread = home_pts - away_pts
 
-        # =========================
-        # FOUR FACTOR MATCHUP
-        # =========================
-
         shooting_edge = home_row["EFG"] - away_row["EFGD"]
         turnover_edge = away_row["TORD"] - home_row["TOR"]
         rebound_edge  = home_row["ORB"] - away_row["DRB"]
@@ -111,8 +110,6 @@ def run_projection():
             0.30 * turnover_edge +
             0.25 * rebound_edge
         )
-
-        # =========================
 
         home_net = home_row["ADJOE"] - home_row["ADJDE"]
         away_net = away_row["ADJOE"] - away_row["ADJDE"]
@@ -147,11 +144,9 @@ def run_projection():
 
     df = pd.DataFrame(results)
 
-    # ZERO-CENTER SPREADS
     spread_bias = np.mean(raw_spreads)
     df["SPREAD_PROJ"] = df["SPREAD_RAW"] - spread_bias
 
-    # TOTAL MARKET ANCHOR
     market_total_mean = load_market_data()
     model_total_mean = np.mean(raw_totals)
 

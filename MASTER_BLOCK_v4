@@ -4,7 +4,7 @@ CBB MODEL V4 — MASTER ARCHITECTURE DOCUMENTATION
 
 OPERATIONAL RULES (MODEL DEVELOPMENT)
 -----------------------------------------------------------
-These rules apply to all development, backtesting,
+These rules apply to all development, debugging,
 and modification sessions:
 
 - Do not assume.
@@ -28,23 +28,31 @@ OVERVIEW
 CBB Model v4 is a fully automated NCAA basketball betting
 model that:
 
-1. Pulls efficiency ratings (BartTorvik)
-2. Cleans and structures advanced metrics
-3. Projects game-level spreads and totals
-4. Uses structurally weighted spread construction
-5. Applies home court + recency adjustments
-6. Applies weighted head-to-head (H2H) matchup adjustments
-7. Applies dynamic market-mean total bias anchoring
-8. Calibrates win probability curve (logistic K)
-9. Pulls live NCAA odds via The Odds API (Consensus)
-10. Normalizes team names deterministically
-11. Computes market edge vs projections
-12. Outputs only qualified +EV bets
-13. Exports full daily engine slate for reporting
-14. Automatically syncs outputs to Google Sheets
-15. Includes validated historical backtesting engine
+1. Scrapes efficiency ratings from BartTorvik
+2. Scrapes daily NCAA schedules from BartTorvik
+3. Pulls consensus betting markets from The Odds API
+4. Cleans and structures advanced efficiency metrics
+5. Normalizes team names across all data sources
+6. Maintains deterministic team identity registry
+7. Projects game-level spreads and totals
+8. Applies structural margin weighting
+9. Applies advanced matchup factor adjustments
+10. Applies home court advantage
+11. Applies recency adjustment using WAB differential
+12. Applies dynamic spread bias centering
+13. Anchors totals to market mean dynamically
+14. Calculates win probability using logistic model
+15. Computes market edge vs model projections
+16. Generates spread and total betting signals
+17. Builds full engine diagnostic slate
+18. Automatically syncs outputs to Google Sheets
+19. Runs automated integrity checks each pipeline run
+20. Maintains append-only results tracking
+21. Provides interactive Streamlit dashboard
+22. Supports admin-controlled daily lock selections
+23. Includes historical data infrastructure for expansion
 
-The system is modular, automated, and production-stable.
+The system is modular, deterministic, and production-stable.
 
 ===========================================================
 PROJECT STRUCTURE
@@ -54,267 +62,618 @@ cbb_model_v4/
 │
 ├── data/
 │   ├── bart_clean.csv
-│   ├── efficiency_table.csv
 │   ├── bart_schedule_clean.csv
-│   ├── historical_games_raw.csv
-│   ├── d1_team_ids.csv
+│   ├── efficiency_table.csv
 │   ├── projections.csv
-│   ├── market_odds.json
-│   ├── qualified_bets.csv
 │   ├── engine.csv
-│   ├── games.csv
-│   ├── bets.csv
-│   ├── results.csv
-│   ├── v4_backtest_results.csv
+│   ├── qualified_bets.csv
+│   ├── market_odds.json
+│   ├── locks.json
 │
 ├── bart_scraper.py
 ├── bart_schedule.py
+├── odds_scraper.py
+│
 ├── efficiency_engine.py
 ├── projection_engine.py
-├── odds_scraper.py
 ├── edge_engine.py
-├── build_games_tab.py
-├── build_bets_tab.py
-├── build_results_tab.py
+│
+├── integrity_check.py
+│
 ├── push_to_sheets.py
+│
 ├── run_daily.py
-├── calibrate_logistic_k.py
 │
-├── espn_pull_all_teams.py
-├── espn_historical_pull.py
-├── espn_patch_two_teams.py
+├── team_registry.py
+├── team_name_normalizer.py
+├── team_normalizer.py
 │
-├── h2h_engine.py
-├── h2h_diagnostics.py
-├── h2h_impact_analysis.py
-├── h2h_name_audit.py
-├── h2h_global_integrity_check.py
+├── dashboard.py
+├── app.py
 │
-├── edge_distribution_diagnostics.py
+├── data_pull.py
 │
-├── v4_backtest_2016.py
-├── engine_2015_backtest.py
+├── MASTER_BLOCK_v4
 │
-└── calibration_engine.py
+└── credentials.json
+
 
 ===========================================================
 FILE PURPOSES
 ===========================================================
 
 -----------------------------------------------------------
-projection_engine.py
+bart_scraper.py
 -----------------------------------------------------------
-Core production projection engine.
+Scrapes the BartTorvik efficiency rankings table.
+
+SOURCE:
+    https://barttorvik.com/trank.php
+
+TECHNOLOGY:
+    Playwright headless browser
+
+OUTPUT:
+    data/bart_clean.csv
+
+Purpose:
+Provides raw efficiency ratings for all Division I teams.
+
+
+-----------------------------------------------------------
+bart_schedule.py
+-----------------------------------------------------------
+Scrapes daily NCAA game schedule from BartTorvik.
+
+SOURCE:
+    https://barttorvik.com/schedule.php
+
+Cleans matchup strings and removes broadcast tags.
+
+TEAM NORMALIZATION:
+    team_name_normalizer.normalize_team()
+
+OUTPUT:
+    data/bart_schedule_clean.csv
+
+NOTE:
+Current projection engine uses market odds for slate
+definition, but this file remains available for schedule
+auditing and expansion.
+
+
+-----------------------------------------------------------
+odds_scraper.py
+-----------------------------------------------------------
+Pulls NCAA betting lines from The Odds API.
+
+API:
+    The Odds API
+
+SPORT:
+    basketball_ncaab
+
+MARKETS:
+    spreads
+    totals
+    h2h
+
+PROCESS:
+
+- Pull odds from all bookmakers
+- Compute consensus average for:
+    spreads
+    totals
+    moneyline
+
+TEAM NORMALIZATION:
+    normalize_team()
+
+OUTPUT:
+    data/market_odds.json
+
+Fields stored:
+
+    HOME
+    AWAY
+    COMMENCE_TIME
+    SPREAD
+    TOTAL
+    HOME_ML
+
+
+-----------------------------------------------------------
+efficiency_engine.py
+-----------------------------------------------------------
+Builds the cleaned efficiency dataset from Torvik data.
 
 INPUT:
+    data/bart_clean.csv
+
+CLEANING:
+
+Removes formatting artifacts:
+    newline tokens
+    + symbols
+    header rows
+
+TEAM NORMALIZATION:
+    normalize_team()
+
+OUTPUT:
     data/efficiency_table.csv
-    data/bart_schedule_clean.csv
-    data/historical_games_raw.csv (via h2h_engine)
-    data/market_odds.json (for total mean anchoring)
+
+Columns produced:
+
+    TEAM
+    CONF
+    G
+    ADJOE
+    ADJDE
+    TEMPO
+    EFG
+    EFGD
+    TOR
+    TORD
+    ORB
+    DRB
+    FTR
+    FTRD
+    WAB
+
+
+-----------------------------------------------------------
+projection_engine.py
+-----------------------------------------------------------
+Core projection model.
+
+INPUT:
+
+    data/efficiency_table.csv
+    data/market_odds.json
+
+OUTPUT:
+
+    data/projections.csv
 
 MODEL FLOW:
 
-1. Tempo interaction:
-    possessions = harmonic mean of team tempos
-    possessions *= TEMPO_INFLATION
+1. Schedule Source
 
-2. Dynamic League Average:
-    LEAGUE_AVG derived from ADJOE mean (~109.5)
+Games are pulled from market_odds.json so projections
+only exist for games with market lines.
 
-3. Matchup-adjusted offense:
-    expected_ortg = off_rating + (LEAGUE_AVG - opponent_def_rating)
 
-4. Projected points:
-    points = possessions * adjusted_ortg / 100
+2. Tempo Interaction
 
-5. Structural Spread Construction:
-    base_spread = home_pts - away_pts
+possessions =
+    harmonic_mean(home_tempo, away_tempo)
 
-    net_gap =
-        (home_ADJOE - home_ADJDE)
-      - (away_ADJOE - away_ADJDE)
+possessions *= TEMPO_INFLATION
 
-    home_margin =
-        BETA_BASE * (base_spread + BASE_HOME_COURT)
-      + BETA_NET  * net_gap
-      + RECENCY_ADJUSTMENT
-      + (optional) WEIGHTED_H2H_ADJUSTMENT
 
-6. Convert to Vegas Format:
-    spread_raw = -home_margin
+3. Matchup Adjusted Offense
 
-7. Spread Bias Correction (Dynamic):
-    spread_bias = mean(raw_spreads)
-    spread_proj = spread_raw - spread_bias
+expected_ortg =
+    offense_rating
+  + (LEAGUE_AVG - opponent_defense)
 
-8. Total Bias Anchoring (Dynamic Market Mean):
-    model_mean = mean(raw_totals)
-    market_mean = mean(market_totals)
-    total_bias = model_mean - market_mean
-    total_proj = total_raw - total_bias
 
-9. Win probability:
-    logistic(home_margin_proj) using LOGISTIC_K
+4. Projected Points
 
-Structural Weights:
+home_pts =
+    possessions * home_adj_ortg / 100
 
-    BETA_BASE = 0.15
-    BETA_NET  = 0.60
-    TEMPO_INFLATION ≈ 1.03
+away_pts =
+    possessions * away_adj_ortg / 100
+
+
+5. Base Total
+
+total_raw =
+    home_pts + away_pts
+
+
+6. Base Spread
+
+base_spread =
+    home_pts - away_pts
+
+
+7. Matchup Factor Adjustments
+
+Additional efficiency factors applied:
+
+shooting_edge =
+    home_EFG - away_EFGD
+
+turnover_edge =
+    away_TORD - home_TOR
+
+rebound_edge =
+    home_ORB - away_DRB
+
+factor_edge =
+    0.35 * shooting_edge
+  + 0.30 * turnover_edge
+  + 0.25 * rebound_edge
+
+
+8. Net Rating Gap
+
+home_net =
+    ADJOE - ADJDE
+
+away_net =
+    ADJOE - ADJDE
+
+net_gap =
+    home_net - away_net
+
+
+9. Margin Construction
+
+home_margin =
+    (BETA_BASE * base_spread)
+  + (BETA_NET  * net_gap)
+  + factor_edge
+  + BASE_HOME_COURT
+
+
+10. Recency Adjustment
+
+Uses WAB differential normalized by league std dev.
+
+adjustment =
+    normalized_wab_diff
+  * RECENCY_WEIGHT * 4
+
+Adjustment capped at:
+
+    ± MAX_RECENCY_IMPACT
+
+
+11. Vegas Spread Format
+
+spread_raw =
+    -home_margin
+
+
+12. Dynamic Spread Bias
+
+spread_bias =
+    mean(raw_spreads)
+
+spread_proj =
+    spread_raw - spread_bias
+
+
+13. Market Anchored Totals
+
+model_total_mean =
+    mean(raw_totals)
+
+market_total_mean =
+    mean(market_totals)
+
+total_bias =
+    model_mean - market_mean
+
+total_proj =
+    total_raw - total_bias
+
+
+14. Win Probability
+
+logistic(home_margin_proj)
+
+using:
+
+    LOGISTIC_K
+
+
+Final Output Columns:
+
+    HOME
+    AWAY
+    SPREAD_PROJ
+    TOTAL_PROJ
+    HOME_WIN_PROB
+
 
 -----------------------------------------------------------
 edge_engine.py
 -----------------------------------------------------------
-Production edge evaluation engine.
+Calculates betting edges and produces engine slate.
 
 INPUT:
+
     data/projections.csv
     data/market_odds.json
     data/efficiency_table.csv
 
+TEAM MATCHING:
+
+Uses team_normalizer.team_key()
+
 FUNCTIONS:
-- Merges projections with market odds
-- Rounds market spreads/totals
-- Computes Spread Edge and Total Edge
-- Computes OE Diff (home perspective)
-- Computes DE Diff (home perspective)
-- Exports:
 
-    data/engine.csv        (full slate)
-    data/qualified_bets.csv (filtered bets)
+- Merge projections with market odds
+- Round spreads and totals to half points
+- Compute spread and total edges
+- Compute OE and DE efficiency diagnostics
 
------------------------------------------------------------
-build_games_tab.py
------------------------------------------------------------
-Builds simplified Games tab export:
+Edge formulas:
 
-Columns:
-    Home
-    Away
-    Spread (Market)
-    Total (Market)
+spread_edge =
+    model_spread - market_spread
 
------------------------------------------------------------
-build_bets_tab.py
------------------------------------------------------------
-Builds formatted Bets tab:
+total_edge =
+    model_total - market_total
+
+
+OUTPUT FILES:
+
+data/engine.csv
+Full model slate with diagnostics.
 
 Columns:
+
+    Game Time
     Home
     Away
     Spread
+    Total
+    OE Diff
+    DE Diff
     Spread Edge
     Model Spread
-    Total
     Total Edge
     Model Total
-    Spread Bet
-    Spread Confidence
-    Total Bet
-    Total Confidence
+
+
+data/qualified_bets.csv
+Filtered bets meeting edge thresholds.
+
 
 -----------------------------------------------------------
-build_results_tab.py
+integrity_check.py
 -----------------------------------------------------------
-Builds Results stacking export.
+Runs automated model sanity checks.
 
-Columns:
-    Date
-    Home
-    Away
-    Spread Edge
-    Spread Bet
-    Spread Confidence
-    Spread W/L
-    Total Edge
-    Total Bet
-    Total Confidence
-    Total W/L
+Checks performed:
 
-Append-only logic.
-Duplicate protection based on:
-    Date + Home + Away
+1. Odds vs Projection game matching
+2. Missing projections
+3. Teams missing from efficiency table
+4. Projection total distribution
+5. Projection spread distribution
+
+Purpose:
+
+Catch structural errors before pushing results.
+
 
 -----------------------------------------------------------
 push_to_sheets.py
 -----------------------------------------------------------
-Handles Google Sheets integration.
+Handles all Google Sheets integration.
 
-- Pushes Games tab
-- Pushes Engine tab
-- Pushes Bets tab
-- Appends Results tab
-- Preserves manual W/L entries
-- Auto-creates missing tabs
-- Prevents duplicate entries
+Uses:
+
+    gspread
+    Google Service Account
+
+Target sheet:
+
+    CBB Model v4
+
+Tabs written:
+
+Games
+Engine
+Spread Bets
+Total Bets
+
+Append-only tabs:
+
+Spread Results
+Total Results
+
+
+Confidence grading applied:
+
+SPREAD CONFIDENCE
+
+    12+  → A+
+    10+  → A
+    8+   → A-
+    6+   → B
+    5+   → C+
+    4+   → C
+
+
+TOTAL CONFIDENCE
+
+    20+ → A+
+    15+ → A
+    12+ → A-
+    10+ → B+
+    8+  → B
+    6+  → B-
+    4+  → C+
+
 
 -----------------------------------------------------------
 run_daily.py
 -----------------------------------------------------------
-Full daily pipeline:
+Primary production pipeline.
 
-1. Pull efficiency + schedule
-2. Pull market odds
-3. Run projection engine
-4. Run edge engine
-5. Build Games / Bets / Results exports
-6. Push all outputs to Google Sheets
+Execution order:
 
-===========================================================
-BACKTESTING STATUS (UPDATED)
-===========================================================
+1. bart_scraper.py
+2. bart_schedule.py
+3. odds_scraper.py
+4. efficiency_engine.py
+5. projection_engine.py
+6. edge_engine.py
+7. integrity_check.py
+8. push_to_sheets.py
 
-SPREAD MODEL:
-- Structurally complete
-- NET differential integrated
-- Dynamic bias centering implemented
-- Walk-forward validated
-- Production stable
+After completion:
 
-TOTAL MODEL:
-- Structural league-average suppression fixed
-- Dynamic market-mean anchor implemented
-- Tempo scale corrected
-- Bias stabilized
-- Production stable
+Automatically commits and pushes data updates
+to the GitHub repository.
+
+
+-----------------------------------------------------------
+team_registry.py
+-----------------------------------------------------------
+Defines canonical team identity database.
+
+Each team entry contains mappings for:
+
+    canonical
+    bart
+    odds
+    espn
+
+Used to normalize team names across all data sources.
+
+
+-----------------------------------------------------------
+team_name_normalizer.py
+-----------------------------------------------------------
+Maps all external team names to canonical names.
+
+Creates lookup dictionary from team_registry.
+
+Unknown team names are logged for manual registry updates.
+
+
+-----------------------------------------------------------
+team_normalizer.py
+-----------------------------------------------------------
+Creates simplified team keys used for joining datasets.
+
+Normalization steps:
+
+- lowercase conversion
+- abbreviation expansion
+- punctuation removal
+- whitespace removal
+
+Used primarily for merging projections and odds data.
+
+
+-----------------------------------------------------------
+dashboard.py
+-----------------------------------------------------------
+Primary Streamlit dashboard interface.
+
+Features:
+
+- Home page with top model edges
+- Full game slate
+- Spread bet cards
+- Total bet cards
+- Engine data viewer
+- Admin-only lock selection system
+
+Locks stored in:
+
+    data/locks.json
+
+Admin access enabled via:
+
+    ?admin=1
+
+
+-----------------------------------------------------------
+app.py
+-----------------------------------------------------------
+Secondary lightweight Streamlit dashboard.
+
+Displays:
+
+- Games
+- Spread edges
+- Total edges
+
+Used for quick local model viewing.
+
+
+-----------------------------------------------------------
+data_pull.py
+-----------------------------------------------------------
+Historical data infrastructure.
+
+Uses:
+
+    cbbpy.mens_scraper
+
+Pulls:
+
+- game metadata
+- box scores
+
+Data stored in:
+
+    data/games_info.csv
+    data/games_box.csv
+
+Not currently used in production pipeline but
+available for backtesting and future model features.
+
 
 ===========================================================
 MODEL CONSTANTS (CURRENT)
 ===========================================================
 
-LEAGUE_AVG ≈ 109.5
+LEAGUE_AVG ≈ 109.55
 
 BASE_HOME_COURT = 3.0
+
 RECENCY_WEIGHT = 0.25
 MAX_RECENCY_IMPACT = 2.0
 
 LOGISTIC_K = 0.18
 
-BETA_BASE = 0.15
-BETA_NET  = 0.60
+BETA_BASE = 0.60
+BETA_NET  = 0.30
 
-MIN_GAMES_REQUIRED = 3
-H2H_WEIGHT = 0.07
+TEMPO_INFLATION = 1.01
 
-EDGE_THRESHOLD_SPREAD = 2.0
-EDGE_THRESHOLD_TOTAL = 4.0
-EDGE_THRESHOLD_ML = 0.05
+
+EDGE THRESHOLDS
+
+EDGE_THRESHOLD_SPREAD = 6.0
+EDGE_THRESHOLD_TOTAL  = 6.0
+
 
 ===========================================================
 DAILY OPERATIONS (PRODUCTION)
 ===========================================================
 
 One-time setup:
+
     source venv/bin/activate
-    export ODDS_API_KEY="your_key_here"
+    export ODDS_API_KEY="your_api_key"
+
 
 Daily run:
+
     python run_daily.py
 
-Outputs:
+
+Outputs generated:
+
+    data/projections.csv
     data/engine.csv
     data/qualified_bets.csv
-    Google Sheets (Games, Engine, Bets, Results)
+
+Google Sheets updated automatically.
+
 
 ===========================================================
 END OF MASTER BLOCK
