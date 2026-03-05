@@ -11,7 +11,6 @@ st.title("CBB Model v4")
 
 engine = pd.read_csv("data/engine.csv")
 
-# keep only games with odds
 engine = engine[engine["Spread"].notna()].copy()
 
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
@@ -49,10 +48,6 @@ def total_confidence(edge):
     return ""
 
 
-# =========================
-# CONFIDENCE COLORS
-# =========================
-
 def confidence_color(conf):
 
     colors = {
@@ -70,7 +65,7 @@ def confidence_color(conf):
 
 
 # =========================
-# BUILD SPREAD BET TABLE
+# BUILD BET DATA
 # =========================
 
 spread = engine.copy()
@@ -85,16 +80,8 @@ spread["Bet"] = spread.apply(
 )
 
 spread_bets = spread[spread["Spread Edge"].abs() >= 4].copy()
+spread_bets = spread_bets.sort_values("Spread Edge", ascending=False)
 
-spread_bets = spread_bets.sort_values(
-    "Spread Edge",
-    ascending=False
-)
-
-
-# =========================
-# BUILD TOTAL BET TABLE
-# =========================
 
 totals = engine.copy()
 
@@ -108,11 +95,7 @@ totals["Bet"] = totals.apply(
 )
 
 total_bets = totals[totals["Total Edge"].abs() >= 6].copy()
-
-total_bets = total_bets.sort_values(
-    "Total Edge",
-    ascending=False
-)
+total_bets = total_bets.sort_values("Total Edge", ascending=False)
 
 
 # =========================
@@ -130,6 +113,34 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
 
 # =========================
+# CARD FUNCTION
+# =========================
+
+def render_card(title, lines):
+
+    st.markdown(
+        f"""
+<div style="
+border:1px solid rgba(150,150,150,0.25);
+border-radius:14px;
+padding:18px;
+margin-bottom:14px;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
+">
+
+<div style="font-size:20px;font-weight:600;margin-bottom:10px;">
+{title}
+</div>
+
+{lines}
+
+</div>
+""",
+        unsafe_allow_html=True
+    )
+
+
+# =========================
 # HOME TAB
 # =========================
 
@@ -137,117 +148,49 @@ with tab1:
 
     col1, col2 = st.columns(2)
 
-    # =====================
-    # SPREAD BETS
-    # =====================
-
     with col1:
 
-        st.subheader("🔥 Top 5 Spread Bets")
+        st.subheader("Top Spread Bets")
 
-        top_spreads = spread_bets.head(5)
+        for _, r in spread_bets.head(5).iterrows():
 
-        best_edge = None
-        if not top_spreads.empty:
-            best_edge = top_spreads.iloc[0]["Spread Edge"]
-
-        for _, r in top_spreads.iterrows():
-
-            border = "2px solid #16a34a" if r["Spread Edge"] == best_edge else "1px solid rgba(150,150,150,0.2)"
-
-            st.markdown(
-                f"""
-<div style="
-border:{border};
-border-radius:14px;
-padding:18px;
-margin-bottom:16px;
-box-shadow:0 2px 6px rgba(0,0,0,0.05);
-">
-
-<div style="font-size:20px;font-weight:600;margin-bottom:8px;">
-{r['Game']}
-</div>
-
-<div style="font-size:16px;margin-bottom:6px;">
-<b>Bet:</b> {r['Bet']}
-</div>
-
-<div style="font-size:16px;margin-bottom:6px;color:#16a34a;">
-<b>Edge:</b> {r['Spread Edge']:+.2f}
-</div>
-
+            lines = f"""
+<b>Bet:</b> {r['Bet']}<br>
+<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
 color:white;
 padding:4px 10px;
 border-radius:8px;
-font-size:13px;
-font-weight:600;
-">
+font-size:12px;
+font-weight:600;">
 {r['Confidence']}
 </span>
+"""
 
-</div>
-""",
-                unsafe_allow_html=True
-            )
-
-    # =====================
-    # TOTAL BETS
-    # =====================
+            render_card(r["Game"], lines)
 
     with col2:
 
-        st.subheader("🔥 Top 5 Total Bets")
+        st.subheader("Top Total Bets")
 
-        top_totals = total_bets.head(5)
+        for _, r in total_bets.head(5).iterrows():
 
-        best_edge = None
-        if not top_totals.empty:
-            best_edge = top_totals.iloc[0]["Total Edge"]
-
-        for _, r in top_totals.iterrows():
-
-            border = "2px solid #16a34a" if r["Total Edge"] == best_edge else "1px solid rgba(150,150,150,0.2)"
-
-            st.markdown(
-                f"""
-<div style="
-border:{border};
-border-radius:14px;
-padding:18px;
-margin-bottom:16px;
-box-shadow:0 2px 6px rgba(0,0,0,0.05);
-">
-
-<div style="font-size:20px;font-weight:600;margin-bottom:8px;">
-{r['Game']}
-</div>
-
-<div style="font-size:16px;margin-bottom:6px;">
-<b>Bet:</b> {r['Bet']}
-</div>
-
-<div style="font-size:16px;margin-bottom:6px;color:#16a34a;">
-<b>Edge:</b> {r['Total Edge']:+.2f}
-</div>
-
+            lines = f"""
+<b>Bet:</b> {r['Bet']}<br>
+<b>Edge:</b> {r['Total Edge']:+.2f}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
 color:white;
 padding:4px 10px;
 border-radius:8px;
-font-size:13px;
-font-weight:600;
-">
+font-size:12px;
+font-weight:600;">
 {r['Confidence']}
 </span>
+"""
 
-</div>
-""",
-                unsafe_allow_html=True
-            )
+            render_card(r["Game"], lines)
 
 
 # =========================
@@ -256,20 +199,14 @@ font-weight:600;
 
 with tab2:
 
-    games = engine[[
-        "Game",
-        "Spread",
-        "Total"
-    ]]
+    for _, r in engine.iterrows():
 
-    games = games.rename(
-        columns={
-            "Spread": "Market Spread",
-            "Total": "Market Total"
-        }
-    )
+        lines = f"""
+<b>Market Spread:</b> {r['Spread']}<br>
+<b>Market Total:</b> {r['Total']}
+"""
 
-    st.dataframe(games, use_container_width=True)
+        render_card(r["Game"], lines)
 
 
 # =========================
@@ -278,23 +215,25 @@ with tab2:
 
 with tab3:
 
-    df = spread_bets[[
-        "Game",
-        "Spread",
-        "Model Spread",
-        "Spread Edge",
-        "Bet",
-        "Confidence"
-    ]]
+    for _, r in spread_bets.iterrows():
 
-    df = df.rename(
-        columns={
-            "Spread": "Market Line",
-            "Spread Edge": "Edge"
-        }
-    )
+        lines = f"""
+<b>Market:</b> {r['Spread']}<br>
+<b>Model:</b> {r['Model Spread']}<br>
+<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
+<b>Bet:</b> {r['Bet']}<br>
+<span style="
+background:{confidence_color(r['Confidence'])};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;">
+{r['Confidence']}
+</span>
+"""
 
-    st.dataframe(df, use_container_width=True)
+        render_card(r["Game"], lines)
 
 
 # =========================
@@ -303,23 +242,25 @@ with tab3:
 
 with tab4:
 
-    df = total_bets[[
-        "Game",
-        "Total",
-        "Model Total",
-        "Total Edge",
-        "Bet",
-        "Confidence"
-    ]]
+    for _, r in total_bets.iterrows():
 
-    df = df.rename(
-        columns={
-            "Total": "Market Total",
-            "Total Edge": "Edge"
-        }
-    )
+        lines = f"""
+<b>Market:</b> {r['Total']}<br>
+<b>Model:</b> {r['Model Total']}<br>
+<b>Edge:</b> {r['Total Edge']:+.2f}<br>
+<b>Bet:</b> {r['Bet']}<br>
+<span style="
+background:{confidence_color(r['Confidence'])};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;">
+{r['Confidence']}
+</span>
+"""
 
-    st.dataframe(df, use_container_width=True)
+        render_card(r["Game"], lines)
 
 
 # =========================
@@ -340,12 +281,10 @@ with tab5:
         "DE Diff"
     ]]
 
-    df = df.rename(
-        columns={
-            "Spread": "Market Spread",
-            "Total": "Market Total"
-        }
-    )
+    df = df.rename(columns={
+        "Spread": "Market Spread",
+        "Total": "Market Total"
+    })
 
     st.dataframe(df, use_container_width=True)
 
