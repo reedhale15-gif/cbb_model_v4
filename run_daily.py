@@ -28,3 +28,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+import subprocess
+
+print("Pushing updated data to GitHub...")
+
+subprocess.run(["git", "add", "data"])
+subprocess.run(["git", "commit", "-m", "Daily model update"])
+subprocess.run(["git", "push"])
+
+print("Dashboard updated.")

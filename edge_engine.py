@@ -70,19 +70,20 @@ def run_edge_engine():
             oe_diff = home_eff["ADJOE"] - away_eff["ADJOE"]
             de_diff = away_eff["ADJDE"] - home_eff["ADJDE"]
 
-        engine_rows.append({
-            "Home": proj["HOME"],
-            "Away": proj["AWAY"],
-            "Spread": market_spread,
-            "Total": market_total,
-            "OE Diff": oe_diff,
-            "DE Diff": de_diff,
-            "Spread Edge": spread_edge,
-            "Model Spread": proj["SPREAD_PROJ"],
-            "Total Edge": total_edge,
-            "Model Total": proj["TOTAL_PROJ"]
-        })
-
+            engine_rows.append({
+                "Game Time": game.get("COMMENCE_TIME"),
+                "Home": proj["HOME"],
+                "Away": proj["AWAY"],
+                "Spread": market_spread,
+                "Total": market_total,
+                "OE Diff": oe_diff,
+                "DE Diff": de_diff,
+                "Spread Edge": spread_edge,
+                "Model Spread": proj["SPREAD_PROJ"],
+                "Total Edge": total_edge,
+                "Model Total": proj["TOTAL_PROJ"]
+            })
+            
         spread_ok = not pd.isna(spread_edge) and abs(spread_edge) >= EDGE_THRESHOLD_SPREAD
         total_ok = not pd.isna(total_edge) and abs(total_edge) >= EDGE_THRESHOLD_TOTAL
 

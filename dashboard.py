@@ -126,17 +126,34 @@ if "admin" in query and query["admin"] == "1":
 # REED'S LOCKS
 # =========================
 
-locks = []
+import json
 
+LOCK_FILE = "data/locks.json"
+
+# Load saved locks
+try:
+    with open(LOCK_FILE, "r") as f:
+        locks = json.load(f)
+except:
+    locks = []
+
+# Only allow editing in admin mode
 if admin_mode:
 
     st.sidebar.header("🔒 Reed's Locks of the Day")
 
-    locks = st.sidebar.multiselect(
+    selected_locks = st.sidebar.multiselect(
         "Select your picks",
-        pick_options
+        pick_options,
+        default=locks
     )
 
+    # Save automatically if changed
+    if selected_locks != locks:
+        with open(LOCK_FILE, "w") as f:
+            json.dump(selected_locks, f)
+
+    locks = selected_locks
 
 # =========================
 # CARD RENDERER
@@ -315,11 +332,6 @@ with tab_objects[0]:
 """
 
             render_card(r["Game"], lines, r["Confidence"], r["Total Edge"])
-
-
-# =========================
-# LOCKS TAB
-# =========================
 
 # =========================
 # LOCKS TAB

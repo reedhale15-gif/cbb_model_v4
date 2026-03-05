@@ -112,9 +112,12 @@ def scrape_odds():
         if spread_consensus is None:
             continue
 
+        commence_time = event.get("commence_time")
+
         output.append({
             "HOME": home,
             "AWAY": away,
+            "COMMENCE_TIME": commence_time,
             "SPREAD": spread_consensus,
             "TOTAL": total_consensus,
             "HOME_ML": ml_consensus
