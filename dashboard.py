@@ -6,6 +6,17 @@ st.set_page_config(page_title="CBB Model v4", layout="wide")
 st.title("CBB Model v4")
 
 # =========================
+# ADMIN MODE (PRIVATE LINK)
+# =========================
+
+query = st.query_params
+
+admin_mode = False
+
+if "admin" in query and query["admin"] == "1":
+    admin_mode = True
+
+# =========================
 # LOAD DATA
 # =========================
 
@@ -90,22 +101,106 @@ total_bets = total_bets.sort_values("Total Edge", ascending=False)
 
 
 # =========================
+# BUILD PICK OPTIONS
+# =========================
+
+spread_options = (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
+total_options = (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
+
+pick_options = spread_options + total_options
+
+
+# =========================
+# ADMIN MODE (PRIVATE LINK)
+# =========================
+
+query = st.query_params
+
+admin_mode = False
+
+if "admin" in query and query["admin"] == "1":
+    admin_mode = True
+
+
+# =========================
 # REED'S LOCKS
 # =========================
 
-st.sidebar.header("🔒 Reed's Locks of the Day")
+locks = []
 
-pick_options = (
-    (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
-    +
-    (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
-)
+if admin_mode:
 
-locks = st.sidebar.multiselect(
-    "Select your picks",
-    pick_options
-)
+    st.sidebar.header("🔒 Reed's Locks of the Day")
 
+    locks = st.sidebar.multiselect(
+        "Select your picks",
+        pick_options
+    )
+
+
+# =========================
+# CARD RENDERER
+# =========================
+
+def render_card(game, lines, conf=None, edge=None, lock=False):
+
+    badge = ""
+
+    if lock:
+        badge = """
+<span style="
+background:#ef4444;
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+margin-left:6px;
+">
+🔒 LOCK
+</span>
+"""
+
+    conf_badge = ""
+
+    if conf:
+        conf_badge = f"""
+<span style="
+background:{confidence_color(conf)};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+margin-top:8px;
+display:inline-block;
+">
+{conf}
+</span>
+"""
+
+    st.markdown(
+        f"""
+<div style="
+border:1px solid rgba(150,150,150,0.25);
+border-radius:14px;
+padding:18px;
+margin-bottom:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+">
+
+<div style="font-size:20px;font-weight:600;margin-bottom:10px;">
+{game} {badge}
+</div>
+
+{lines}
+
+{conf_badge}
+
+</div>
+""",
+        unsafe_allow_html=True
+    )
 
 # =========================
 # CARD RENDERER
