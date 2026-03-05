@@ -6,49 +6,31 @@ st.set_page_config(page_title="CBB Model v4", layout="wide")
 st.title("CBB Model v4")
 
 # =========================
-# PASSWORD PROTECTION
-# =========================
-
-PASSWORD = "lockboard"
-
-password = st.sidebar.text_input("Enter password to edit picks", type="password")
-
-edit_mode = password == PASSWORD
-
-
-# =========================
 # LOAD DATA
 # =========================
 
 engine = pd.read_csv("data/engine.csv")
-
 engine = engine[engine["Spread"].notna()].copy()
 
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
-
 
 # =========================
 # CONFIDENCE FUNCTIONS
 # =========================
 
 def spread_confidence(edge):
-
     edge = abs(edge)
-
     if edge >= 12: return "A+"
     if edge >= 10: return "A"
     if edge >= 8: return "A-"
     if edge >= 6: return "B"
     if edge >= 5: return "C+"
     if edge >= 4: return "C"
-
     return ""
 
 
 def total_confidence(edge):
-
     edge = abs(edge)
-
     if edge >= 20: return "A+"
     if edge >= 15: return "A"
     if edge >= 12: return "A-"
@@ -56,12 +38,10 @@ def total_confidence(edge):
     if edge >= 8: return "B"
     if edge >= 6: return "B-"
     if edge >= 4: return "C+"
-
     return ""
 
 
 def confidence_color(conf):
-
     colors = {
         "A+": "#16a34a",
         "A": "#22c55e",
@@ -72,7 +52,6 @@ def confidence_color(conf):
         "C+": "#fb923c",
         "C": "#f97316"
     }
-
     return colors.get(conf, "#9ca3af")
 
 
@@ -111,45 +90,33 @@ total_bets = total_bets.sort_values("Total Edge", ascending=False)
 
 
 # =========================
-# BUILD PICK OPTIONS
-# =========================
-
-spread_options = (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
-total_options = (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
-
-pick_options = spread_options + total_options
-
-
-# =========================
 # REED'S LOCKS
 # =========================
 
-locks = []
+st.sidebar.header("🔒 Reed's Locks of the Day")
 
-if edit_mode:
+pick_options = (
+    (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
+    +
+    (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
+)
 
-    st.sidebar.header("🔒 Reed's Locks of the Day")
-
-    locks = st.sidebar.multiselect(
-        "Select your picks",
-        pick_options
-    )
-
-else:
-
-    st.sidebar.info("View mode")
+locks = st.sidebar.multiselect(
+    "Select your picks",
+    pick_options
+)
 
 
 # =========================
-# CARD FUNCTION
+# CARD RENDERER
 # =========================
 
-def render_card(title, lines, lock=False):
+def render_card(game, lines, conf=None, edge=None, lock=False):
 
     badge = ""
 
     if lock:
-        badge = """
+        badge += """
 <span style="
 background:#ef4444;
 color:white;
@@ -163,21 +130,42 @@ margin-left:6px;
 </span>
 """
 
+    conf_badge = ""
+
+    if conf:
+        conf_badge = f"""
+<span style="
+background:{confidence_color(conf)};
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+margin-top:8px;
+display:inline-block;
+">
+{conf}
+</span>
+"""
+
     st.markdown(
         f"""
 <div style="
 border:1px solid rgba(150,150,150,0.25);
 border-radius:14px;
 padding:18px;
-margin-bottom:14px;
-box-shadow:0 3px 10px rgba(0,0,0,0.08);
+margin-bottom:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+transition: all 0.15s ease;
 ">
 
 <div style="font-size:20px;font-weight:600;margin-bottom:10px;">
-{title} {badge}
+{game} {badge}
 </div>
 
 {lines}
+
+{conf_badge}
 
 </div>
 """,
@@ -189,12 +177,12 @@ box-shadow:0 3px 10px rgba(0,0,0,0.08);
 # TABS
 # =========================
 
-tabs = ["Home","Games","Spread Bets","Total Bets","Engine"]
+tabs = ["Home"]
 
 if locks:
-    tabs.insert(1,"🔒 Reed's Locks")
+    tabs.append("🔒 Reed's Locks")
 
-tabs.append("Results")
+tabs += ["Games", "Spread Bets", "Total Bets", "Engine", "Results"]
 
 tab_objects = st.tabs(tabs)
 
@@ -209,7 +197,7 @@ with tab_objects[0]:
 
     with col1:
 
-        st.subheader("🔥 Top 5 Spread Bets")
+        st.subheader("🔥 Top Spread Bets")
 
         for _, r in spread_bets.head(5).iterrows():
 
@@ -218,11 +206,11 @@ with tab_objects[0]:
 <b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}
 """
 
-            render_card(r["Game"], lines)
+            render_card(r["Game"], lines, r["Confidence"], r["Spread Edge"])
 
     with col2:
 
-        st.subheader("🔥 Top 5 Total Bets")
+        st.subheader("🔥 Top Total Bets")
 
         for _, r in total_bets.head(5).iterrows():
 
@@ -231,11 +219,11 @@ with tab_objects[0]:
 <b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}
 """
 
-            render_card(r["Game"], lines)
+            render_card(r["Game"], lines, r["Confidence"], r["Total Edge"])
 
 
 # =========================
-# LOCK TAB
+# LOCKS TAB
 # =========================
 
 if locks:
@@ -248,9 +236,7 @@ if locks:
 
             game, bet = pick.split(" — ")
 
-            lines = f"""
-<b>Play:</b> {bet}
-"""
+            lines = f"<b>Play:</b> {bet}"
 
             render_card(game, lines, lock=True)
 
@@ -259,29 +245,38 @@ if locks:
 # GAMES
 # =========================
 
-games_tab_index = 1 if not locks else 2
+games_index = 1 if not locks else 2
 
-with tab_objects[games_tab_index]:
+with tab_objects[games_index]:
 
-    for _, r in engine.iterrows():
+    st.header("🎮 All Games Today")
+
+    cols = st.columns(2)
+
+    for i, (_, r) in enumerate(engine.iterrows()):
 
         lines = f"""
 <b>Spread:</b> {r['Spread']}<br>
 <b>Total:</b> {r['Total']}
 """
 
-        render_card(r["Game"], lines)
+        with cols[i % 2]:
+            render_card(r["Game"], lines)
 
 
 # =========================
 # SPREAD BETS
 # =========================
 
-spread_tab_index = games_tab_index + 1
+spread_index = games_index + 1
 
-with tab_objects[spread_tab_index]:
+with tab_objects[spread_index]:
 
-    for _, r in spread_bets.iterrows():
+    st.header("📈 Spread Edges")
+
+    cols = st.columns(2)
+
+    for i, (_, r) in enumerate(spread_bets.iterrows()):
 
         lines = f"""
 <b>Market:</b> {r['Spread']}<br>
@@ -290,18 +285,23 @@ with tab_objects[spread_tab_index]:
 <b>Bet:</b> {r['Bet']}
 """
 
-        render_card(r["Game"], lines)
+        with cols[i % 2]:
+            render_card(r["Game"], lines, r["Confidence"], r["Spread Edge"])
 
 
 # =========================
 # TOTAL BETS
 # =========================
 
-total_tab_index = spread_tab_index + 1
+total_index = spread_index + 1
 
-with tab_objects[total_tab_index]:
+with tab_objects[total_index]:
 
-    for _, r in total_bets.iterrows():
+    st.header("📊 Total Edges")
+
+    cols = st.columns(2)
+
+    for i, (_, r) in enumerate(total_bets.iterrows()):
 
         lines = f"""
 <b>Market:</b> {r['Total']}<br>
@@ -310,16 +310,17 @@ with tab_objects[total_tab_index]:
 <b>Bet:</b> {r['Bet']}
 """
 
-        render_card(r["Game"], lines)
+        with cols[i % 2]:
+            render_card(r["Game"], lines, r["Confidence"], r["Total Edge"])
 
 
 # =========================
 # ENGINE
 # =========================
 
-engine_tab_index = total_tab_index + 1
+engine_index = total_index + 1
 
-with tab_objects[engine_tab_index]:
+with tab_objects[engine_index]:
 
     st.dataframe(engine, use_container_width=True)
 
