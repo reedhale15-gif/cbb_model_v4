@@ -16,6 +16,17 @@ engine = engine[engine["Spread"].notna()].copy()
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
 
 # =========================
+# REED'S LOCKS OF THE DAY
+# =========================
+
+st.sidebar.header("🔒 Reed's Locks of the Day")
+
+locks = st.sidebar.multiselect(
+    "Select your locks",
+    engine["Game"].tolist()
+)
+
+# =========================
 # CONFIDENCE FUNCTIONS
 # =========================
 
@@ -118,6 +129,23 @@ tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
 
 def render_card(title, lines):
 
+    badge = ""
+
+    if title in locks:
+        badge = """
+<span style="
+background:#3b82f6;
+color:white;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+margin-left:6px;
+">
+🔒 LOCK
+</span>
+"""
+
     st.markdown(
         f"""
 <div style="
@@ -125,11 +153,12 @@ border:1px solid rgba(150,150,150,0.25);
 border-radius:14px;
 padding:18px;
 margin-bottom:14px;
-box-shadow:0 2px 6px rgba(0,0,0,0.06);
+box-shadow:0 3px 10px rgba(0,0,0,0.08);
+transition: all 0.15s ease;
 ">
 
 <div style="font-size:20px;font-weight:600;margin-bottom:10px;">
-{title}
+{title} {badge}
 </div>
 
 {lines}
@@ -150,13 +179,13 @@ with tab1:
 
     with col1:
 
-        st.subheader("Top Spread Bets")
+        st.subheader("🔥 Top 5 Spread Bets")
 
         for _, r in spread_bets.head(5).iterrows():
 
             lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
-<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
 color:white;
@@ -172,13 +201,13 @@ font-weight:600;">
 
     with col2:
 
-        st.subheader("Top Total Bets")
+        st.subheader("🔥 Top 5 Total Bets")
 
         for _, r in total_bets.head(5).iterrows():
 
             lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
-<b>Edge:</b> {r['Total Edge']:+.2f}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
 color:white;
@@ -199,6 +228,8 @@ font-weight:600;">
 
 with tab2:
 
+    st.header("All Games With Market Lines")
+
     for _, r in engine.iterrows():
 
         lines = f"""
@@ -215,12 +246,14 @@ with tab2:
 
 with tab3:
 
+    st.header("Qualified Spread Bets")
+
     for _, r in spread_bets.iterrows():
 
         lines = f"""
 <b>Market:</b> {r['Spread']}<br>
 <b>Model:</b> {r['Model Spread']}<br>
-<b>Edge:</b> {r['Spread Edge']:+.2f}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}<br>
 <b>Bet:</b> {r['Bet']}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
@@ -242,12 +275,14 @@ font-weight:600;">
 
 with tab4:
 
+    st.header("Qualified Total Bets")
+
     for _, r in total_bets.iterrows():
 
         lines = f"""
 <b>Market:</b> {r['Total']}<br>
 <b>Model:</b> {r['Model Total']}<br>
-<b>Edge:</b> {r['Total Edge']:+.2f}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}<br>
 <b>Bet:</b> {r['Bet']}<br>
 <span style="
 background:{confidence_color(r['Confidence'])};
