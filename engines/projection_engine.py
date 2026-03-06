@@ -1,6 +1,12 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pandas as pd
 import numpy as np
 import json
+from teams.team_normalizer import team_key
 
 # =========================
 # MODEL CONSTANTS
@@ -13,7 +19,6 @@ LOGISTIC_K = 0.18
 RECENCY_WEIGHT = 0.18
 MAX_RECENCY_IMPACT = 2.0
 
-# FINAL WEIGHT ADJUSTMENT
 BETA_BASE = 0.72
 BETA_NET  = 0.18
 
@@ -67,9 +72,14 @@ def run_projection():
 
     ratings = pd.read_csv("data/efficiency_table.csv")
 
-    # ❗ CHANGE 1: load games from odds instead of Bart schedule
+    # create normalized key for ratings
+    ratings["TEAM_KEY"] = ratings["TEAM"].apply(team_key)
+
     with open("data/market_odds.json") as f:
         schedule = pd.DataFrame(json.load(f))
+
+    schedule["HOME_KEY"] = schedule["HOME"].apply(team_key)
+    schedule["AWAY_KEY"] = schedule["AWAY"].apply(team_key)
 
     results = []
     raw_spreads = []
@@ -77,11 +87,11 @@ def run_projection():
 
     for _, game in schedule.iterrows():
 
-        home = game["HOME"]
-        away = game["AWAY"]
+        home_key = game["HOME_KEY"]
+        away_key = game["AWAY_KEY"]
 
-        home_row = ratings[ratings["TEAM"] == home]
-        away_row = ratings[ratings["TEAM"] == away]
+        home_row = ratings[ratings["TEAM_KEY"] == home_key]
+        away_row = ratings[ratings["TEAM_KEY"] == away_key]
 
         if home_row.empty or away_row.empty:
             continue
@@ -136,8 +146,8 @@ def run_projection():
         raw_totals.append(total)
 
         results.append({
-            "HOME": home,
-            "AWAY": away,
+            "HOME": home_row["TEAM"],
+            "AWAY": away_row["TEAM"],
             "SPREAD_RAW": vegas_spread,
             "TOTAL_RAW": total
         })
