@@ -59,13 +59,19 @@ engine["Game Time"] = (
 
 def get_performance_data():
 
+    import os
+    import json
+
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
 
-    creds = Credentials.from_service_account_file(
-        "credentials.json",
+    # Load credentials from Render environment variable
+    creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+    creds = Credentials.from_service_account_info(
+        creds_dict,
         scopes=scope
     )
 
