@@ -3,6 +3,8 @@ import pandas as pd
 import json
 import os
 from streamlit_autorefresh import st_autorefresh
+import gspread
+from google.oauth2.service_account import Credentials
 
 st.set_page_config(page_title="CBB Model v4", layout="wide")
 
@@ -52,29 +54,65 @@ engine["Game Time"] = (
 )
 
 # =========================
+# LOAD PERFORMANCE DATA
+# =========================
+
+def get_performance_data():
+
+    scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    creds = Credentials.from_service_account_file(
+        "credentials.json",
+        scopes=scope
+    )
+
+    client = gspread.authorize(creds)
+    sheet = client.open("CBB Model v4")
+
+    spread_tab = sheet.worksheet("Spread Performance")
+    total_tab = sheet.worksheet("Total Performance")
+
+    spread_data = {
+        "bets": spread_tab.acell("B5").value,
+        "winpct": spread_tab.acell("B6").value
+    }
+
+    total_data = {
+        "overall_bets": total_tab.acell("B5").value,
+        "overall_pct": total_tab.acell("B6").value,
+        "over_bets": total_tab.acell("E5").value,
+        "over_pct": total_tab.acell("E6").value,
+        "under_bets": total_tab.acell("H5").value,
+        "under_pct": total_tab.acell("H6").value
+    }
+
+    return spread_data, total_data
+
+
+spread_perf, total_perf = get_performance_data()
+
+# =========================
 # CONFIDENCE FUNCTIONS
 # =========================
 
 def spread_confidence(edge):
     edge = abs(edge)
     if edge >= 12: return "A+"
-    if edge >= 10: return "A"
-    if edge >= 8: return "A-"
-    if edge >= 6: return "B"
-    if edge >= 5: return "C+"
-    if edge >= 4: return "C"
+    if edge >= 10: return "A-"
+    if edge >= 8: return "B+"
+    if edge >= 7: return "B-"
+    if edge >= 6: return "C"
     return ""
 
 
 def total_confidence(edge):
     edge = abs(edge)
-    if edge >= 20: return "A+"
     if edge >= 15: return "A"
-    if edge >= 12: return "A-"
-    if edge >= 10: return "B+"
-    if edge >= 8: return "B"
-    if edge >= 6: return "B-"
-    if edge >= 4: return "C+"
+    if edge >= 10: return "B"
+    if edge >= 6: return "C"
     return ""
 
 
@@ -83,10 +121,9 @@ def confidence_color(conf):
         "A+": "#16a34a",
         "A": "#22c55e",
         "A-": "#4ade80",
-        "B+": "#facc15",
-        "B": "#fbbf24",
+        "B+": "#eab308",
+        "B": "#facc15",
         "B-": "#f59e0b",
-        "C+": "#fb923c",
         "C": "#f97316"
     }
     return colors.get(conf, "#9ca3af")
@@ -105,7 +142,7 @@ spread["Bet"] = spread.apply(
     axis=1
 )
 
-spread_bets = spread[spread["Spread Edge"].abs() >= 4].copy()
+spread_bets = spread[spread["Spread Edge"].abs() >= 6].copy()
 spread_bets = spread_bets.sort_values("Spread Edge", ascending=False)
 
 
@@ -119,7 +156,7 @@ totals["Bet"] = totals.apply(
     axis=1
 )
 
-total_bets = totals[totals["Total Edge"].abs() >= 6].copy()
+total_bets = totals[(totals["Total Edge"].abs() >= 6) & (totals["Total Edge"].abs() < 20)].copy()
 total_bets = total_bets.sort_values("Total Edge", ascending=False)
 
 # =========================
@@ -243,7 +280,7 @@ tabs = ["Home"]
 if locks:
     tabs.append("🔒 Reed's Locks")
 
-tabs += ["Games", "Spread Bets", "Total Bets", "Engine", "Results"]
+tabs += ["Games", "Spread Bets", "Total Bets", "Engine", "🔥 Performance"]
 
 tab_objects = st.tabs(tabs)
 
@@ -283,127 +320,57 @@ with tab_objects[0]:
 
 
 # =========================
-# LOCKS TAB
-# =========================
-
-if locks:
-
-    with tab_objects[1]:
-
-        st.header("🔒 Reed's Locks of the Day")
-
-        cols = st.columns(2)
-
-        for i, pick in enumerate(locks):
-
-            game, bet = pick.split(" — ")
-
-            row = spread_bets[spread_bets["Game"] == game]
-
-            if not row.empty:
-                r = row.iloc[0]
-                edge = r["Spread Edge"]
-            else:
-                row = total_bets[total_bets["Game"] == game]
-                r = row.iloc[0]
-                edge = r["Total Edge"]
-
-            lines = f"""
-<b>Bet:</b> {bet}<br>
-<b style="color:#16a34a;">Edge:</b> {edge:+.2f}<br>
-<b>Confidence:</b> {r['Confidence']}
-"""
-
-            with cols[i % 2]:
-                render_card(r["Game Time"], game, lines, r["Confidence"], True)
-
-
-# =========================
-# GAMES
-# =========================
-
-games_index = 1 if not locks else 2
-
-with tab_objects[games_index]:
-
-    st.header("🎮 All Games Today")
-
-    cols = st.columns(2)
-
-    for i, (_, r) in enumerate(engine.iterrows()):
-
-        lines = f"""
-<b>Spread:</b> {r['Spread']}<br>
-<b>Total:</b> {r['Total']}
-"""
-
-        with cols[i % 2]:
-            render_card(r["Game Time"], r["Game"], lines)
-
-
-# =========================
-# SPREAD BETS
-# =========================
-
-spread_index = games_index + 1
-
-with tab_objects[spread_index]:
-
-    st.header("📈 Spread Edges")
-
-    cols = st.columns(2)
-
-    for i, (_, r) in enumerate(spread_bets.iterrows()):
-
-        lines = f"""
-<b>Market:</b> {r['Spread']}<br>
-<b>Model:</b> {r['Model Spread']}<br>
-<b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}<br>
-<b>Bet:</b> {r['Bet']}
-"""
-
-        with cols[i % 2]:
-            render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
-
-
-# =========================
-# TOTAL BETS
-# =========================
-
-total_index = spread_index + 1
-
-with tab_objects[total_index]:
-
-    st.header("📊 Total Edges")
-
-    cols = st.columns(2)
-
-    for i, (_, r) in enumerate(total_bets.iterrows()):
-
-        lines = f"""
-<b>Market:</b> {r['Total']}<br>
-<b>Model:</b> {r['Model Total']}<br>
-<b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}<br>
-<b>Bet:</b> {r['Bet']}
-"""
-
-        with cols[i % 2]:
-            render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
-
-
-# =========================
-# ENGINE
-# =========================
-
-engine_index = total_index + 1
-
-with tab_objects[engine_index]:
-    st.dataframe(engine, use_container_width=True)
-
-
-# =========================
-# RESULTS
+# PERFORMANCE
 # =========================
 
 with tab_objects[-1]:
-    st.write("Results tracking coming soon.")
+
+    st.header("🔥 Model Performance")
+
+    left, right = st.columns(2)
+
+    with left:
+
+        st.markdown("### 🔥 Spread Performance")
+
+        st.markdown(f"""
+<div style="
+border:2px solid #16a34a;
+border-radius:14px;
+padding:20px;
+margin-bottom:16px;
+box-shadow:0 0 15px rgba(34,197,94,0.8);
+background:rgba(34,197,94,0.08);
+">
+
+<b>Overall Spread Bets:</b> {spread_perf["bets"]}<br>
+<b>Overall Win %:</b> {spread_perf["winpct"]}
+
+</div>
+""", unsafe_allow_html=True)
+
+    with right:
+
+        st.markdown("### 🔥 Totals Performance")
+
+        st.markdown(f"""
+<div style="
+border:2px solid #16a34a;
+border-radius:14px;
+padding:20px;
+margin-bottom:16px;
+box-shadow:0 0 15px rgba(34,197,94,0.8);
+background:rgba(34,197,94,0.08);
+">
+
+<b>Overall Total Bets:</b> {total_perf["overall_bets"]}<br>
+<b>Overall Win %:</b> {total_perf["overall_pct"]}<br><br>
+
+<b>Total Over Bets:</b> {total_perf["over_bets"]}<br>
+<b>Over Win %:</b> {total_perf["over_pct"]}<br><br>
+
+<b>Total Under Bets:</b> {total_perf["under_bets"]}<br>
+<b>Under Win %:</b> {total_perf["under_pct"]}
+
+</div>
+""", unsafe_allow_html=True)
