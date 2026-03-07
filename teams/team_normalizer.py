@@ -4,17 +4,14 @@ def team_key(name):
 
     name = name.lower()
 
-    # normalize abbreviations BEFORE punctuation removal
-    name = name.replace("st.", "saint")
-    name = name.replace("st ", "saint ")
-    name = name.replace(" st", " saint")
-
-    name = name.replace("colorado st", "colorado state")
+    # normalize saint abbreviations safely
+    name = re.sub(r"\bst\.\s", "saint ", name)
+    name = re.sub(r"\bst\s", "saint ", name)
 
     # remove punctuation
     name = re.sub(r"[^\w\s]", "", name)
 
-    # collapse spaces
-    name = "".join(name.split())
+    # remove spaces
+    name = name.replace(" ", "")
 
-    return name.strip()
+    return name

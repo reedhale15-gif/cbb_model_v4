@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import json
 from teams.team_normalizer import team_key
+from teams.team_name_normalizer import normalize_team
 
 # =========================
 # MODEL CONSTANTS
@@ -71,12 +72,14 @@ def load_market_data():
 def run_projection():
 
     ratings = pd.read_csv("data/efficiency_table.csv")
-
-    # create normalized key for ratings
     ratings["TEAM_KEY"] = ratings["TEAM"].apply(team_key)
 
     with open("data/market_odds.json") as f:
         schedule = pd.DataFrame(json.load(f))
+
+    # NORMALIZE ODDS TEAM NAMES
+    schedule["HOME"] = schedule["HOME"].apply(normalize_team)
+    schedule["AWAY"] = schedule["AWAY"].apply(normalize_team)
 
     schedule["HOME_KEY"] = schedule["HOME"].apply(team_key)
     schedule["AWAY_KEY"] = schedule["AWAY"].apply(team_key)

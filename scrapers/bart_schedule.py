@@ -14,7 +14,15 @@ def clean_matchup_string(matchup):
 
     matchup = re.sub(r"\b\d+\s", "", matchup)
 
-    parts = matchup.split(" at ")
+    # SUPPORT MULTIPLE MATCHUP FORMATS
+    if " at " in matchup:
+        parts = matchup.split(" at ")
+    elif " vs. " in matchup:
+        parts = matchup.split(" vs. ")
+    elif " vs " in matchup:
+        parts = matchup.split(" vs ")
+    else:
+        return None, None
 
     if len(parts) != 2:
         return None, None
@@ -22,14 +30,17 @@ def clean_matchup_string(matchup):
     away = parts[0].strip()
     home = parts[1].strip()
 
-    # Remove all trailing broadcast tokens
-    home = re.sub(r"\s+(ESPN2|ESPN|ESPN\+|FS1|BTN|SECN|ACCN|CBSSN|Peacock|Pat-T)$", "", home)
+    # Remove broadcast / network / tournament tokens
+    pattern = r"\s+(ESPN2|ESPN|ESPNU|ESPN\+|FS1|FOX|BTN|SECN|ACCN|CBSSN|CBS|TNT|truTV|Peacock|The CW Network|ACC Network|SEC Network|FloSports|USA Net|MWN|AE-T|NEC-T|CAA-T|BSky-T|BSth-T|Sum-T|ASun-T).*"
 
-    # Remove leftover uppercase tokens
-    home = re.sub(r"\s+[A-Z0-9+\-]+$", "", home)
+    away = re.sub(pattern, "", away)
+    home = re.sub(pattern, "", home)
 
-    return away, home
+    # remove leftover uppercase artifacts
+    away = re.sub(r"\s+[A-Z0-9\-\+\.]+$", "", away)
+    home = re.sub(r"\s+[A-Z0-9\-\+\.]+$", "", home)
 
+    return away.strip(), home.strip()
 
 def scrape_schedule():
 
