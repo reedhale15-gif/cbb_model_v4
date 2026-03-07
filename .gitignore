@@ -1,2 +1,11 @@
 credentials.json
 .env
+__pycache__/
+*.pyc
+
+canonical_teams.txt
+clean_team_names.csv
+clean_team_names.py
+collect_team_names.py
+efficiency_teams.txt
+odds_teams.txt
