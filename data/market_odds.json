@@ -1,410 +1,106 @@
 [
   {
-    "HOME": "Central Arkansas Bears",
-    "AWAY": "Bellarmine Knights",
-    "COMMENCE_TIME": "2026-03-06T17:00:00Z",
-    "SPREAD": -8.17,
-    "TOTAL": 153.17,
-    "HOME_ML": -472.5
+    "HOME": "Monmouth",
+    "AWAY": "Campbell",
+    "COMMENCE_TIME": "2026-03-09T22:00:00Z",
+    "SPREAD": -1.38,
+    "TOTAL": 151.56,
+    "HOME_ML": -120.0
   },
   {
-    "HOME": "High Point Panthers",
-    "AWAY": "Gardner-Webb Bulldogs",
-    "COMMENCE_TIME": "2026-03-06T17:00:00Z",
-    "SPREAD": -32.5,
-    "TOTAL": 157.5,
-    "HOME_ML": -10000.0
-  },
-  {
-    "HOME": "Belmont Bruins",
-    "AWAY": "Drake",
-    "COMMENCE_TIME": "2026-03-06T18:00:00Z",
-    "SPREAD": -12.64,
-    "TOTAL": 153.21,
-    "HOME_ML": -1015.71
-  },
-  {
-    "HOME": "North Carolina A&T Aggies",
-    "AWAY": "Northeastern Huskies",
-    "COMMENCE_TIME": "2026-03-06T19:00:00Z",
-    "SPREAD": -1.0,
-    "TOTAL": 152.64,
-    "HOME_ML": -114.5
-  },
-  {
-    "HOME": "Winthrop Eagles",
-    "AWAY": "Charleston Southern Buccaneers",
-    "COMMENCE_TIME": "2026-03-06T19:30:00Z",
-    "SPREAD": -5.33,
-    "TOTAL": 164.17,
-    "HOME_ML": -223.83
-  },
-  {
-    "HOME": "Lipscomb Bisons",
-    "AWAY": "Florida Gulf Coast Eagles",
-    "COMMENCE_TIME": "2026-03-06T19:30:00Z",
-    "SPREAD": -4.17,
-    "TOTAL": 150.67,
-    "HOME_ML": -189.83
-  },
-  {
-    "HOME": "Murray St Racers",
-    "AWAY": "UIC Flames",
-    "COMMENCE_TIME": "2026-03-06T20:30:00Z",
-    "SPREAD": -0.43,
-    "TOTAL": 150.14,
-    "HOME_ML": -116.75
-  },
-  {
-    "HOME": "Austin Peay Governors",
-    "AWAY": "Stetson Hatters",
-    "COMMENCE_TIME": "2026-03-06T22:00:00Z",
-    "SPREAD": -11.5,
-    "TOTAL": 152.0,
-    "HOME_ML": -730.83
-  },
-  {
-    "HOME": "Chattanooga Mocs",
-    "AWAY": "The Citadel Bulldogs",
-    "COMMENCE_TIME": "2026-03-06T22:00:00Z",
-    "SPREAD": -7.29,
-    "TOTAL": 147.5,
-    "HOME_ML": -320.0
-  },
-  {
-    "HOME": "Akron Zips",
-    "AWAY": "Northern Illinois Huskies",
-    "COMMENCE_TIME": "2026-03-06T23:00:00Z",
-    "SPREAD": -22.42,
-    "TOTAL": 155.43,
-    "HOME_ML": -9000.0
-  },
-  {
-    "HOME": "UNC Asheville Bulldogs",
-    "AWAY": "Longwood Lancers",
-    "COMMENCE_TIME": "2026-03-06T23:00:00Z",
-    "SPREAD": -1.33,
-    "TOTAL": 140.67,
-    "HOME_ML": -122.17
-  },
-  {
-    "HOME": "Merrimack Warriors",
-    "AWAY": "Sacred Heart",
-    "COMMENCE_TIME": "2026-03-06T23:00:00Z",
-    "SPREAD": -8.29,
-    "TOTAL": 141.64,
-    "HOME_ML": -376.67
-  },
-  {
-    "HOME": "Texas State Bobcats",
-    "AWAY": "Southern Miss",
-    "COMMENCE_TIME": "2026-03-06T23:00:00Z",
-    "SPREAD": -1.29,
-    "TOTAL": 139.29,
-    "HOME_ML": -117.29
-  },
-  {
-    "HOME": "Eastern Michigan Eagles",
-    "AWAY": "Bowling Green Falcons",
-    "COMMENCE_TIME": "2026-03-06T23:30:00Z",
-    "SPREAD": 4.0,
-    "TOTAL": 141.79,
-    "HOME_ML": 153.71
-  },
-  {
-    "HOME": "Ball State Cardinals",
-    "AWAY": "Central Michigan Chippewas",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": -2.14,
-    "TOTAL": 134.21,
-    "HOME_ML": -138.14
-  },
-  {
-    "HOME": "Brown Bears",
-    "AWAY": "Pennsylvania Quakers",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": 1.86,
-    "TOTAL": 144.14,
-    "HOME_ML": 110.29
-  },
-  {
-    "HOME": "Toledo Rockets",
-    "AWAY": "Buffalo Bulls",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": -7.92,
-    "TOTAL": 153.5,
-    "HOME_ML": -359.17
-  },
-  {
-    "HOME": "Harvard Crimson",
-    "AWAY": "Columbia Lions",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": -3.92,
-    "TOTAL": 133.92,
-    "HOME_ML": -183.17
-  },
-  {
-    "HOME": "Dayton Flyers",
-    "AWAY": "VCU Rams",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": -1.5,
-    "TOTAL": 147.64,
-    "HOME_ML": -125.57
-  },
-  {
-    "HOME": "Kent State Golden Flashes",
-    "AWAY": "Western Michigan Broncos",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": -11.86,
-    "TOTAL": 158.5,
-    "HOME_ML": -799.29
-  },
-  {
-    "HOME": "South Dakota Coyotes",
-    "AWAY": "Omaha Mavericks",
-    "COMMENCE_TIME": "2026-03-07T00:00:00Z",
-    "SPREAD": 3.5,
-    "TOTAL": 149.36,
-    "HOME_ML": 139.71
-  },
-  {
-    "HOME": "Bradley Braves",
-    "AWAY": "Valparaiso",
-    "COMMENCE_TIME": "2026-03-07T00:00:51Z",
-    "SPREAD": -4.0,
-    "TOTAL": 134.14,
-    "HOME_ML": -188.43
-  },
-  {
-    "HOME": "Queens University Royals",
-    "AWAY": "West Georgia Wolves",
-    "COMMENCE_TIME": "2026-03-07T00:30:00Z",
-    "SPREAD": -7.7,
-    "TOTAL": 162.7,
-    "HOME_ML": -361.0
-  },
-  {
-    "HOME": "UNC Greensboro Spartans",
-    "AWAY": "VMI Keydets",
-    "COMMENCE_TIME": "2026-03-07T00:30:00Z",
-    "SPREAD": -7.5,
-    "TOTAL": 154.43,
-    "HOME_ML": -337.86
-  },
-  {
-    "HOME": "West Virginia Mountaineers",
-    "AWAY": "UCF Knights",
-    "COMMENCE_TIME": "2026-03-07T01:00:24Z",
-    "SPREAD": -3.57,
-    "TOTAL": 141.36,
-    "HOME_ML": -171.86
-  },
-  {
-    "HOME": "Tennessee St Tigers",
-    "AWAY": "Tennessee Martin",
-    "COMMENCE_TIME": "2026-03-07T01:00:42Z",
-    "SPREAD": -2.43,
-    "TOTAL": 137.29,
-    "HOME_ML": -146.0
-  },
-  {
-    "HOME": "Radford Highlanders",
-    "AWAY": "Presbyterian Blue Hose",
-    "COMMENCE_TIME": "2026-03-07T01:30:00Z",
-    "SPREAD": -2.17,
+    "HOME": "Texas A&M Corpus Chris Slnd-T",
+    "AWAY": "New Orleans",
+    "COMMENCE_TIME": "2026-03-09T22:00:00Z",
+    "SPREAD": -2.67,
     "TOTAL": 147.17,
-    "HOME_ML": -132.17
+    "HOME_ML": -148.0
   },
   {
-    "HOME": "South Alabama Jaguars",
+    "HOME": "East Tennessee St.",
+    "AWAY": "Furman",
+    "COMMENCE_TIME": "2026-03-09T23:00:00Z",
+    "SPREAD": -1.21,
+    "TOTAL": 138.0,
+    "HOME_ML": -118.5
+  },
+  {
+    "HOME": "Troy",
     "AWAY": "Georgia Southern",
-    "COMMENCE_TIME": "2026-03-07T01:30:14Z",
-    "SPREAD": -5.14,
-    "TOTAL": 147.86,
-    "HOME_ML": -217.5
+    "COMMENCE_TIME": "2026-03-09T23:00:00Z",
+    "SPREAD": -5.12,
+    "TOTAL": 152.38,
+    "HOME_ML": -234.75
   },
   {
-    "HOME": "Saint Peter's Peacocks",
-    "AWAY": "Fairfield",
-    "COMMENCE_TIME": "2026-03-07T01:30:46Z",
-    "SPREAD": -3.5,
-    "TOTAL": 133.93,
-    "HOME_ML": -172.33
+    "HOME": "Wright St.",
+    "AWAY": "Northern Kentucky",
+    "COMMENCE_TIME": "2026-03-09T23:00:00Z",
+    "SPREAD": -1.06,
+    "TOTAL": 157.56,
+    "HOME_ML": -118.83
   },
   {
-    "HOME": "Ohio",
-    "AWAY": "Miami OH",
-    "COMMENCE_TIME": "2026-03-07T02:00:00Z",
-    "SPREAD": 5.5,
-    "TOTAL": 159.5,
-    "HOME_ML": 195.14
+    "HOME": "Montana",
+    "AWAY": "Northern Colorado",
+    "COMMENCE_TIME": "2026-03-09T23:30:00Z",
+    "SPREAD": 4.44,
+    "TOTAL": 152.38,
+    "HOME_ML": 157.0
   },
   {
-    "HOME": "Washington St Cougars",
-    "AWAY": "Portland",
-    "COMMENCE_TIME": "2026-03-07T02:00:00Z",
-    "SPREAD": -6.14,
-    "TOTAL": 151.64,
-    "HOME_ML": -273.17
-  },
-  {
-    "HOME": "Seton Hall Pirates",
-    "AWAY": "St. John's Red Storm",
-    "COMMENCE_TIME": "2026-03-07T02:00:09Z",
-    "SPREAD": 4.3,
-    "TOTAL": 136.25,
-    "HOME_ML": 157.67
-  },
-  {
-    "HOME": "North Dakota Fighting Hawks",
-    "AWAY": "Denver Pioneers",
-    "COMMENCE_TIME": "2026-03-07T02:30:00Z",
-    "SPREAD": 3.36,
-    "TOTAL": 159.14,
-    "HOME_ML": 133.57
-  },
-  {
-    "HOME": "Illinois St Redbirds",
-    "AWAY": "Northern Iowa",
-    "COMMENCE_TIME": "2026-03-07T02:30:00Z",
-    "SPREAD": 1.5,
-    "TOTAL": 124.71,
-    "HOME_ML": 103.57
-  },
-  {
-    "HOME": "San Diego St Aztecs",
-    "AWAY": "UNLV Rebels",
-    "COMMENCE_TIME": "2026-03-07T03:00:00Z",
-    "SPREAD": -10.29,
-    "TOTAL": 152.86,
-    "HOME_ML": -572.86
-  },
-  {
-    "HOME": "Morehead St Eagles",
-    "AWAY": "Southeast Missouri St.",
-    "COMMENCE_TIME": "2026-03-07T03:30:00Z",
-    "SPREAD": 2.5,
-    "TOTAL": 140.93,
-    "HOME_ML": 120.17
-  },
-  {
-    "HOME": "Seattle Redhawks",
-    "AWAY": "San Diego",
-    "COMMENCE_TIME": "2026-03-07T04:30:00Z",
-    "SPREAD": -9.36,
-    "TOTAL": 139.43,
-    "HOME_ML": -507.83
-  },
-  {
-    "HOME": "Oklahoma St Cowboys",
-    "AWAY": "Houston Cougars",
-    "COMMENCE_TIME": "2026-03-07T17:00:00Z",
-    "SPREAD": 13.0,
-    "TOTAL": 150.0,
-    "HOME_ML": 570.0
-  },
-  {
-    "HOME": "Virginia Cavaliers",
-    "AWAY": "Virginia Tech Hokies",
-    "COMMENCE_TIME": "2026-03-07T17:00:00Z",
-    "SPREAD": -9.5,
-    "TOTAL": 141.5,
-    "HOME_ML": null
-  },
-  {
-    "HOME": "Missouri Tigers",
-    "AWAY": "Arkansas Razorbacks",
-    "COMMENCE_TIME": "2026-03-07T17:00:07Z",
-    "SPREAD": 2.83,
-    "TOTAL": 162.17,
-    "HOME_ML": 117.5
-  },
-  {
-    "HOME": "Marquette Golden Eagles",
-    "AWAY": "UConn Huskies",
-    "COMMENCE_TIME": "2026-03-07T17:30:00Z",
-    "SPREAD": 9.5,
-    "TOTAL": 143.5,
-    "HOME_ML": null
-  },
-  {
-    "HOME": "Iowa State Cyclones",
-    "AWAY": "Arizona St Sun Devils",
-    "COMMENCE_TIME": "2026-03-07T19:00:00Z",
+    "HOME": "Grambling St.",
+    "AWAY": "Mississippi Valley St.",
+    "COMMENCE_TIME": "2026-03-10T00:30:00Z",
     "SPREAD": -13.5,
-    "TOTAL": 146.5,
-    "HOME_ML": null
+    "TOTAL": 135.71,
+    "HOME_ML": -1271.43
   },
   {
-    "HOME": "Kansas Jayhawks",
-    "AWAY": "Kansas St Wildcats",
-    "COMMENCE_TIME": "2026-03-07T19:00:00Z",
-    "SPREAD": -16.5,
-    "TOTAL": 152.0,
-    "HOME_ML": -1700.0
+    "HOME": "UT Rio Grande Valley",
+    "AWAY": "Nicholls St.",
+    "COMMENCE_TIME": "2026-03-10T00:30:00Z",
+    "SPREAD": -5.43,
+    "TOTAL": 143.5,
+    "HOME_ML": -258.29
   },
   {
-    "HOME": "Miami Hurricanes",
-    "AWAY": "Louisville Cardinals",
-    "COMMENCE_TIME": "2026-03-07T19:00:00Z",
-    "SPREAD": 1.5,
-    "TOTAL": 156.5,
-    "HOME_ML": 100.0
+    "HOME": "Hofstra",
+    "AWAY": "Towson",
+    "COMMENCE_TIME": "2026-03-10T00:30:55Z",
+    "SPREAD": -4.21,
+    "TOTAL": 132.07,
+    "HOME_ML": -186.14
   },
   {
-    "HOME": "Tennessee Volunteers",
-    "AWAY": "Vanderbilt Commodores",
-    "COMMENCE_TIME": "2026-03-07T19:00:00Z",
-    "SPREAD": -5.0,
-    "TOTAL": 148.0,
-    "HOME_ML": -205.0
+    "HOME": "Gonzaga",
+    "AWAY": "Oregon St.",
+    "COMMENCE_TIME": "2026-03-10T01:00:00Z",
+    "SPREAD": -20.31,
+    "TOTAL": 145.0,
+    "HOME_ML": -5357.14
   },
   {
-    "HOME": "Kentucky Wildcats",
-    "AWAY": "Florida Gators",
-    "COMMENCE_TIME": "2026-03-07T21:00:00Z",
-    "SPREAD": 7.5,
-    "TOTAL": 156.5,
-    "HOME_ML": null
+    "HOME": "Robert Morris",
+    "AWAY": "Detroit Mercy",
+    "COMMENCE_TIME": "2026-03-10T01:30:00Z",
+    "SPREAD": -4.5,
+    "TOTAL": 146.62,
+    "HOME_ML": -205.38
   },
   {
-    "HOME": "George Mason Patriots",
-    "AWAY": "Saint Louis Billikens",
-    "COMMENCE_TIME": "2026-03-07T21:00:00Z",
-    "SPREAD": 7.5,
-    "TOTAL": 145.5,
-    "HOME_ML": null
+    "HOME": "Eastern Washington",
+    "AWAY": "Weber St.",
+    "COMMENCE_TIME": "2026-03-10T02:00:00Z",
+    "SPREAD": -3.12,
+    "TOTAL": 154.56,
+    "HOME_ML": -157.75
   },
   {
-    "HOME": "Purdue Boilermakers",
-    "AWAY": "Wisconsin Badgers",
-    "COMMENCE_TIME": "2026-03-07T21:00:00Z",
-    "SPREAD": -6.5,
-    "TOTAL": 157.5,
-    "HOME_ML": null
-  },
-  {
-    "HOME": "Duke Blue Devils",
-    "AWAY": "North Carolina Tar Heels",
-    "COMMENCE_TIME": "2026-03-07T23:30:08Z",
-    "SPREAD": -15.83,
-    "TOTAL": 144.83,
-    "HOME_ML": -1633.5
-  },
-  {
-    "HOME": "Alabama Crimson Tide",
-    "AWAY": "Auburn Tigers",
-    "COMMENCE_TIME": "2026-03-08T01:30:00Z",
-    "SPREAD": -8.5,
-    "TOTAL": 176.5,
-    "HOME_ML": null
-  },
-  {
-    "HOME": "Colorado Buffaloes",
-    "AWAY": "Arizona Wildcats",
-    "COMMENCE_TIME": "2026-03-08T04:00:00Z",
-    "SPREAD": 16.5,
-    "TOTAL": 155.5,
-    "HOME_ML": null
+    "HOME": "Saint Mary's",
+    "AWAY": "Santa Clara",
+    "COMMENCE_TIME": "2026-03-10T03:30:00Z",
+    "SPREAD": -4.36,
+    "TOTAL": 148.88,
+    "HOME_ML": -198.12
   }
 ]
