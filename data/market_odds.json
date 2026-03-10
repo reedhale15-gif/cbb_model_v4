@@ -3,9 +3,17 @@
     "HOME": "Arizona St.",
     "AWAY": "Baylor",
     "COMMENCE_TIME": "2026-03-10T16:30:00Z",
-    "SPREAD": 4.38,
-    "TOTAL": 152.62,
-    "HOME_ML": 160.12
+    "SPREAD": 4.44,
+    "TOTAL": 152.25,
+    "HOME_ML": 164.75
+  },
+  {
+    "HOME": "Prairie View A&M",
+    "AWAY": "Alcorn St.",
+    "COMMENCE_TIME": "2026-03-10T18:00:00Z",
+    "SPREAD": -6.42,
+    "TOTAL": 144.36,
+    "HOME_ML": -281.57
   },
   {
     "HOME": "Stanford",
@@ -19,41 +27,41 @@
     "HOME": "Cincinnati",
     "AWAY": "Utah",
     "COMMENCE_TIME": "2026-03-10T19:00:33Z",
-    "SPREAD": -11.5,
+    "SPREAD": -11.19,
     "TOTAL": 137.56,
-    "HOME_ML": -716.25
+    "HOME_ML": -683.75
   },
   {
     "HOME": "SMU",
     "AWAY": "Syracuse",
     "COMMENCE_TIME": "2026-03-10T20:30:08Z",
-    "SPREAD": -4.79,
-    "TOTAL": 154.5,
-    "HOME_ML": -210.0
+    "SPREAD": -4.71,
+    "TOTAL": 154.43,
+    "HOME_ML": -203.57
   },
   {
     "HOME": "Oregon",
     "AWAY": "Maryland",
     "COMMENCE_TIME": "2026-03-10T21:00:55Z",
     "SPREAD": -4.0,
-    "TOTAL": 138.56,
-    "HOME_ML": -179.12
+    "TOTAL": 138.69,
+    "HOME_ML": -180.25
   },
   {
     "HOME": "UMBC",
     "AWAY": "UMass Lowell",
     "COMMENCE_TIME": "2026-03-10T22:00:00Z",
-    "SPREAD": -8.5,
-    "TOTAL": 146.5,
-    "HOME_ML": -402.5
+    "SPREAD": -8.42,
+    "TOTAL": 146.92,
+    "HOME_ML": -396.67
   },
   {
     "HOME": "FIU",
     "AWAY": "Missouri St.",
     "COMMENCE_TIME": "2026-03-10T22:30:00Z",
-    "SPREAD": 1.5,
+    "SPREAD": 1.44,
     "TOTAL": 152.81,
-    "HOME_ML": 77.12
+    "HOME_ML": 51.75
   },
   {
     "HOME": "BYU",
@@ -61,7 +69,7 @@
     "COMMENCE_TIME": "2026-03-10T23:00:00Z",
     "SPREAD": -10.5,
     "TOTAL": 166.06,
-    "HOME_ML": -599.38
+    "HOME_ML": -603.12
   },
   {
     "HOME": "Wright St.",
@@ -75,25 +83,25 @@
     "HOME": "Hofstra",
     "AWAY": "Monmouth",
     "COMMENCE_TIME": "2026-03-10T23:00:00Z",
-    "SPREAD": -4.07,
+    "SPREAD": -4.21,
     "TOTAL": 133.21,
-    "HOME_ML": -190.0
+    "HOME_ML": -195.0
   },
   {
     "HOME": "LIU",
     "AWAY": "Mercyhurst",
     "COMMENCE_TIME": "2026-03-10T23:00:00Z",
     "SPREAD": -5.42,
-    "TOTAL": 136.67,
-    "HOME_ML": -238.33
+    "TOTAL": 136.5,
+    "HOME_ML": -237.5
   },
   {
     "HOME": "Vermont",
     "AWAY": "NJIT",
     "COMMENCE_TIME": "2026-03-10T23:00:00Z",
-    "SPREAD": -12.64,
+    "SPREAD": -12.5,
     "TOTAL": 135.14,
-    "HOME_ML": -997.86
+    "HOME_ML": -976.43
   },
   {
     "HOME": "Virginia Tech",
@@ -104,12 +112,28 @@
     "HOME_ML": -147.5
   },
   {
+    "HOME": "Stephen F. Austin",
+    "AWAY": "Texas A&M Corpus Chris",
+    "COMMENCE_TIME": "2026-03-10T23:00:42Z",
+    "SPREAD": -7.25,
+    "TOTAL": 134.36,
+    "HOME_ML": -325.71
+  },
+  {
     "HOME": "Northwestern",
     "AWAY": "Penn St.",
     "COMMENCE_TIME": "2026-03-10T23:30:00Z",
     "SPREAD": -6.19,
     "TOTAL": 143.69,
-    "HOME_ML": -265.0
+    "HOME_ML": -266.25
+  },
+  {
+    "HOME": "Jackson St.",
+    "AWAY": "Grambling St.",
+    "COMMENCE_TIME": "2026-03-11T00:30:15Z",
+    "SPREAD": 7.43,
+    "TOTAL": 141.64,
+    "HOME_ML": 260.43
   },
   {
     "HOME": "Gonzaga",
@@ -123,9 +147,9 @@
     "HOME": "Jacksonville St.",
     "AWAY": "New Mexico St.",
     "COMMENCE_TIME": "2026-03-11T01:00:00Z",
-    "SPREAD": 1.25,
-    "TOTAL": 140.0,
-    "HOME_ML": -52.88
+    "SPREAD": 1.0,
+    "TOTAL": 140.12,
+    "HOME_ML": -79.62
   },
   {
     "HOME": "Merrimack",
@@ -139,17 +163,25 @@
     "HOME": "Portland St.",
     "AWAY": "Montana",
     "COMMENCE_TIME": "2026-03-11T01:00:59Z",
-    "SPREAD": -2.38,
-    "TOTAL": 144.06,
-    "HOME_ML": -140.38
+    "SPREAD": -2.5,
+    "TOTAL": 142.75,
+    "HOME_ML": -143.5
   },
   {
     "HOME": "Colorado",
     "AWAY": "Oklahoma St.",
     "COMMENCE_TIME": "2026-03-11T01:30:00Z",
-    "SPREAD": -1.44,
+    "SPREAD": -1.56,
     "TOTAL": 162.69,
-    "HOME_ML": -126.38
+    "HOME_ML": -127.62
+  },
+  {
+    "HOME": "McNeese St.",
+    "AWAY": "UT Rio Grande Valley",
+    "COMMENCE_TIME": "2026-03-11T01:30:57Z",
+    "SPREAD": -7.57,
+    "TOTAL": 139.79,
+    "HOME_ML": -361.43
   },
   {
     "HOME": "Eastern Washington",
