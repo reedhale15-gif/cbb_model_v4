@@ -59,15 +59,11 @@ engine["Game Time"] = (
 
 def get_performance_data():
 
-    import os
-    import json
-
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
 
-    # Load credentials from Render environment variable
     creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
 
     creds = Credentials.from_service_account_info(
@@ -148,7 +144,8 @@ spread["Bet"] = spread.apply(
     axis=1
 )
 
-spread_bets = spread[spread["Spread Edge"].abs() >= 6].copy()
+# SPREAD FILTER UPDATED
+spread_bets = spread[spread["Spread Edge"].abs() >= 10].copy()
 spread_bets = spread_bets.sort_values("Spread Edge", ascending=False)
 
 
@@ -162,7 +159,8 @@ totals["Bet"] = totals.apply(
     axis=1
 )
 
-total_bets = totals[(totals["Total Edge"].abs() >= 6) & (totals["Total Edge"].abs() < 20)].copy()
+# TOTAL FILTER UPDATED
+total_bets = totals[(totals["Total Edge"].abs() >= 6) & (totals["Total Edge"].abs() <= 12)].copy()
 total_bets = total_bets.sort_values("Total Edge", ascending=False)
 
 # =========================
@@ -207,24 +205,21 @@ if admin_mode:
 # CARD RENDERER
 # =========================
 
-def render_card(time, game, lines, conf=None, lock=False):
+def render_card(time, game, lines, conf=None, glow=None):
 
-    badge = ""
+    border = "1px solid rgba(150,150,150,0.25)"
+    shadow = "0 4px 12px rgba(0,0,0,0.08)"
+    background = "transparent"
 
-    if lock:
-        badge = """
-<span style="
-background:#ef4444;
-color:white;
-padding:4px 10px;
-border-radius:8px;
-font-size:12px;
-font-weight:600;
-margin-left:6px;
-">
-🔒 LOCK
-</span>
-"""
+    if glow == "green":
+        border = "2px solid #16a34a"
+        shadow = "0 0 15px rgba(34,197,94,0.8)"
+        background = "rgba(34,197,94,0.08)"
+
+    if glow == "red":
+        border = "2px solid #ef4444"
+        shadow = "0 0 15px rgba(239,68,68,0.6)"
+        background = "rgba(239,68,68,0.08)"
 
     conf_badge = ""
 
@@ -244,10 +239,6 @@ display:inline-block;
 </span>
 """
 
-    border = "2px solid #ef4444" if lock else "1px solid rgba(150,150,150,0.25)"
-    shadow = "0 0 15px rgba(239,68,68,0.6)" if lock else "0 4px 12px rgba(0,0,0,0.08)"
-    background = "rgba(239,68,68,0.08)" if lock else "transparent"
-
     st.markdown(
         f"""
 <div style="
@@ -264,7 +255,7 @@ background:{background};
 </div>
 
 <div style="font-size:20px;font-weight:600;margin-bottom:10px;">
-{game} {badge}
+{game}
 </div>
 
 {lines}
@@ -309,7 +300,7 @@ with tab_objects[0]:
 <b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}
 """
 
-            render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
+            render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
 
     with col2:
 
@@ -322,7 +313,87 @@ with tab_objects[0]:
 <b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}
 """
 
-            render_card(r["Game Time"], r["Game"], lines, r["Confidence"])
+            render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+
+
+# =========================
+# GAMES TAB
+# =========================
+
+with tab_objects[1 if not locks else 2]:
+
+    st.header("Games")
+
+    for _, r in engine.iterrows():
+
+        lines = f"""
+Spread: {r['Spread']}<br>
+Total: {r['Total']}
+"""
+
+        render_card(r["Game Time"], r["Game"], lines)
+
+
+# =========================
+# SPREAD BETS
+# =========================
+
+with tab_objects[2 if not locks else 3]:
+
+    st.header("Spread Bets")
+
+    for _, r in spread_bets.iterrows():
+
+        lines = f"""
+<b>Bet:</b> {r['Bet']}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}
+"""
+
+        render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+
+
+# =========================
+# TOTAL BETS
+# =========================
+
+with tab_objects[3 if not locks else 4]:
+
+    st.header("Total Bets")
+
+    for _, r in total_bets.iterrows():
+
+        lines = f"""
+<b>Bet:</b> {r['Bet']}<br>
+<b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}
+"""
+
+        render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+
+
+# =========================
+# ENGINE TAB
+# =========================
+
+with tab_objects[4 if not locks else 5]:
+
+    st.header("Engine")
+
+    def highlight_edges(val, col):
+        if col == "Spread Edge" and abs(val) >= 10:
+            return "background-color: rgba(34,197,94,0.6)"
+        if col == "Total Edge" and abs(val) >= 6 and abs(val) <= 12:
+            return "background-color: rgba(34,197,94,0.6)"
+        return ""
+
+    styled = engine.style.applymap(
+        lambda v: highlight_edges(v, "Spread Edge"),
+        subset=["Spread Edge"]
+    ).applymap(
+        lambda v: highlight_edges(v, "Total Edge"),
+        subset=["Total Edge"]
+    )
+
+    st.dataframe(styled, use_container_width=True)
 
 
 # =========================
