@@ -61,6 +61,7 @@ engine["Game Time"] = (
 )
 
 engine = apply_seeds_to_dataframe(engine)
+engine["Game"] = engine["Away"] + " @ " + engine["Home"]
 
 # =========================
 # LOAD PERFORMANCE DATA
