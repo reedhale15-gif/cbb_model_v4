@@ -2,9 +2,18 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+import sys
 from streamlit_autorefresh import st_autorefresh
 import gspread
 from google.oauth2.service_account import Credentials
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
+from tournament import apply_seeds_to_dataframe
+
+EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
+EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
 st.set_page_config(page_title="CBB Model v4", layout="wide")
 
@@ -44,14 +53,14 @@ if "admin" in query and query["admin"] == "1":
 engine = pd.read_csv("data/engine.csv")
 engine = engine[engine["Spread"].notna()].copy()
 
-engine["Game"] = engine["Away"] + " @ " + engine["Home"]
-
 engine["Game Time"] = pd.to_datetime(engine["Game Time"], errors="coerce")
 engine["Game Time"] = (
     engine["Game Time"]
     .dt.tz_convert("US/Central")
     .dt.strftime("%-I:%M %p")
 )
+
+engine = apply_seeds_to_dataframe(engine)
 
 # =========================
 # LOAD PERFORMANCE DATA
@@ -111,10 +120,20 @@ def spread_confidence(edge):
 
 
 def total_confidence(edge):
-    edge = abs(edge)
-    if edge >= 15: return "A"
-    if edge >= 10: return "B"
-    if edge >= 6: return "C"
+    edge = float(edge)
+    edge_abs = abs(edge)
+
+    if edge > 0:
+        if edge_abs >= 6:
+            return "A"
+        return ""
+
+    if edge_abs >= 10:
+        return "A"
+    if edge_abs >= 6:
+        if edge_abs < 8:
+            return "B"
+        return "C"
     return ""
 
 
@@ -145,8 +164,12 @@ spread["Bet"] = spread.apply(
 )
 
 # SPREAD FILTER UPDATED
-spread_bets = spread[spread["Spread Edge"].abs() >= 10].copy()
+spread_bets = spread[
+    (spread["Spread Edge"].abs() >= EDGE_THRESHOLD_SPREAD)
+    & (spread["Spread Edge"].abs() <= MAX_SPREAD_EDGE)
+].copy()
 spread_bets = spread_bets.sort_values("Spread Edge", ascending=False)
+spread_bets = apply_seeds_to_dataframe(spread_bets)
 
 
 totals = engine.copy()
@@ -160,8 +183,16 @@ totals["Bet"] = totals.apply(
 )
 
 # TOTAL FILTER UPDATED
-total_bets = totals[(totals["Total Edge"].abs() >= 6) & (totals["Total Edge"].abs() <= 12)].copy()
-total_bets = total_bets.sort_values("Total Edge", ascending=False)
+total_bets = totals[
+    (totals["Total Edge"].abs() >= EDGE_THRESHOLD_TOTAL)
+    & (totals["Total Edge"].abs() <= TOTAL_EDGE_MAX)
+].copy()
+total_bets = total_bets.sort_values(
+    by="Total Edge",
+    key=lambda s: s.abs(),
+    ascending=False
+)
+total_bets = apply_seeds_to_dataframe(total_bets)
 
 # =========================
 # BUILD PICK OPTIONS
@@ -184,6 +215,8 @@ try:
 except:
     locks = []
 
+valid_locks = [lock for lock in locks if lock in pick_options]
+
 if admin_mode:
 
     st.sidebar.header("🔒 Reed's Locks of the Day")
@@ -191,10 +224,10 @@ if admin_mode:
     selected_locks = st.sidebar.multiselect(
         "Select your picks",
         pick_options,
-        default=locks
+        default=valid_locks
     )
 
-    if selected_locks != locks:
+    if selected_locks != valid_locks:
         with open(LOCK_FILE, "w") as f:
             json.dump(selected_locks, f)
 

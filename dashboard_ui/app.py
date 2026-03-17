@@ -1,5 +1,11 @@
 import streamlit as st
 import pandas as pd
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from tournament import apply_seeds_to_dataframe
 
 st.set_page_config(page_title="CBB Model Dashboard", layout="wide")
 
@@ -12,6 +18,7 @@ st.title("CBB Model v4 Dashboard")
 engine = pd.read_csv("data/engine.csv")
 
 engine = engine[engine["Spread"].notna()]
+engine = apply_seeds_to_dataframe(engine)
 
 # =========================
 # EDGE FILTER
@@ -23,13 +30,13 @@ spread_edge_filter = st.sidebar.slider(
     "Minimum Spread Edge",
     0.0,
     15.0,
-    4.0
+    10.0
 )
 
 total_edge_filter = st.sidebar.slider(
     "Minimum Total Edge",
     0.0,
-    20.0,
+    12.0,
     6.0
 )
 
@@ -70,7 +77,11 @@ totals = engine.copy()
 
 totals = totals[totals["Total Edge"].abs() >= total_edge_filter]
 
-totals = totals.sort_values("Total Edge", ascending=False)
+totals = totals.sort_values(
+    by="Total Edge",
+    key=lambda s: s.abs(),
+    ascending=False
+)
 
 st.dataframe(
     totals[["Home","Away","Total","Model Total","Total Edge"]],
