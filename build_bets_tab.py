@@ -2,9 +2,10 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
 import pandas as pd
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
 
-EDGE_THRESHOLD_SPREAD = 4.0
-EDGE_THRESHOLD_TOTAL = 6.0
+EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
+EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
 # ----------------------------
 # Spread Confidence (Edge-Based)
@@ -25,14 +26,18 @@ def spread_confidence(edge):
 # ----------------------------
 
 def total_confidence(edge):
-    edge = abs(edge)
+    edge = float(edge)
+    edge_abs = abs(edge)
 
-    if edge >= 26: return "A++"
-    if edge >= 22: return "A+"
-    if edge >= 18: return "A"
-    if edge >= 14: return "B+"
-    if edge >= 10: return "B"
-    if edge >= 6: return "C"
+    if edge > 0:
+        if edge_abs < 10: return "A"
+        if edge_abs <= 12: return "B"
+        return ""
+
+    if edge_abs >= 10: return "A"
+    if edge_abs >= 6:
+        if edge_abs < 8: return "B"
+        return "C"
 
     return ""
 
@@ -52,7 +57,7 @@ for _, row in df.iterrows():
     total_edge = float(row["Total Edge"])
 
     # -------- Spread Bet Logic --------
-    if abs(spread_edge) >= EDGE_THRESHOLD_SPREAD:
+    if EDGE_THRESHOLD_SPREAD <= abs(spread_edge) <= MAX_SPREAD_EDGE:
         if model_spread < market_spread:
             spread_bet = f"{home} {market_spread:+.1f}"
         else:
@@ -63,7 +68,7 @@ for _, row in df.iterrows():
         spread_conf = ""
 
     # -------- Total Bet Logic --------
-    if abs(total_edge) >= EDGE_THRESHOLD_TOTAL:
+    if EDGE_THRESHOLD_TOTAL <= abs(total_edge) <= TOTAL_EDGE_MAX:
         if total_edge > 0:
             total_bet = f"Over {market_total:.1f}"
         else:
@@ -72,7 +77,7 @@ for _, row in df.iterrows():
     else:
         total_bet = "No Bet"
         total_conf = ""
-
+        
     rows.append({
         "Home": home,
         "Away": away,

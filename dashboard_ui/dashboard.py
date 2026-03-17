@@ -125,8 +125,10 @@ def total_confidence(edge):
     edge_abs = abs(edge)
 
     if edge > 0:
-        if edge_abs >= 6:
+        if edge_abs < 10:
             return "A"
+        if edge_abs <= 12:
+            return "B"
         return ""
 
     if edge_abs >= 10:

@@ -2,36 +2,53 @@ import gspread
 from google.oauth2.service_account import Credentials
 import pandas as pd
 from datetime import datetime
+from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
+from tournament import apply_seeds_to_dataframe
 
 SHEET_NAME = "CBB Model v4"
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATA_DIR = BASE_DIR / "data"
+CREDS_PATH = BASE_DIR / "credentials.json"
 
-EDGE_THRESHOLD_SPREAD = 6.0
-EDGE_THRESHOLD_TOTAL = 6.0
+EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
+EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
 TODAY = datetime.now().strftime("%Y-%m-%d")
 
 
-# ============================================================
-# GOOGLE SHEETS CONNECTION
-# ============================================================
+def filter_today_games(df):
+
+    df["Game Time"] = pd.to_datetime(df["Game Time"], utc=True, errors="coerce")
+    df["Game Time"] = df["Game Time"].dt.tz_convert("US/Central")
+
+    today = pd.Timestamp.now(tz="US/Central").date()
+
+    df = df[df["Game Time"].dt.date == today].copy()
+
+    df["Game Time"] = df["Game Time"].dt.strftime("%Y-%m-%d %H:%M:%S")
+
+    return df
+
 
 def get_client():
+
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
         "https://www.googleapis.com/auth/drive"
     ]
 
     creds = Credentials.from_service_account_file(
-        "credentials.json",
+        str(CREDS_PATH),
         scopes=scope
     )
 
     return gspread.authorize(creds)
 
-
-# ============================================================
-# SIMPLE OVERWRITE PUSH
-# ============================================================
 
 def push_dataframe(sheet, tab_name, df):
 
@@ -42,83 +59,82 @@ def push_dataframe(sheet, tab_name, df):
     except:
         worksheet = sheet.add_worksheet(title=tab_name, rows="3000", cols="30")
 
+    rows = len(df) + 1
+    cols = len(df.columns)
+
+    worksheet.resize(rows=rows, cols=cols)
     worksheet.clear()
 
     if not df.empty:
         worksheet.update([df.columns.tolist()] + df.values.tolist())
 
 
-# ============================================================
-# BUILD GAMES TAB
-# ============================================================
-
-def build_games_df():
-    df = pd.read_csv("data/engine.csv")
-
-    # Remove games without market spreads
-    df = df[df["Spread"].notna()]
-
-    return df[["Home", "Away", "Spread", "Total"]]
-
-
-# ============================================================
-# BUILD ENGINE TAB
-# ============================================================
-
 def build_engine_df():
-    df = pd.read_csv("data/engine.csv")
 
-    # Remove games without market spreads
+    df = pd.read_csv(DATA_DIR / "engine.csv")
+
+    df = filter_today_games(df)
+
     df = df[df["Spread"].notna()]
 
     return df
 
 
-# ============================================================
-# CONFIDENCE FUNCTIONS
-# ============================================================
+def build_games_df():
+
+    df = build_engine_df()
+
+    return apply_seeds_to_dataframe(df[["Home", "Away", "Spread", "Total"]])
+
 
 def spread_confidence(edge):
     edge = abs(edge)
     if edge >= 12: return "A+"
-    if edge >= 10: return "A"
-    if edge >= 8: return "A-"
-    if edge >= 6: return "B"
-    if edge >= 5: return "C+"
-    if edge >= 4: return "C"
+    if edge >= 10: return "A-"
+    if edge >= 8: return "B+"
+    if edge >= 7: return "B-"
+    if edge >= 6: return "C"
     return ""
-
 
 def total_confidence(edge):
-    edge = abs(edge)
-    if edge >= 20: return "A+"
-    if edge >= 15: return "A"
-    if edge >= 12: return "A-"
-    if edge >= 10: return "B+"
-    if edge >= 8: return "B"
-    if edge >= 6: return "B-"
-    if edge >= 4: return "C+"
+    edge = float(edge)
+    edge_abs = abs(edge)
+
+    if edge > 0:
+        if edge_abs < 10:
+            return "A"
+        if edge_abs <= 12:
+            return "B"
+        return ""
+
+    if edge_abs >= 10:
+        return "A"
+    if edge_abs >= 6:
+        if edge_abs < 8:
+            return "B"
+        return "C"
     return ""
-
-
-# ============================================================
-# BUILD SPREAD BETS TAB
-# ============================================================
 
 def build_spread_bets_df():
 
-    df = pd.read_csv("data/engine.csv")
+    df = build_engine_df()
+
     rows = []
 
     for _, row in df.iterrows():
 
         edge = row["Spread Edge"]
 
-        if pd.isna(edge) or abs(edge) < EDGE_THRESHOLD_SPREAD:
+        if (
+            pd.isna(edge)
+            or abs(edge) < EDGE_THRESHOLD_SPREAD
+            or abs(edge) > MAX_SPREAD_EDGE
+        ):
             continue
 
         home = row["Home"]
         away = row["Away"]
+
         market_spread = float(row["Spread"])
         model_spread = float(row["Model Spread"])
 
@@ -137,27 +153,28 @@ def build_spread_bets_df():
             "Spread Confidence": spread_confidence(edge)
         })
 
-    return pd.DataFrame(rows)
+    return apply_seeds_to_dataframe(
+        pd.DataFrame(rows),
+        bet_columns=("Spread Bet",)
+    )
 
-
-# ============================================================
-# BUILD TOTAL BETS TAB
-# ============================================================
 
 def build_total_bets_df():
 
-    df = pd.read_csv("data/engine.csv")
+    df = build_engine_df()
+
     rows = []
 
     for _, row in df.iterrows():
 
         edge = row["Total Edge"]
 
-        if pd.isna(edge) or abs(edge) < EDGE_THRESHOLD_TOTAL:
+        if pd.isna(edge) or abs(edge) < EDGE_THRESHOLD_TOTAL or abs(edge) > TOTAL_EDGE_MAX:
             continue
 
         home = row["Home"]
         away = row["Away"]
+
         market_total = float(row["Total"])
         model_total = float(row["Model Total"])
 
@@ -176,12 +193,11 @@ def build_total_bets_df():
             "Total Confidence": total_confidence(edge)
         })
 
-    return pd.DataFrame(rows)
+    return apply_seeds_to_dataframe(
+        pd.DataFrame(rows),
+        bet_columns=("Total Bet",)
+    )
 
-
-# ============================================================
-# APPEND RESULTS (NEW ROWS ON TOP)
-# ============================================================
 
 def append_results(sheet, tab_name, new_df):
 
@@ -194,8 +210,11 @@ def append_results(sheet, tab_name, new_df):
         existing_df = pd.DataFrame()
 
     if existing_df.empty or "Date" not in existing_df.columns:
+
         combined_df = new_df.copy()
+
     else:
+
         key_cols = ["Date", "Home", "Away"]
 
         existing_keys = existing_df[key_cols]
@@ -219,46 +238,42 @@ def append_results(sheet, tab_name, new_df):
     worksheet.update([combined_df.columns.tolist()] + combined_df.values.tolist())
 
 
-# ============================================================
-# BUILD RESULTS DATA
-# ============================================================
-
 def build_spread_results_df():
+
     df = build_spread_bets_df()
+
     if df.empty:
         return df
 
     df.insert(0, "Date", TODAY)
     df["Spread W/L"] = ""
+
     return df
 
 
 def build_total_results_df():
+
     df = build_total_bets_df()
+
     if df.empty:
         return df
 
     df.insert(0, "Date", TODAY)
     df["Total W/L"] = ""
+
     return df
 
-
-# ============================================================
-# MAIN
-# ============================================================
 
 def push_all():
 
     client = get_client()
     sheet = client.open(SHEET_NAME)
 
-    # Overwrite tabs
     push_dataframe(sheet, "Games", build_games_df())
     push_dataframe(sheet, "Engine", build_engine_df())
     push_dataframe(sheet, "Spread Bets", build_spread_bets_df())
     push_dataframe(sheet, "Total Bets", build_total_bets_df())
 
-    # Append results
     append_results(sheet, "Spread Results", build_spread_results_df())
     append_results(sheet, "Total Results", build_total_results_df())
 
