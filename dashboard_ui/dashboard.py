@@ -205,6 +205,29 @@ spread_options = (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
 total_options = (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
 
 pick_options = spread_options + total_options
+lock_card_lookup = {}
+
+for _, r in spread_bets.iterrows():
+    option = f"{r['Game']} — {r['Bet']}"
+    lock_card_lookup[option] = {
+        "time": r["Game Time"],
+        "game": r["Game"],
+        "bet_type": "Spread",
+        "edge": r["Spread Edge"],
+        "bet": r["Bet"],
+        "confidence": r["Confidence"],
+    }
+
+for _, r in total_bets.iterrows():
+    option = f"{r['Game']} — {r['Bet']}"
+    lock_card_lookup[option] = {
+        "time": r["Game Time"],
+        "game": r["Game"],
+        "bet_type": "Total",
+        "edge": r["Total Edge"],
+        "bet": r["Bet"],
+        "confidence": r["Confidence"],
+    }
 
 # =========================
 # REED'S LOCKS
@@ -350,6 +373,39 @@ with tab_objects[0]:
 """
 
             render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+
+
+# =========================
+# LOCKS TAB
+# =========================
+
+if locks:
+
+    with tab_objects[1]:
+
+        st.header("🔒 Reed's Locks")
+
+        for lock in locks:
+
+            lock_data = lock_card_lookup.get(lock)
+
+            if not lock_data:
+                continue
+
+            lines = f"""
+<b>{lock_data['bet_type']}: {lock_data['bet']}</b><br>
+<b>Edge: {lock_data['edge']:+.2f}</b><br>
+<b>Bet: {lock_data['bet']}</b><br>
+<b>Confidence Grade: {lock_data['confidence']}</b>
+"""
+
+            render_card(
+                f"<b>{lock_data['time']}</b>",
+                lock_data["game"],
+                lines,
+                lock_data["confidence"],
+                glow="red"
+            )
 
 
 # =========================
