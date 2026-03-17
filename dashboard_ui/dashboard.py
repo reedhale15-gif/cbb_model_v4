@@ -3,7 +3,6 @@ import pandas as pd
 import json
 import os
 import sys
-from streamlit_autorefresh import st_autorefresh
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -16,12 +15,6 @@ EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
 st.set_page_config(page_title="CBB Model v4", layout="wide")
-
-# =========================
-# AUTO REFRESH
-# =========================
-
-st_autorefresh(interval=60000, key="datarefresh")
 
 engine_path = "data/engine.csv"
 
