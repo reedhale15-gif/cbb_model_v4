@@ -86,19 +86,27 @@ def get_performance_data():
 
     spread_tab = sheet.worksheet("Spread Performance")
     total_tab = sheet.worksheet("Total Performance")
+    spread_values = spread_tab.batch_get(["B5:B6"])
+    total_values = total_tab.batch_get(["B5:B6", "E5:E6", "H5:H6"])
+
+    def get_range_value(ranges, range_idx, row_idx):
+        values = ranges[range_idx]
+        if row_idx >= len(values) or not values[row_idx]:
+            return ""
+        return values[row_idx][0]
 
     spread_data = {
-        "bets": spread_tab.acell("B5").value,
-        "winpct": spread_tab.acell("B6").value
+        "bets": get_range_value(spread_values, 0, 0),
+        "winpct": get_range_value(spread_values, 0, 1)
     }
 
     total_data = {
-        "overall_bets": total_tab.acell("B5").value,
-        "overall_pct": total_tab.acell("B6").value,
-        "over_bets": total_tab.acell("E5").value,
-        "over_pct": total_tab.acell("E6").value,
-        "under_bets": total_tab.acell("H5").value,
-        "under_pct": total_tab.acell("H6").value
+        "overall_bets": get_range_value(total_values, 0, 0),
+        "overall_pct": get_range_value(total_values, 0, 1),
+        "over_bets": get_range_value(total_values, 1, 0),
+        "over_pct": get_range_value(total_values, 1, 1),
+        "under_bets": get_range_value(total_values, 2, 0),
+        "under_pct": get_range_value(total_values, 2, 1)
     }
 
     return spread_data, total_data
