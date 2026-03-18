@@ -8,7 +8,7 @@ from google.oauth2.service_account import Credentials
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_qualifies, spread_edge_band
 from tournament import apply_seeds_to_dataframe
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
@@ -169,8 +169,10 @@ spread["Bet"] = spread.apply(
 
 # SPREAD FILTER UPDATED
 spread_bets = spread[
-    (spread["Spread Edge"].abs() >= EDGE_THRESHOLD_SPREAD)
-    & (spread["Spread Edge"].abs() <= MAX_SPREAD_EDGE)
+    spread.apply(
+        lambda r: spread_bet_qualifies(r["Spread"], r["Model Spread"], r["Spread Edge"]),
+        axis=1
+    )
 ].copy()
 spread_bets = spread_bets.sort_values("Spread Edge", ascending=False)
 spread_bets = apply_seeds_to_dataframe(spread_bets)

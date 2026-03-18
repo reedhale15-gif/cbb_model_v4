@@ -2,7 +2,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill
 from openpyxl.utils import get_column_letter
 import pandas as pd
-from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_qualifies, spread_edge_band
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
@@ -57,7 +57,7 @@ for _, row in df.iterrows():
     total_edge = float(row["Total Edge"])
 
     # -------- Spread Bet Logic --------
-    if EDGE_THRESHOLD_SPREAD <= abs(spread_edge) <= MAX_SPREAD_EDGE:
+    if spread_bet_qualifies(market_spread, model_spread, spread_edge):
         if model_spread < market_spread:
             spread_bet = f"{home} {market_spread:+.1f}"
         else:

@@ -7,7 +7,7 @@ import sys
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_edge_band
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_qualifies, spread_edge_band
 from tournament import apply_seeds_to_dataframe
 
 SHEET_NAME = "CBB Model v4"
@@ -125,17 +125,14 @@ def build_spread_bets_df():
 
         edge = row["Spread Edge"]
 
-        if (
-            pd.isna(edge)
-            or abs(edge) < EDGE_THRESHOLD_SPREAD
-            or abs(edge) > MAX_SPREAD_EDGE
-        ):
+        if pd.isna(edge):
+            continue
+
+        if not spread_bet_qualifies(market_spread := float(row["Spread"]), float(row["Model Spread"]), edge):
             continue
 
         home = row["Home"]
         away = row["Away"]
-
-        market_spread = float(row["Spread"])
         model_spread = float(row["Model Spread"])
 
         if model_spread < market_spread:
