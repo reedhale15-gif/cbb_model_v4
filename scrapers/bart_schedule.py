@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from playwright.sync_api import sync_playwright
 import pandas as pd
 import re
-from teams.team_name_normalizer import normalize_team
+from teams.team_name_normalizer import normalize_team, report_unknown
 
 URL = "https://barttorvik.com/schedule.php"
 
@@ -74,10 +74,15 @@ def scrape_schedule():
                 continue
 
             try:
-                away = normalize_team(away)
-                home = normalize_team(home)
+                away = normalize_team(away, source="bart_schedule")
+                home = normalize_team(home, source="bart_schedule")
             except:
                 continue
+
+            # Bart occasionally renders the SMU matchup as Miami FL; the actual
+            # tournament game here is Miami OH.
+            if home == "SMU" and away == "Miami FL":
+                away = "Miami OH"
 
             games.append({
                 "TIME": time,
@@ -99,3 +104,4 @@ if __name__ == "__main__":
     df = scrape_schedule()
     df.to_csv("data/bart_schedule_clean.csv", index=False)
     print("Saved to data/bart_schedule_clean.csv")
+    report_unknown()

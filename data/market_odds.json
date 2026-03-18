@@ -19,9 +19,9 @@
     "HOME": "Utah Valley",
     "AWAY": "George Washington",
     "COMMENCE_TIME": "2026-03-19T00:00:00Z",
-    "SPREAD": -1.5,
+    "SPREAD": -1.88,
     "TOTAL": 156.5,
-    "HOME_ML": -131.0
+    "HOME_ML": -132.25
   },
   {
     "HOME": "Illinois St.",
@@ -35,9 +35,9 @@
     "HOME": "Bradley",
     "AWAY": "Dayton",
     "COMMENCE_TIME": "2026-03-19T01:00:00Z",
-    "SPREAD": 1.75,
+    "SPREAD": 1.58,
     "TOTAL": 141.5,
-    "HOME_ML": 72.67
+    "HOME_ML": 71.83
   },
   {
     "HOME": "New Mexico",
@@ -46,6 +46,14 @@
     "SPREAD": -11.75,
     "TOTAL": 164.5,
     "HOME_ML": -800.0
+  },
+  {
+    "HOME": "SMU",
+    "AWAY": "Miami OH",
+    "COMMENCE_TIME": "2026-03-19T01:15:00Z",
+    "SPREAD": -6.88,
+    "TOTAL": 161.83,
+    "HOME_ML": -303.78
   },
   {
     "HOME": "Nevada",
