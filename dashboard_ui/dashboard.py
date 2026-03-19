@@ -204,32 +204,34 @@ total_bets = apply_seeds_to_dataframe(total_bets)
 # BUILD PICK OPTIONS
 # =========================
 
-spread_options = (spread_bets["Game"] + " — " + spread_bets["Bet"]).tolist()
-total_options = (total_bets["Game"] + " — " + total_bets["Bet"]).tolist()
+spread_options = (spread["Game"] + " — " + spread["Bet"]).tolist()
+total_options = (totals["Game"] + " — " + totals["Bet"]).tolist()
 
 pick_options = spread_options + total_options
 lock_card_lookup = {}
 
-for _, r in spread_bets.iterrows():
+for _, r in spread.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
+    confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
         "time": r["Game Time"],
         "game": r["Game"],
         "bet_type": "Spread",
         "edge": r["Spread Edge"],
         "bet": r["Bet"],
-        "confidence": r["Confidence"],
+        "confidence": confidence,
     }
 
-for _, r in total_bets.iterrows():
+for _, r in totals.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
+    confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
         "time": r["Game Time"],
         "game": r["Game"],
         "bet_type": "Total",
         "edge": r["Total Edge"],
         "bet": r["Bet"],
-        "confidence": r["Confidence"],
+        "confidence": confidence,
     }
 
 # =========================
