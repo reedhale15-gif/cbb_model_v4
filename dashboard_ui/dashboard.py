@@ -8,7 +8,7 @@ from google.oauth2.service_account import Credentials
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_qualifies, spread_edge_band
+from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band
 from tournament import apply_seeds_to_dataframe
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
@@ -111,13 +111,20 @@ spread_perf, total_perf = get_performance_data()
 # CONFIDENCE FUNCTIONS
 # =========================
 
-def spread_confidence(edge):
+def spread_confidence(market_spread, model_spread, edge):
     edge = abs(edge)
-    if edge >= 12: return "A+"
-    if edge >= 10: return "A-"
-    if edge >= 8: return "B+"
-    if edge >= 7: return "B-"
-    if edge >= 6: return "C"
+
+    if spread_bet_is_favorite(market_spread, model_spread):
+        if edge >= 8:
+            return "B"
+        if edge >= 6:
+            return "A"
+        return ""
+
+    if edge >= 7:
+        return "B"
+    if edge >= 6:
+        return "A"
     return ""
 
 
@@ -126,18 +133,16 @@ def total_confidence(edge):
     edge_abs = abs(edge)
 
     if edge > 0:
-        if edge_abs < 10:
+        if edge_abs <= 8:
             return "A"
         if edge_abs <= 12:
             return "B"
         return ""
 
-    if edge_abs >= 10:
+    if edge_abs >= 10 and edge_abs <= 12:
         return "A"
-    if edge_abs >= 6:
-        if edge_abs < 8:
-            return "B"
-        return "C"
+    if edge_abs >= 6 and edge_abs < 10:
+        return "B"
     return ""
 
 
@@ -158,7 +163,10 @@ def confidence_color(conf):
 # =========================
 
 spread = engine.copy()
-spread["Confidence"] = spread["Spread Edge"].apply(spread_confidence)
+spread["Confidence"] = spread.apply(
+    lambda r: spread_confidence(r["Spread"], r["Model Spread"], r["Spread Edge"]),
+    axis=1
+)
 
 spread["Bet"] = spread.apply(
     lambda r: f"{r['Home']} {r['Spread']:+.1f}"
