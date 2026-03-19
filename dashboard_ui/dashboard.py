@@ -29,6 +29,9 @@ if current_update != st.session_state.last_engine_update:
 
 st.title("CBB Model v4")
 
+SHEET_NAME = "CBB Model v4"
+LOCKS_TAB_NAME = "App Locks"
+
 # =========================
 # ADMIN MODE
 # =========================
@@ -75,7 +78,7 @@ def get_performance_data():
     )
 
     client = gspread.authorize(creds)
-    sheet = client.open("CBB Model v4")
+    sheet = client.open(SHEET_NAME)
 
     spread_tab = sheet.worksheet("Spread Performance")
     total_tab = sheet.worksheet("Total Performance")
@@ -103,6 +106,49 @@ def get_performance_data():
     }
 
     return spread_data, total_data
+
+
+def get_sheet():
+
+    scope = [
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/drive"
+    ]
+
+    creds_dict = json.loads(os.environ["GOOGLE_CREDENTIALS"])
+
+    creds = Credentials.from_service_account_info(
+        creds_dict,
+        scopes=scope
+    )
+
+    client = gspread.authorize(creds)
+    return client.open(SHEET_NAME)
+
+
+def load_locks():
+
+    try:
+        sheet = get_sheet()
+        worksheet = sheet.worksheet(LOCKS_TAB_NAME)
+        values = worksheet.col_values(1)
+        return [value for value in values[1:] if value]
+    except:
+        return []
+
+
+def save_locks(locks):
+
+    sheet = get_sheet()
+
+    try:
+        worksheet = sheet.worksheet(LOCKS_TAB_NAME)
+    except:
+        worksheet = sheet.add_worksheet(title=LOCKS_TAB_NAME, rows="200", cols="1")
+
+    rows = [["Lock"]] + [[lock] for lock in locks]
+    worksheet.clear()
+    worksheet.update(rows)
 
 
 spread_perf, total_perf = get_performance_data()
@@ -246,15 +292,10 @@ for _, r in totals.iterrows():
 # REED'S LOCKS
 # =========================
 
-LOCK_FILE = "data/locks.json"
-
-try:
-    with open(LOCK_FILE, "r") as f:
-        locks = json.load(f)
-except:
-    locks = []
+locks = load_locks()
 
 valid_locks = [lock for lock in locks if lock in pick_options]
+locks = valid_locks
 
 if admin_mode:
 
@@ -267,8 +308,7 @@ if admin_mode:
     )
 
     if selected_locks != valid_locks:
-        with open(LOCK_FILE, "w") as f:
-            json.dump(selected_locks, f)
+        save_locks(selected_locks)
 
     locks = selected_locks
 
