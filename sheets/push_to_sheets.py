@@ -200,33 +200,40 @@ def append_results(sheet, tab_name, new_df):
 
     try:
         worksheet = sheet.worksheet(tab_name)
-        existing_data = worksheet.get_all_records()
-        existing_df = pd.DataFrame(existing_data)
+        values = worksheet.get_all_values()
+
+        if len(values) >= 2:
+            headers = values[0]
+            rows = values[1:]
+            width = len(headers)
+            normalized_rows = [row[:width] + [""] * max(0, width - len(row)) for row in rows]
+            existing_df = pd.DataFrame(normalized_rows, columns=headers)
+        else:
+            existing_df = pd.DataFrame()
     except:
-        worksheet = sheet.add_worksheet(title=tab_name, rows="5000", cols="30")
-        existing_df = pd.DataFrame()
+        try:
+            worksheet = sheet.add_worksheet(title=tab_name, rows="5000", cols="30")
+            existing_df = pd.DataFrame()
+        except:
+            worksheet = sheet.worksheet(tab_name)
+            existing_df = pd.DataFrame()
 
     if existing_df.empty or "Date" not in existing_df.columns:
 
         combined_df = new_df.copy()
 
     else:
+        existing_df = existing_df.loc[:, ~existing_df.columns.duplicated()]
+        existing_df = existing_df.reindex(columns=new_df.columns, fill_value="")
 
         key_cols = ["Date", "Home", "Away"]
+        existing_df = existing_df[
+            ~existing_df[key_cols].apply(tuple, axis=1).isin(
+                new_df[key_cols].apply(tuple, axis=1)
+            )
+        ]
 
-        existing_keys = existing_df[key_cols]
-
-        merged = new_df.merge(
-            existing_keys,
-            on=key_cols,
-            how="left",
-            indicator=True
-        )
-
-        new_rows = merged[merged["_merge"] == "left_only"]
-        new_rows = new_rows[new_df.columns]
-
-        combined_df = pd.concat([new_rows, existing_df], ignore_index=True)
+        combined_df = pd.concat([new_df, existing_df], ignore_index=True)
 
     combined_df = combined_df.sort_values("Date", ascending=False)
     combined_df = combined_df.reset_index(drop=True)
