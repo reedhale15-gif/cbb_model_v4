@@ -702,55 +702,55 @@ with tab_objects[4 if not locks else 5]:
 
     st.header("Engine")
 
-    def edge_color(edge):
-        if edge > 0:
-            return "#16a34a"
-        if edge < 0:
-            return "#dc2626"
-        return "#6b7280"
+def edge_color(edge):
+    if edge > 0:
+        return "#16a34a"
+    if edge < 0:
+        return "#dc2626"
+    return "#6b7280"
 
     def render_engine_card(row):
         st.markdown(
             f"""
 <div style="
 border:1px solid rgba(148,163,184,0.28);
-border-radius:16px;
-padding:18px 18px 16px 18px;
-margin-bottom:16px;
+border-radius:14px;
+padding:12px 12px 10px 12px;
+margin-bottom:10px;
 background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(148,163,184,0.05));
 box-shadow:0 8px 24px rgba(15,23,42,0.08);
-min-height:250px;
+min-height:195px;
 ">
   <div style="
     display:grid;
-    grid-template-columns:88px 1fr;
-    column-gap:14px;
-    row-gap:8px;
+    grid-template-columns:78px 1fr;
+    column-gap:10px;
+    row-gap:4px;
     align-items:start;
   ">
-    <div style="font-size:12px;color:#6b7280;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Game Time</div>
-    <div style="font-size:20px;font-weight:700;line-height:1.25;color:#0f172a;">{row['Game']}</div>
+    <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Game Time</div>
+    <div style="font-size:16px;font-weight:700;line-height:1.15;color:#1d4ed8;text-shadow:0 0 10px rgba(37,99,235,0.14);">{row['Game']}</div>
 
     <div></div>
-    <div style="font-size:13px;color:#64748b;">{row['Game Time']}</div>
+    <div style="font-size:11px;color:#94a3b8;">{row['Game Time']}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:4px;">Spread</div>
-    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Spread']:+.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:2px;">Spread</div>
+    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Spread']:+.1f}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
-    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Model Spread']:+.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
+    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Model Spread']:+.1f}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
-    <div style="font-size:18px;font-weight:800;color:{edge_color(row['Spread Edge'])};">{row['Spread Edge']:+.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
+    <div style="font-size:15px;font-weight:800;color:{edge_color(row['Spread Edge'])};">{row['Spread Edge']:+.1f}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:8px;">Total</div>
-    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Total']:.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:4px;">Total</div>
+    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Total']:.1f}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
-    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Model Total']:.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
+    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Model Total']:.1f}</div>
 
-    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
-    <div style="font-size:18px;font-weight:800;color:{edge_color(row['Total Edge'])};">{row['Total Edge']:+.1f}</div>
+    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
+    <div style="font-size:15px;font-weight:800;color:{edge_color(row['Total Edge'])};">{row['Total Edge']:+.1f}</div>
   </div>
 </div>
 """,
