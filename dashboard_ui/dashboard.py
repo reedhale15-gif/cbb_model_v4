@@ -39,8 +39,9 @@ letter-spacing: 0.04em;
   <div style="
     font-size: 2.25rem;
     font-weight: 800;
-    color: #0f172a;
+    color: #3b82f6;
     line-height: 1.05;
+    text-shadow: 0 0 18px rgba(59, 130, 246, 0.18);
   ">The LineLab</div>
   <div style="
     margin-top: 8px;
