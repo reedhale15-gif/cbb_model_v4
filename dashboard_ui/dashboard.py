@@ -14,7 +14,7 @@ from tournament import apply_seeds_to_dataframe
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
-st.set_page_config(page_title="CBB Model v4", layout="wide")
+st.set_page_config(page_title="The LineLab", layout="wide")
 
 engine_path = "data/engine.csv"
 
@@ -27,7 +27,32 @@ if current_update != st.session_state.last_engine_update:
     st.session_state.last_engine_update = current_update
     st.rerun()
 
-st.title("CBB Model v4")
+st.markdown(
+    """
+<div style="
+text-align:center;
+margin: 6px 0 22px 0;
+font-family: Inter, Arial, sans-serif;
+letter-spacing: 0.04em;
+">
+  <div style="
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.05;
+  ">The LineLab</div>
+  <div style="
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  ">College Basketball Model Dashboard</div>
+</div>
+""",
+    unsafe_allow_html=True
+)
 
 SHEET_NAME = "CBB Model v4"
 LOCKS_TAB_NAME = "App Locks"
@@ -49,15 +74,16 @@ if "admin" in query and query["admin"] == "1":
 engine = pd.read_csv("data/engine.csv")
 engine = engine[engine["Spread"].notna()].copy()
 
-engine["Game Time"] = pd.to_datetime(engine["Game Time"], errors="coerce")
+engine["Game Time Sort"] = pd.to_datetime(engine["Game Time"], errors="coerce")
 engine["Game Time"] = (
-    engine["Game Time"]
+    engine["Game Time Sort"]
     .dt.tz_convert("US/Central")
     .dt.strftime("%-I:%M %p")
 )
 
 engine = apply_seeds_to_dataframe(engine)
 engine["Game"] = engine["Away"] + " @ " + engine["Home"]
+engine = engine.sort_values("Game Time Sort").reset_index(drop=True)
 
 # =========================
 # LOAD PERFORMANCE DATA
@@ -131,8 +157,52 @@ def load_locks():
     try:
         sheet = get_sheet()
         worksheet = sheet.worksheet(LOCKS_TAB_NAME)
-        values = worksheet.col_values(1)
-        return [value for value in values[1:] if value]
+        values = worksheet.get_all_values()
+
+        if len(values) < 2:
+            return []
+
+        headers = [str(h).strip().lower() for h in values[0]]
+
+        if headers == ["lock"]:
+            return [
+                {
+                    "source": "auto",
+                    "option": value[0],
+                    "time": "",
+                    "game": value[0],
+                    "bet_type": "",
+                    "bet": value[0],
+                    "edge": "",
+                    "confidence": "",
+                    "market_line": "",
+                }
+                for value in values[1:]
+                if value and value[0]
+            ]
+
+        records = []
+
+        for row in values[1:]:
+            padded = row + [""] * max(0, len(headers) - len(row))
+            record = dict(zip(headers, padded))
+
+            if not any(record.values()):
+                continue
+
+            records.append({
+                "source": record.get("source", "manual") or "manual",
+                "option": record.get("option", ""),
+                "time": record.get("time", ""),
+                "game": record.get("game", ""),
+                "bet_type": record.get("bet_type", ""),
+                "bet": record.get("bet", ""),
+                "edge": record.get("edge", ""),
+                "confidence": record.get("confidence", ""),
+                "market_line": record.get("market_line", ""),
+            })
+
+        return records
     except:
         return []
 
@@ -146,7 +216,46 @@ def save_locks(locks):
     except:
         worksheet = sheet.add_worksheet(title=LOCKS_TAB_NAME, rows="200", cols="1")
 
-    rows = [["Lock"]] + [[lock] for lock in locks]
+    normalized = []
+
+    for lock in locks:
+        normalized.append({
+            "source": lock.get("source", "manual"),
+            "option": lock.get("option", ""),
+            "time": lock.get("time", ""),
+            "game": lock.get("game", ""),
+            "bet_type": lock.get("bet_type", ""),
+            "bet": lock.get("bet", ""),
+            "edge": lock.get("edge", ""),
+            "confidence": lock.get("confidence", ""),
+            "market_line": lock.get("market_line", ""),
+        })
+
+    deduped = []
+    seen = set()
+    for lock in normalized:
+        key = tuple(lock.items())
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(lock)
+
+    rows = [
+        ["source", "option", "time", "game", "bet_type", "bet", "edge", "confidence", "market_line"]
+    ]
+    for lock in deduped:
+        rows.append([
+            lock["source"],
+            lock["option"],
+            lock["time"],
+            lock["game"],
+            lock["bet_type"],
+            lock["bet"],
+            lock["edge"],
+            lock["confidence"],
+            lock["market_line"],
+        ])
+
     worksheet.clear()
     worksheet.update(rows)
 
@@ -203,6 +312,19 @@ def confidence_color(conf):
         "C": "#f97316"
     }
     return colors.get(conf, "#9ca3af")
+
+
+def confidence_rank(conf):
+    order = {
+        "A+": 5,
+        "A": 4,
+        "A-": 3,
+        "B+": 2,
+        "B": 1,
+        "B-": 0,
+        "C": -1
+    }
+    return order.get(conf, -2)
 
 # =========================
 # BUILD BET DATA
@@ -268,34 +390,44 @@ for _, r in spread.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
     confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
+        "source": "auto",
+        "option": option,
         "time": r["Game Time"],
         "game": r["Game"],
         "bet_type": "Spread",
         "edge": r["Spread Edge"],
         "bet": r["Bet"],
         "confidence": confidence,
+        "market_line": f"{float(r['Spread']):+.1f}",
     }
 
 for _, r in totals.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
     confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
+        "source": "auto",
+        "option": option,
         "time": r["Game Time"],
         "game": r["Game"],
         "bet_type": "Total",
         "edge": r["Total Edge"],
         "bet": r["Bet"],
         "confidence": confidence,
+        "market_line": f"{float(r['Total']):.1f}",
     }
 
 # =========================
 # REED'S LOCKS
 # =========================
 
-locks = load_locks()
-
-valid_locks = [lock for lock in locks if lock in pick_options]
-locks = valid_locks
+saved_locks = load_locks()
+manual_locks = [lock for lock in saved_locks if lock.get("source") == "manual"]
+saved_auto_options = [
+    lock.get("option")
+    for lock in saved_locks
+    if lock.get("source") == "auto" and lock.get("option") in pick_options
+]
+locks = manual_locks + [lock_card_lookup[option] for option in saved_auto_options]
 
 if admin_mode:
 
@@ -304,13 +436,45 @@ if admin_mode:
     selected_locks = st.sidebar.multiselect(
         "Select your picks",
         pick_options,
-        default=valid_locks
+        default=saved_auto_options
     )
 
-    if selected_locks != valid_locks:
-        save_locks(selected_locks)
+    with st.sidebar.expander("Add Custom Lock", expanded=False):
+        with st.form("custom_lock_form", clear_on_submit=True):
+            custom_time = st.text_input("Time", placeholder="7:30 PM")
+            custom_away = st.text_input("Away Team", placeholder="Duke")
+            custom_home = st.text_input("Home Team", placeholder="North Carolina")
+            custom_bet_type = st.selectbox("Bet Type", ["Spread", "Total"])
+            custom_market_line = st.text_input("Market Line", placeholder="-7.5 or 142.5")
+            custom_pick = st.text_input("Pick", placeholder="North Carolina +7.5")
+            custom_edge = st.number_input("Edge", value=0.0, step=0.1, format="%.1f")
+            custom_confidence = st.selectbox("Confidence Grade", ["", "A", "B", "C"])
+            custom_submit = st.form_submit_button("Add Custom Lock")
 
-    locks = selected_locks
+            if custom_submit:
+                custom_game = " @ ".join([x for x in [custom_away, custom_home] if x])
+                custom_lock = {
+                    "source": "manual",
+                    "option": f"{custom_game} — {custom_pick}",
+                    "time": custom_time,
+                    "game": custom_game,
+                    "bet_type": custom_bet_type,
+                    "bet": custom_pick or custom_market_line,
+                    "edge": custom_edge,
+                    "confidence": custom_confidence,
+                    "market_line": custom_market_line,
+                }
+
+                combined = manual_locks + [lock_card_lookup[option] for option in selected_locks] + [custom_lock]
+                save_locks(combined)
+                st.rerun()
+
+    selected_auto_locks = [lock_card_lookup[option] for option in selected_locks]
+
+    if selected_locks != saved_auto_options:
+        save_locks(manual_locks + selected_auto_locks)
+
+    locks = manual_locks + selected_auto_locks
 
 
 # =========================
@@ -405,7 +569,17 @@ with tab_objects[0]:
 
         st.subheader("🔥 Top Spread Bets")
 
-        for _, r in spread_bets.head(5).iterrows():
+        top_spreads = (
+            spread_bets.assign(conf_rank=spread_bets["Confidence"].apply(confidence_rank))
+            .sort_values(
+                by=["conf_rank", "Spread Edge"],
+                ascending=[False, True],
+                key=lambda s: s.abs() if s.name == "Spread Edge" else s
+            )
+            .head(3)
+        )
+
+        for _, r in top_spreads.iterrows():
 
             lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
@@ -418,7 +592,17 @@ with tab_objects[0]:
 
         st.subheader("🔥 Top Total Bets")
 
-        for _, r in total_bets.head(5).iterrows():
+        top_totals = (
+            total_bets.assign(conf_rank=total_bets["Confidence"].apply(confidence_rank))
+            .sort_values(
+                by=["conf_rank", "Total Edge"],
+                ascending=[False, True],
+                key=lambda s: s.abs() if s.name == "Total Edge" else s
+            )
+            .head(3)
+        )
+
+        for _, r in top_totals.iterrows():
 
             lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
@@ -438,16 +622,10 @@ if locks:
 
         st.header("🔒 Reed's Locks")
 
-        for lock in locks:
-
-            lock_data = lock_card_lookup.get(lock)
-
-            if not lock_data:
-                continue
-
+        def render_lock_card(lock_data):
             lines = f"""
 <b>{lock_data['bet_type']}: {lock_data['bet']}</b><br>
-<b>Edge: {lock_data['edge']:+.2f}</b><br>
+<b>Edge: {float(lock_data['edge']):+.2f}</b><br>
 <b>Bet: {lock_data['bet']}</b><br>
 <b>Confidence Grade: {lock_data['confidence']}</b>
 """
@@ -460,6 +638,16 @@ if locks:
                 glow="red"
             )
 
+        for i in range(0, len(locks), 2):
+            left, right = st.columns(2)
+
+            with left:
+                render_lock_card(locks[i])
+
+            if i + 1 < len(locks):
+                with right:
+                    render_lock_card(locks[i + 1])
+
 
 # =========================
 # GAMES TAB
@@ -469,14 +657,84 @@ with tab_objects[1 if not locks else 2]:
 
     st.header("Games")
 
+    st.markdown(
+        """
+<style>
+.game-strip {
+    display: grid;
+    grid-template-columns: 84px 12px minmax(180px, 1fr) 12px 72px 72px;
+    align-items: center;
+    gap: 0;
+    min-height: 34px;
+    padding: 7px 2px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #111111;
+    background: #ffffff;
+    font-size: 12px;
+}
+.games-list .game-strip:nth-child(even) {
+    background: #f7f7f7;
+}
+.game-strip:hover {
+    filter: brightness(1.03);
+}
+.game-time {
+    color: #6b7280;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.game-matchup {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+.game-num {
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+@media (prefers-color-scheme: dark) {
+    .game-strip {
+        border-bottom-color: #334155;
+    color: #e5e7eb;
+        background: #0f172a;
+    }
+    .games-list .game-strip:nth-child(even) {
+        background: #1e293b;
+    }
+    .game-time {
+        color: #94a3b8;
+    }
+}
+</style>
+""",
+        unsafe_allow_html=True
+    )
+
+    rows_html = []
+
     for _, r in engine.iterrows():
-
-        lines = f"""
-Spread: {r['Spread']}<br>
-Total: {r['Total']}
+        rows_html.append(
+            f"""
+<div class="game-strip">
+    <div class="game-time">{r['Game Time']}</div>
+    <div></div>
+    <div class="game-matchup">{r['Game']}</div>
+    <div></div>
+    <div class="game-num">{r['Spread']:+.1f}</div>
+    <div class="game-num">{r['Total']:.1f}</div>
+</div>
 """
+        )
 
-        render_card(r["Game Time"], r["Game"], lines)
+    st.markdown(
+        f"""
+<div class="games-list">
+{''.join(rows_html)}
+</div>
+""",
+        unsafe_allow_html=True
+    )
 
 
 # =========================
@@ -523,22 +781,66 @@ with tab_objects[4 if not locks else 5]:
 
     st.header("Engine")
 
-    def highlight_edges(val, col):
-        if col == "Spread Edge" and abs(val) >= 10:
-            return "background-color: rgba(34,197,94,0.6)"
-        if col == "Total Edge" and abs(val) >= 6 and abs(val) <= 12:
-            return "background-color: rgba(34,197,94,0.6)"
-        return ""
+    def edge_color(edge):
+        if edge > 0:
+            return "#16a34a"
+        if edge < 0:
+            return "#dc2626"
+        return "#6b7280"
 
-    styled = engine.style.applymap(
-        lambda v: highlight_edges(v, "Spread Edge"),
-        subset=["Spread Edge"]
-    ).applymap(
-        lambda v: highlight_edges(v, "Total Edge"),
-        subset=["Total Edge"]
-    )
+    def render_engine_card(row):
+        st.markdown(
+            f"""
+<div style="
+border:1px solid rgba(148,163,184,0.28);
+border-radius:16px;
+padding:18px 18px 16px 18px;
+margin-bottom:16px;
+background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(148,163,184,0.05));
+box-shadow:0 8px 24px rgba(15,23,42,0.08);
+min-height:250px;
+">
+  <div style="
+    display:grid;
+    grid-template-columns:88px 1fr;
+    column-gap:14px;
+    row-gap:8px;
+    align-items:start;
+  ">
+    <div style="font-size:12px;color:#6b7280;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Game Time</div>
+    <div style="font-size:20px;font-weight:700;line-height:1.25;color:#0f172a;">{row['Game']}</div>
 
-    st.dataframe(styled, use_container_width=True)
+    <div></div>
+    <div style="font-size:13px;color:#64748b;">{row['Game Time']}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:4px;">Spread</div>
+    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Spread']:+.1f}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
+    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Model Spread']:+.1f}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
+    <div style="font-size:18px;font-weight:800;color:{edge_color(row['Spread Edge'])};">{row['Spread Edge']:+.1f}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:8px;">Total</div>
+    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Total']:.1f}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
+    <div style="font-size:18px;font-weight:700;color:#0f172a;">{row['Model Total']:.1f}</div>
+
+    <div style="font-size:12px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
+    <div style="font-size:18px;font-weight:800;color:{edge_color(row['Total Edge'])};">{row['Total Edge']:+.1f}</div>
+  </div>
+</div>
+""",
+            unsafe_allow_html=True
+        )
+
+    for i in range(0, len(engine), 2):
+        cols = st.columns(2)
+        for col, (_, row) in zip(cols, engine.iloc[i:i + 2].iterrows()):
+            with col:
+                render_engine_card(row)
 
 
 # =========================
