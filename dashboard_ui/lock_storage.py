@@ -1,5 +1,27 @@
+import hashlib
+
+
+LOCK_HEADERS = ["uid", "source", "option", "time", "game", "bet_type", "bet", "edge", "confidence", "market_line"]
+
+
+def make_lock_uid(lock):
+    base = "|".join([
+        str(lock.get("source", "manual")),
+        str(lock.get("option", "")),
+        str(lock.get("time", "")),
+        str(lock.get("game", "")),
+        str(lock.get("bet_type", "")),
+        str(lock.get("bet", "")),
+        str(lock.get("edge", "")),
+        str(lock.get("confidence", "")),
+        str(lock.get("market_line", "")),
+    ])
+    return hashlib.sha1(base.encode("utf-8")).hexdigest()[:12]
+
+
 def normalize_lock_record(lock):
-    return {
+    normalized = {
+        "uid": lock.get("uid", "") or make_lock_uid(lock),
         "source": lock.get("source", "manual"),
         "option": lock.get("option", ""),
         "time": lock.get("time", ""),
@@ -10,6 +32,7 @@ def normalize_lock_record(lock):
         "confidence": lock.get("confidence", ""),
         "market_line": lock.get("market_line", ""),
     }
+    return normalized
 
 
 def parse_locks_values(values):
@@ -72,10 +95,11 @@ def build_locks_rows(locks):
         deduped.append(lock)
 
     rows = [
-        ["source", "option", "time", "game", "bet_type", "bet", "edge", "confidence", "market_line"]
+        LOCK_HEADERS
     ]
     for lock in deduped:
         rows.append([
+            lock["uid"],
             lock["source"],
             lock["option"],
             lock["time"],

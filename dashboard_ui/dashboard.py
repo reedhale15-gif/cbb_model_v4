@@ -5,12 +5,13 @@ import os
 import sys
 import gspread
 from google.oauth2.service_account import Credentials
+from uuid import uuid4
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band
 from tournament import apply_seeds_to_dataframe
-from dashboard_ui.lock_storage import build_locks_rows, parse_locks_values
+from dashboard_ui.lock_storage import build_locks_rows, make_lock_uid, parse_locks_values
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
@@ -311,6 +312,17 @@ for _, r in spread.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
     confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
+        "uid": make_lock_uid({
+            "source": "auto",
+            "option": option,
+            "time": r["Game Time"],
+            "game": r["Game"],
+            "bet_type": "Spread",
+            "bet": r["Bet"],
+            "edge": r["Spread Edge"],
+            "confidence": confidence,
+            "market_line": f"{float(r['Spread']):+.1f}",
+        }),
         "source": "auto",
         "option": option,
         "time": r["Game Time"],
@@ -326,6 +338,17 @@ for _, r in totals.iterrows():
     option = f"{r['Game']} — {r['Bet']}"
     confidence = r["Confidence"] if pd.notna(r["Confidence"]) and r["Confidence"] else "No Grade"
     lock_card_lookup[option] = {
+        "uid": make_lock_uid({
+            "source": "auto",
+            "option": option,
+            "time": r["Game Time"],
+            "game": r["Game"],
+            "bet_type": "Total",
+            "bet": r["Bet"],
+            "edge": r["Total Edge"],
+            "confidence": confidence,
+            "market_line": f"{float(r['Total']):.1f}",
+        }),
         "source": "auto",
         "option": option,
         "time": r["Game Time"],
@@ -376,6 +399,7 @@ if admin_mode:
                 custom_game = " @ ".join([x for x in [custom_away, custom_home] if x])
                 custom_lock = {
                     "source": "manual",
+                    "uid": uuid4().hex[:12],
                     "option": f"{custom_game} — {custom_pick}",
                     "time": custom_time,
                     "game": custom_game,
@@ -402,11 +426,16 @@ if admin_mode:
 # CARD RENDERER
 # =========================
 
-def render_card(time, game, lines, conf=None, glow=None):
+def render_card(time, game, lines, conf=None, glow=None, compact=False):
 
     border = "1px solid rgba(150,150,150,0.25)"
     shadow = "0 4px 12px rgba(0,0,0,0.08)"
     background = "transparent"
+    time_size = "13px"
+    game_size = "20px"
+    pad = "18px"
+    game_margin = "10px"
+    badge_size = "12px"
 
     if glow == "green":
         border = "2px solid #16a34a"
@@ -418,6 +447,13 @@ def render_card(time, game, lines, conf=None, glow=None):
         shadow = "0 0 15px rgba(239,68,68,0.6)"
         background = "rgba(239,68,68,0.08)"
 
+    if compact:
+        time_size = "11px"
+        game_size = "16px"
+        pad = "13px"
+        game_margin = "7px"
+        badge_size = "11px"
+
     conf_badge = ""
 
     if conf:
@@ -427,7 +463,7 @@ background:{confidence_color(conf)};
 color:white;
 padding:4px 10px;
 border-radius:8px;
-font-size:12px;
+font-size:{badge_size};
 font-weight:600;
 margin-top:8px;
 display:inline-block;
@@ -441,17 +477,17 @@ display:inline-block;
 <div style="
 border:{border};
 border-radius:14px;
-padding:18px;
-margin-bottom:16px;
+padding:{pad};
+margin-bottom:12px;
 box-shadow:{shadow};
 background:{background};
 ">
 
-<div style="font-size:13px;color:#6b7280;margin-bottom:6px;">
+<div style="font-size:{time_size};color:#6b7280;margin-bottom:6px;">
 {time}
 </div>
 
-<div style="font-size:20px;font-weight:600;margin-bottom:10px;">
+<div style="font-size:{game_size};font-weight:600;margin-bottom:{game_margin};">
 {game}
 </div>
 
@@ -559,6 +595,15 @@ if locks:
                 glow="red"
             )
 
+            if admin_mode and lock_data.get("source") == "manual":
+                if st.button("Remove", key=f"remove_{lock_data.get('uid', make_lock_uid(lock_data))}"):
+                    remaining = [
+                        lock for lock in saved_locks
+                        if lock.get("uid") != lock_data.get("uid")
+                    ]
+                    save_locks(remaining)
+                    st.rerun()
+
         for i in range(0, len(locks), 2):
             left, right = st.columns(2)
 
@@ -581,17 +626,35 @@ with tab_objects[1 if not locks else 2]:
     st.markdown(
         """
 <style>
+.games-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.games-head,
 .game-strip {
     display: grid;
     grid-template-columns: 84px 12px minmax(180px, 1fr) 12px 72px 72px;
     align-items: center;
     gap: 0;
-    min-height: 34px;
-    padding: 7px 2px;
-    border-bottom: 1px solid #e5e7eb;
-    color: #111111;
+}
+.games-head {
+    padding: 0 12px 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+.game-strip {
+    min-height: 38px;
+    padding: 10px 12px;
+    border: 1px solid rgba(148,163,184,0.24);
+    border-radius: 14px;
     background: #ffffff;
     font-size: 12px;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.05);
+    color: #111111;
 }
 .games-list .game-strip:nth-child(even) {
     background: #f7f7f7;
@@ -615,16 +678,20 @@ with tab_objects[1 if not locks else 2]:
     white-space: nowrap;
 }
 @media (prefers-color-scheme: dark) {
-    .game-strip {
-        border-bottom-color: #334155;
-    color: #e5e7eb;
-        background: #0f172a;
+    .games-head {
+        color: #94a3b8;
     }
-    .games-list .game-strip:nth-child(even) {
-        background: #1e293b;
+    .game-strip {
+        border-color: #334155;
+        color: #e5e7eb;
+        background: #0f172a;
+        box-shadow: 0 8px 20px rgba(15,23,42,0.18);
     }
     .game-time {
         color: #94a3b8;
+    }
+    .games-list .game-strip:nth-child(even) {
+        background: #1e293b;
     }
 }
 </style>
@@ -633,6 +700,19 @@ with tab_objects[1 if not locks else 2]:
     )
 
     rows_html = []
+
+    rows_html.append(
+        """
+<div class="games-head">
+    <div>Time</div>
+    <div></div>
+    <div>Game</div>
+    <div></div>
+    <div>Spread</div>
+    <div>Total</div>
+</div>
+"""
+    )
 
     for _, r in engine.iterrows():
         rows_html.append(
@@ -666,14 +746,17 @@ with tab_objects[2 if not locks else 3]:
 
     st.header("Spread Bets")
 
-    for _, r in spread_bets.iterrows():
+    spread_rows = spread_bets.reset_index(drop=True)
 
-        lines = f"""
+    for i in range(0, len(spread_rows), 2):
+        cols = st.columns(2)
+        for col, (_, r) in zip(cols, spread_rows.iloc[i:i + 2].iterrows()):
+            with col:
+                lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
 <b style="color:#16a34a;">Edge:</b> {r['Spread Edge']:+.2f}
 """
-
-        render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+                render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green", compact=True)
 
 
 # =========================
@@ -684,14 +767,17 @@ with tab_objects[3 if not locks else 4]:
 
     st.header("Total Bets")
 
-    for _, r in total_bets.iterrows():
+    total_rows = total_bets.reset_index(drop=True)
 
-        lines = f"""
+    for i in range(0, len(total_rows), 2):
+        cols = st.columns(2)
+        for col, (_, r) in zip(cols, total_rows.iloc[i:i + 2].iterrows()):
+            with col:
+                lines = f"""
 <b>Bet:</b> {r['Bet']}<br>
 <b style="color:#16a34a;">Edge:</b> {r['Total Edge']:+.2f}
 """
-
-        render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green")
+                render_card(r["Game Time"], r["Game"], lines, r["Confidence"], glow="green", compact=True)
 
 
 # =========================
@@ -702,12 +788,12 @@ with tab_objects[4 if not locks else 5]:
 
     st.header("Engine")
 
-def edge_color(edge):
-    if edge > 0:
-        return "#16a34a"
-    if edge < 0:
-        return "#dc2626"
-    return "#6b7280"
+    def edge_color(edge):
+        if edge > 0:
+            return "#16a34a"
+        if edge < 0:
+            return "#dc2626"
+        return "#6b7280"
 
     def render_engine_card(row):
         st.markdown(
