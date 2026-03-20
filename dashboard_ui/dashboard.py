@@ -795,48 +795,102 @@ with tab_objects[4 if not locks else 5]:
             return "#dc2626"
         return "#6b7280"
 
+    st.markdown(
+        """
+<style>
+.engine-card {
+    border: 1px solid rgba(148,163,184,0.28);
+    border-radius: 14px;
+    padding: 12px 12px 10px 12px;
+    margin-bottom: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(148,163,184,0.05));
+    box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+    min-height: 195px;
+}
+.engine-grid {
+    display: grid;
+    grid-template-columns: 78px 1fr;
+    column-gap: 10px;
+    row-gap: 4px;
+    align-items: start;
+}
+.engine-label {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.engine-game {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #2563eb;
+    text-shadow: 0 0 10px rgba(37,99,235,0.10);
+}
+.engine-time {
+    font-size: 11px;
+    color: #94a3b8;
+}
+.engine-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #e2e8f0;
+}
+.engine-edge {
+    font-size: 15px;
+    font-weight: 800;
+}
+@media (prefers-color-scheme: dark) {
+    .engine-card {
+        border-color: rgba(51,65,85,0.9);
+        background: linear-gradient(180deg, rgba(15,23,42,0.86), rgba(30,41,59,0.96));
+        box-shadow: 0 8px 24px rgba(2,6,23,0.28);
+    }
+    .engine-label {
+        color: #94a3b8;
+    }
+    .engine-game {
+        color: #f8fafc;
+        text-shadow: 0 0 12px rgba(248,250,252,0.10);
+    }
+    .engine-time {
+        color: #cbd5e1;
+    }
+}
+</style>
+""",
+        unsafe_allow_html=True
+    )
+
     def render_engine_card(row):
         st.markdown(
             f"""
-<div style="
-border:1px solid rgba(148,163,184,0.28);
-border-radius:14px;
-padding:12px 12px 10px 12px;
-margin-bottom:10px;
-background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(148,163,184,0.05));
-box-shadow:0 8px 24px rgba(15,23,42,0.08);
-min-height:195px;
-">
-  <div style="
-    display:grid;
-    grid-template-columns:78px 1fr;
-    column-gap:10px;
-    row-gap:4px;
-    align-items:start;
-  ">
-    <div style="font-size:10px;color:#64748b;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Game Time</div>
-    <div style="font-size:16px;font-weight:700;line-height:1.15;color:#1d4ed8;text-shadow:0 0 10px rgba(37,99,235,0.14);">{row['Game']}</div>
+<div class="engine-card">
+  <div class="engine-grid">
+    <div class="engine-label">Game Time</div>
+    <div class="engine-game">{row['Game']}</div>
 
     <div></div>
-    <div style="font-size:11px;color:#94a3b8;">{row['Game Time']}</div>
+    <div class="engine-time">{row['Game Time']}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:2px;">Spread</div>
-    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Spread']:+.1f}</div>
+    <div class="engine-label" style="margin-top:2px;">Spread</div>
+    <div class="engine-value">{row['Spread']:+.1f}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
-    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Model Spread']:+.1f}</div>
+    <div class="engine-label">Model</div>
+    <div class="engine-value">{row['Model Spread']:+.1f}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
-    <div style="font-size:15px;font-weight:800;color:{edge_color(row['Spread Edge'])};">{row['Spread Edge']:+.1f}</div>
+    <div class="engine-label">Edge</div>
+    <div class="engine-edge" style="color:{edge_color(row['Spread Edge'])};">{row['Spread Edge']:+.1f}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-top:4px;">Total</div>
-    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Total']:.1f}</div>
+    <div class="engine-label" style="margin-top:4px;">Total</div>
+    <div class="engine-value">{row['Total']:.1f}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Model</div>
-    <div style="font-size:15px;font-weight:700;color:#e2e8f0;">{row['Model Total']:.1f}</div>
+    <div class="engine-label">Model</div>
+    <div class="engine-value">{row['Model Total']:.1f}</div>
 
-    <div style="font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Edge</div>
-    <div style="font-size:15px;font-weight:800;color:{edge_color(row['Total Edge'])};">{row['Total Edge']:+.1f}</div>
+    <div class="engine-label">Edge</div>
+    <div class="engine-edge" style="color:{edge_color(row['Total Edge'])};">{row['Total Edge']:+.1f}</div>
   </div>
 </div>
 """,
