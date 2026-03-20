@@ -10,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band
 from tournament import apply_seeds_to_dataframe
+from dashboard_ui.lock_storage import build_locks_rows, parse_locks_values
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
@@ -159,50 +160,7 @@ def load_locks():
         worksheet = sheet.worksheet(LOCKS_TAB_NAME)
         values = worksheet.get_all_values()
 
-        if len(values) < 2:
-            return []
-
-        headers = [str(h).strip().lower() for h in values[0]]
-
-        if headers == ["lock"]:
-            return [
-                {
-                    "source": "auto",
-                    "option": value[0],
-                    "time": "",
-                    "game": value[0],
-                    "bet_type": "",
-                    "bet": value[0],
-                    "edge": "",
-                    "confidence": "",
-                    "market_line": "",
-                }
-                for value in values[1:]
-                if value and value[0]
-            ]
-
-        records = []
-
-        for row in values[1:]:
-            padded = row + [""] * max(0, len(headers) - len(row))
-            record = dict(zip(headers, padded))
-
-            if not any(record.values()):
-                continue
-
-            records.append({
-                "source": record.get("source", "manual") or "manual",
-                "option": record.get("option", ""),
-                "time": record.get("time", ""),
-                "game": record.get("game", ""),
-                "bet_type": record.get("bet_type", ""),
-                "bet": record.get("bet", ""),
-                "edge": record.get("edge", ""),
-                "confidence": record.get("confidence", ""),
-                "market_line": record.get("market_line", ""),
-            })
-
-        return records
+        return parse_locks_values(values)
     except:
         return []
 
@@ -216,45 +174,7 @@ def save_locks(locks):
     except:
         worksheet = sheet.add_worksheet(title=LOCKS_TAB_NAME, rows="200", cols="1")
 
-    normalized = []
-
-    for lock in locks:
-        normalized.append({
-            "source": lock.get("source", "manual"),
-            "option": lock.get("option", ""),
-            "time": lock.get("time", ""),
-            "game": lock.get("game", ""),
-            "bet_type": lock.get("bet_type", ""),
-            "bet": lock.get("bet", ""),
-            "edge": lock.get("edge", ""),
-            "confidence": lock.get("confidence", ""),
-            "market_line": lock.get("market_line", ""),
-        })
-
-    deduped = []
-    seen = set()
-    for lock in normalized:
-        key = tuple(lock.items())
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append(lock)
-
-    rows = [
-        ["source", "option", "time", "game", "bet_type", "bet", "edge", "confidence", "market_line"]
-    ]
-    for lock in deduped:
-        rows.append([
-            lock["source"],
-            lock["option"],
-            lock["time"],
-            lock["game"],
-            lock["bet_type"],
-            lock["bet"],
-            lock["edge"],
-            lock["confidence"],
-            lock["market_line"],
-        ])
+    rows = build_locks_rows(locks)
 
     worksheet.clear()
     worksheet.update(rows)
