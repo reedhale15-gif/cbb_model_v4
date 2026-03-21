@@ -1,130 +1,82 @@
 [
   {
-    "HOME": "Kentucky",
-    "AWAY": "Santa Clara",
-    "COMMENCE_TIME": "2026-03-20T16:15:00Z",
-    "SPREAD": -3.0,
-    "TOTAL": 157.61,
-    "HOME_ML": -151.44
+    "HOME": "Michigan",
+    "AWAY": "Saint Louis",
+    "COMMENCE_TIME": "2026-03-21T16:10:00Z",
+    "SPREAD": -12.06,
+    "TOTAL": 161.44,
+    "HOME_ML": -784.33
   },
   {
-    "HOME": "Texas Tech",
-    "AWAY": "Akron",
-    "COMMENCE_TIME": "2026-03-20T16:40:00Z",
-    "SPREAD": -7.5,
-    "TOTAL": 156.0,
-    "HOME_ML": -319.33
+    "HOME": "Michigan St.",
+    "AWAY": "Louisville",
+    "COMMENCE_TIME": "2026-03-21T18:45:00Z",
+    "SPREAD": -5.0,
+    "TOTAL": 151.56,
+    "HOME_ML": -219.33
   },
   {
-    "HOME": "Arizona",
-    "AWAY": "LIU",
-    "COMMENCE_TIME": "2026-03-20T17:35:00Z",
-    "SPREAD": -30.69,
-    "TOTAL": 149.12,
-    "HOME_ML": -57500.0
+    "HOME": "Duke",
+    "AWAY": "TCU",
+    "COMMENCE_TIME": "2026-03-21T21:15:00Z",
+    "SPREAD": -12.22,
+    "TOTAL": 140.17,
+    "HOME_ML": -822.11
   },
   {
-    "HOME": "Virginia",
-    "AWAY": "Wright St.",
-    "COMMENCE_TIME": "2026-03-20T17:50:03Z",
-    "SPREAD": -17.78,
-    "TOTAL": 145.22,
-    "HOME_ML": -2955.67
+    "HOME": "Houston",
+    "AWAY": "Texas A&M",
+    "COMMENCE_TIME": "2026-03-21T22:10:00Z",
+    "SPREAD": -10.5,
+    "TOTAL": 142.94,
+    "HOME_ML": -548.33
   },
   {
-    "HOME": "Iowa St.",
-    "AWAY": "Tennessee St.",
-    "COMMENCE_TIME": "2026-03-20T18:50:00Z",
-    "SPREAD": -24.67,
-    "TOTAL": 147.78,
-    "HOME_ML": -9500.0
+    "HOME": "UNC Wilmington",
+    "AWAY": "Dayton",
+    "COMMENCE_TIME": "2026-03-21T23:00:00Z",
+    "SPREAD": 2.5,
+    "TOTAL": 138.67,
+    "HOME_ML": 127.5
   },
   {
-    "HOME": "Alabama",
-    "AWAY": "Hofstra",
-    "COMMENCE_TIME": "2026-03-20T19:15:56Z",
-    "SPREAD": -11.5,
-    "TOTAL": 158.28,
-    "HOME_ML": -771.44
+    "HOME": "Gonzaga",
+    "AWAY": "Texas",
+    "COMMENCE_TIME": "2026-03-21T23:10:00Z",
+    "SPREAD": -6.5,
+    "TOTAL": 147.33,
+    "HOME_ML": -268.67
   },
   {
-    "HOME": "Villanova",
-    "AWAY": "Utah St.",
-    "COMMENCE_TIME": "2026-03-20T20:10:00Z",
-    "SPREAD": 1.56,
-    "TOTAL": 146.89,
-    "HOME_ML": 107.22
+    "HOME": "Illinois",
+    "AWAY": "VCU",
+    "COMMENCE_TIME": "2026-03-21T23:50:00Z",
+    "SPREAD": -11.11,
+    "TOTAL": 150.67,
+    "HOME_ML": -621.11
   },
   {
-    "HOME": "Tennessee",
-    "AWAY": "Miami OH",
-    "COMMENCE_TIME": "2026-03-20T20:25:38Z",
-    "SPREAD": -11.5,
-    "TOTAL": 148.89,
-    "HOME_ML": -623.56
+    "HOME": "Nebraska",
+    "AWAY": "Vanderbilt",
+    "COMMENCE_TIME": "2026-03-22T00:45:00Z",
+    "SPREAD": 1.61,
+    "TOTAL": 146.67,
+    "HOME_ML": 107.0
   },
   {
-    "HOME": "Clemson",
-    "AWAY": "Iowa",
-    "COMMENCE_TIME": "2026-03-20T22:50:00Z",
-    "SPREAD": 2.11,
-    "TOTAL": 129.56,
-    "HOME_ML": 109.89
+    "HOME": "Nevada",
+    "AWAY": "Liberty",
+    "COMMENCE_TIME": "2026-03-22T01:00:00Z",
+    "SPREAD": -7.75,
+    "TOTAL": 147.17,
+    "HOME_ML": -365.83
   },
   {
-    "HOME": "St. John's",
-    "AWAY": "Northern Iowa",
-    "COMMENCE_TIME": "2026-03-20T23:10:00Z",
-    "SPREAD": -9.56,
-    "TOTAL": 131.67,
-    "HOME_ML": -535.89
-  },
-  {
-    "HOME": "UCLA",
-    "AWAY": "UCF",
-    "COMMENCE_TIME": "2026-03-20T23:25:00Z",
-    "SPREAD": -5.5,
-    "TOTAL": 152.28,
-    "HOME_ML": -230.89
-  },
-  {
-    "HOME": "Purdue",
-    "AWAY": "Queens",
-    "COMMENCE_TIME": "2026-03-20T23:35:00Z",
-    "SPREAD": -25.31,
-    "TOTAL": 162.5,
-    "HOME_ML": -11142.86
-  },
-  {
-    "HOME": "Florida",
-    "AWAY": "Prairie View A&M",
-    "COMMENCE_TIME": "2026-03-21T01:25:00Z",
-    "SPREAD": -35.43,
-    "TOTAL": 155.06,
-    "HOME_ML": -62500.0
-  },
-  {
-    "HOME": "Kansas",
-    "AWAY": "Cal Baptist",
-    "COMMENCE_TIME": "2026-03-21T01:45:00Z",
-    "SPREAD": -14.0,
-    "TOTAL": 138.17,
-    "HOME_ML": -1244.44
-  },
-  {
-    "HOME": "Connecticut",
-    "AWAY": "Furman",
-    "COMMENCE_TIME": "2026-03-21T02:00:00Z",
-    "SPREAD": -20.5,
-    "TOTAL": 136.5,
-    "HOME_ML": -4888.89
-  },
-  {
-    "HOME": "Miami FL",
-    "AWAY": "Missouri",
-    "COMMENCE_TIME": "2026-03-21T02:10:00Z",
-    "SPREAD": -1.89,
-    "TOTAL": 146.83,
-    "HOME_ML": -132.33
+    "HOME": "Arkansas",
+    "AWAY": "High Point",
+    "COMMENCE_TIME": "2026-03-22T01:45:00Z",
+    "SPREAD": -11.56,
+    "TOTAL": 169.61,
+    "HOME_ML": -780.33
   }
 ]
