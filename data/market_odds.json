@@ -1,114 +1,34 @@
 [
   {
     "HOME": "Purdue",
-    "AWAY": "Miami FL",
-    "COMMENCE_TIME": "2026-03-22T16:10:00Z",
-    "SPREAD": -7.61,
-    "TOTAL": 147.0,
-    "HOME_ML": -362.78
+    "AWAY": "Texas",
+    "COMMENCE_TIME": "2026-03-26T23:10:36Z",
+    "SPREAD": -7.5,
+    "TOTAL": 147.56,
+    "HOME_ML": -366.0
   },
   {
-    "HOME": "Iowa St.",
-    "AWAY": "Kentucky",
-    "COMMENCE_TIME": "2026-03-22T18:45:00Z",
-    "SPREAD": -5.11,
-    "TOTAL": 146.39,
-    "HOME_ML": -228.44
-  },
-  {
-    "HOME": "Wake Forest",
-    "AWAY": "Illinois St.",
-    "COMMENCE_TIME": "2026-03-22T20:30:00Z",
-    "SPREAD": -7.75,
-    "TOTAL": 152.33,
-    "HOME_ML": -358.33
-  },
-  {
-    "HOME": "Kansas",
-    "AWAY": "St. John's",
-    "COMMENCE_TIME": "2026-03-22T21:15:00Z",
-    "SPREAD": 3.5,
-    "TOTAL": 144.5,
-    "HOME_ML": 142.78
-  },
-  {
-    "HOME": "Virginia",
-    "AWAY": "Tennessee",
-    "COMMENCE_TIME": "2026-03-22T22:10:00Z",
-    "SPREAD": 1.22,
-    "TOTAL": 137.61,
-    "HOME_ML": -105.56
-  },
-  {
-    "HOME": "Auburn",
-    "AWAY": "Seattle",
-    "COMMENCE_TIME": "2026-03-22T22:30:00Z",
-    "SPREAD": -13.5,
-    "TOTAL": 146.67,
-    "HOME_ML": -1108.33
-  },
-  {
-    "HOME": "Tulsa",
-    "AWAY": "UNLV",
-    "COMMENCE_TIME": "2026-03-22T23:00:00Z",
-    "SPREAD": -4.67,
-    "TOTAL": 161.33,
-    "HOME_ML": -200.0
-  },
-  {
-    "HOME": "Florida",
+    "HOME": "Nebraska",
     "AWAY": "Iowa",
-    "COMMENCE_TIME": "2026-03-22T23:10:00Z",
-    "SPREAD": -10.5,
-    "TOTAL": 145.28,
-    "HOME_ML": -637.44
+    "COMMENCE_TIME": "2026-03-26T23:30:00Z",
+    "SPREAD": -1.5,
+    "TOTAL": 131.56,
+    "HOME_ML": -129.67
   },
   {
     "HOME": "Arizona",
-    "AWAY": "Utah St.",
-    "COMMENCE_TIME": "2026-03-22T23:50:00Z",
-    "SPREAD": -11.83,
-    "TOTAL": 154.5,
-    "HOME_ML": -808.22
+    "AWAY": "Arkansas",
+    "COMMENCE_TIME": "2026-03-27T01:45:00Z",
+    "SPREAD": -7.83,
+    "TOTAL": 165.33,
+    "HOME_ML": -372.78
   },
   {
-    "HOME": "New Mexico",
-    "AWAY": "George Washington",
-    "COMMENCE_TIME": "2026-03-23T00:00:00Z",
-    "SPREAD": -7.5,
-    "TOTAL": 161.67,
-    "HOME_ML": -333.33
-  },
-  {
-    "HOME": "Oklahoma St.",
-    "AWAY": "Wichita St.",
-    "COMMENCE_TIME": "2026-03-23T00:30:00Z",
-    "SPREAD": -2.5,
-    "TOTAL": 164.5,
-    "HOME_ML": -141.83
-  },
-  {
-    "HOME": "Connecticut",
-    "AWAY": "UCLA",
-    "COMMENCE_TIME": "2026-03-23T00:45:00Z",
-    "SPREAD": -4.56,
-    "TOTAL": 136.61,
-    "HOME_ML": -200.0
-  },
-  {
-    "HOME": "California",
-    "AWAY": "Saint Joseph's",
-    "COMMENCE_TIME": "2026-03-23T01:00:00Z",
-    "SPREAD": -5.5,
-    "TOTAL": 151.5,
-    "HOME_ML": -238.33
-  },
-  {
-    "HOME": "Alabama",
-    "AWAY": "Texas Tech",
-    "COMMENCE_TIME": "2026-03-23T01:45:41Z",
-    "SPREAD": 1.28,
-    "TOTAL": 164.33,
-    "HOME_ML": 8.67
+    "HOME": "Houston",
+    "AWAY": "Illinois",
+    "COMMENCE_TIME": "2026-03-27T02:05:00Z",
+    "SPREAD": -2.61,
+    "TOTAL": 140.0,
+    "HOME_ML": -154.11
   }
 ]
