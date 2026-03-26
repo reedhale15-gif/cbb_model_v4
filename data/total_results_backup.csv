@@ -1,23 +1,23 @@
 Date,Home,Away,Market Total,Model Total,Total Edge,Total Bet,Total Confidence,Total W/L
 2026-03-26,(2) Houston,(3) Illinois,140.0,148.0,+8.00,Over 140.0,A,
-2026-03-22,(1) Arizona,(9) Utah St.,154.5,166.1,11.60,Over 154.5,B,L
 2026-03-22,(2) Purdue,(7) Miami FL,147.0,156.0,9.00,Over 147.0,A,W
+2026-03-22,(1) Arizona,(9) Utah St.,154.5,166.1,11.60,Over 154.5,B,L
 2026-03-21,(1) Michigan,(9) Saint Louis,161.5,167.5,6.00,Over 161.5,A,W
 2026-03-21,(4) Nebraska,(5) Vanderbilt,146.5,156.2,9.70,Over 146.5,A,W
 2026-03-21,(2) Houston,(10) Texas A&M,143.0,154.3,11.30,Over 143.0,B,L
 2026-03-20,(4) Alabama,(13) Hofstra,158.5,152.3,-6.20,Under 158.5,B,L
 2026-03-20,(4) Kansas,(13) Cal Baptist,138.0,144.1,6.10,Over 138.0,A,L
-2026-03-19,(8) Georgia,(9) Saint Louis,168.5,161.0,-7.50,Under 168.5,B,L
 2026-03-19,(2) Houston,(15) Idaho,138.0,144.0,6.00,Over 138.0,A,L
 2026-03-19,(1) Duke,(16) Siena,136.5,143.8,7.30,Over 136.0,A,P
 2026-03-19,(5) Wisconsin,(12) High Point,162.0,153.0,-9.00,Under 162.0,C,L
+2026-03-19,(8) Georgia,(9) Saint Louis,168.5,161.0,-7.50,Under 168.5,B,L
 2026-03-18,Bradley,Dayton,141.5,151.3,9.80,Over 141.5,A,W
 2026-03-18,(16) Lehigh,(16) Prairie View A&M,141,131.9,-9.10,Under 141.0,C,W
 2026-03-18,Nevada,Murray St.,161,154.9,-6.10,Under 161.0,B,L
 2026-03-17,(11) Texas,(11) N.C. State,157.5,168.4,10.90,Over 157.5,B,L
+2026-03-14,Utah St.,San Diego St.,145.5,153.2,7.70,Over 145.5,C,L
 2026-03-14,UCLA,Purdue,144,156,12.00,Over 144.0,B,L
 2026-03-14,Wichita St.,Tulsa,152,140.5,-11.50,Under 152.0,B,W
-2026-03-14,Utah St.,San Diego St.,145.5,153.2,7.70,Over 145.5,C,L
 2026-03-13,UC Irvine,Cal St. Northridge,149,140.5,-8.50,Under 149.0,C,L
 2026-03-13,Howard,South Carolina St.,144.5,133.2,-11.30,Under 144.5,B,W
 2026-03-13,VCU,Duquesne,153.5,145.3,-8.20,Under 153.5,C,W
@@ -27,72 +27,107 @@ Date,Home,Away,Market Total,Model Total,Total Edge,Total Bet,Total Confidence,To
 2026-03-13,Arkansas,Oklahoma,168.5,162.2,-6.30,Under 168.5,C,W
 2026-03-13,Connecticut,Georgetown,139.5,151.2,11.70,Over 139.5,B,L
 2026-03-13,Florida,Kentucky,160,171.5,11.50,Over 160.0,B,L
-2026-03-12,Missouri,Kentucky,149,156.2,7.20,Over 149.0,C,W
-2026-03-12,Connecticut,Xavier,151.5,157.5,6.00,Over 151.5,C,W
-2026-03-12,Grand Canyon,Nevada,137.5,146.9,9.40,Over 137.5,C,W
-2026-03-12,Seton Hall,Creighton,132.5,143.5,11.00,Over 132.5,B,W
-2026-03-12,Louisiana Tech,Middle Tennessee,131.5,124.9,-6.60,Under 131.5,C,L
 2026-03-12,Villanova,Georgetown,140.5,147.5,7.00,Over 140.5,C,W
-2026-03-12,Cal St. Northridge,UC San Diego,150,141.3,-8.70,Under 150.0,C,P
-2026-03-12,Davidson,Loyola Chicago,132.5,124.6,-7.90,Under 132.5,C,W
-2026-03-12,Virginia,N.C. State,150,161.8,11.80,Over 150.0,B,W
 2026-03-12,George Mason,St. Bonaventure,141.5,130.9,-10.60,Under 141.5,B,W
+2026-03-12,Virginia,N.C. State,150,161.8,11.80,Over 150.0,B,W
+2026-03-12,Davidson,Loyola Chicago,132.5,124.6,-7.90,Under 132.5,C,W
+2026-03-12,Cal St. Northridge,UC San Diego,150,141.3,-8.70,Under 150.0,C,P
+2026-03-12,Louisiana Tech,Middle Tennessee,131.5,124.9,-6.60,Under 131.5,C,L
+2026-03-12,Seton Hall,Creighton,132.5,143.5,11.00,Over 132.5,B,W
+2026-03-12,Grand Canyon,Nevada,137.5,146.9,9.40,Over 137.5,C,W
+2026-03-12,Connecticut,Xavier,151.5,157.5,6.00,Over 151.5,C,W
+2026-03-12,Missouri,Kentucky,149,156.2,7.20,Over 149.0,C,W
+2026-03-11,West Virginia,BYU,141.00,155.20,14.20,Over 141.0,B,L
+2026-03-11,Nevada,Air Force,141.00,129.20,-11.80,Under 141.0,B,W
+2026-03-11,Lehigh,Boston University,138.00,121.10,-16.90,Under 138.0,A,W
+2026-03-11,Clemson,Wake Forest,140.00,156.00,16.00,Over 140.0,A,L
+2026-03-11,Sam Houston St.,New Mexico St.,153.50,142.80,-10.70,Under 153.5,B,W
+2026-03-11,Indiana,Northwestern,142,155.6,13.60,Over 142.0,B,L
+2026-03-11,Florida St.,California,153.00,159.50,6.50,Over 153.0,C,W
+2026-03-11,Kentucky,LSU,151.5,158.4,6.90,Over 151.5,C,W
+2026-03-11,Minnesota,Rutgers,135.00,143.10,8.10,Over 135.0,C,W
+2026-03-11,Texas,Mississippi,144.50,154.20,9.70,Over 144.5,C,L
+2026-03-11,Stephen F. Austin,McNeese St.,134.50,147.60,13.10,Over 134.5,B,W
+2026-03-11,Richmond,Loyola Chicago,142.00,129.70,-12.30,Under 142.0,B,P
+2026-03-11,UC San Diego,Cal Poly,160.50,144.50,-16.00,Under 160.5,A,W
 2026-03-11,UCF,Cincinnati,149.50,163.00,13.50,Over 149.5,B,L
-2026-03-11,Liberty,Missouri St.,143,133.2,-9.80,Under 143.0,C,L
 2026-03-11,Iowa St.,Arizona St.,149,168.2,19.20,Over 149.0,A,L
 2026-03-11,Memphis,Tulane,151.50,140.10,-11.40,Under 151.5,B,W
-2026-03-11,UC San Diego,Cal Poly,160.50,144.50,-16.00,Under 160.5,A,W
+2026-03-11,Liberty,Missouri St.,143,133.2,-9.80,Under 143.0,C,L
 2026-03-11,DePaul,Georgetown,132.50,146.70,14.20,Over 132.5,B,L
 2026-03-11,Louisville,SMU,163.50,173.40,9.90,Over 163.5,C,L
 2026-03-11,Washington,USC,152.50,158.80,6.30,Over 152.5,C,W
 2026-03-11,N.C. State,Pittsburgh,161.50,152.20,-9.30,Under 161.5,C,L
-2026-03-11,Richmond,Loyola Chicago,142.00,129.70,-12.30,Under 142.0,B,P
-2026-03-11,West Virginia,BYU,141.00,155.20,14.20,Over 141.0,B,L
-2026-03-11,Texas,Mississippi,144.50,154.20,9.70,Over 144.5,C,L
-2026-03-11,Stephen F. Austin,McNeese St.,134.50,147.60,13.10,Over 134.5,B,W
-2026-03-11,Minnesota,Rutgers,135.00,143.10,8.10,Over 135.0,C,W
-2026-03-11,Kentucky,LSU,151.5,158.4,6.90,Over 151.5,C,W
-2026-03-11,Florida St.,California,153.00,159.50,6.50,Over 153.0,C,W
-2026-03-11,Indiana,Northwestern,142,155.6,13.60,Over 142.0,B,L
-2026-03-11,Sam Houston St.,New Mexico St.,153.50,142.80,-10.70,Under 153.5,B,W
-2026-03-11,Clemson,Wake Forest,140.00,156.00,16.00,Over 140.0,A,L
-2026-03-11,Lehigh,Boston University,138.00,121.10,-16.90,Under 138.0,A,W
-2026-03-11,Nevada,Air Force,141.00,129.20,-11.80,Under 141.0,B,W
-2026-03-10,Vermont,NJIT,135,122.3,-12.70,Under 135.0,B,W
+2026-03-10,SMU,Syracuse,154.5,161.1,6.60,Over 154.5,C,W
+2026-03-10,Eastern Washington,Idaho,151.5,141.2,-10.30,Under 151.5,B,W
+2026-03-10,Arizona St.,Baylor,152.5,162.1,9.60,Over 152.5,C,W
+2026-03-10,Cincinnati,Utah,137.5,154,16.50,Over 137.5,A,W
+2026-03-10,Wright St.,Detroit Mercy,151.5,141.1,-10.40,Under 151.5,B,W
+2026-03-10,FIU,Missouri St.,153,139.3,-13.70,Under 153.0,B,W
+2026-03-10,Virginia Tech,Wake Forest,151.5,158.2,6.70,Over 151.5,C,W
+2026-03-10,Oregon,Maryland,138.5,144.7,6.20,Over 138.5,C,L
+2026-03-10,Jackson St.,Grambling St.,141.5,122.7,-18.80,Under 141.5,A,W
+2026-03-10,McNeese St.,UT Rio Grande Valley,140,147.7,7.70,Over 140.0,C,W
+2026-03-10,UMBC,UMass Lowell,146.50,128.80,-17.70,Under 146.5,A,L
+2026-03-10,Stanford,Pittsburgh,137.5,147.6,10.10,Over 137.5,B,L
+2026-03-10,Gonzaga,Santa Clara,159.5,176.3,16.80,Over 159.5,A,L
 2026-03-10,LIU,Mercyhurst,136.5,125.9,-10.60,Under 136.5,B,L
 2026-03-10,Hofstra,Monmouth,133,140.6,7.60,Over 133.0,C,W
-2026-03-10,McNeese St.,UT Rio Grande Valley,140,147.7,7.70,Over 140.0,C,W
-2026-03-10,Stanford,Pittsburgh,137.5,147.6,10.10,Over 137.5,B,L
+2026-03-10,Vermont,NJIT,135,122.3,-12.70,Under 135.0,B,W
 2026-03-10,Jacksonville St.,New Mexico St.,140,132.5,-7.50,Under 140.0,C,W
 2026-03-10,Stephen F. Austin,Texas A&M Corpus Chris,134.5,142.6,8.10,Over 134.5,C,L
 2026-03-10,Merrimack,Siena,124.5,130.7,6.20,Over 124.5,C,L
-2026-03-10,Gonzaga,Santa Clara,159.5,176.3,16.80,Over 159.5,A,L
-2026-03-10,UMBC,UMass Lowell,146.50,128.80,-17.70,Under 146.5,A,L
-2026-03-10,SMU,Syracuse,154.5,161.1,6.60,Over 154.5,C,W
-2026-03-10,Jackson St.,Grambling St.,141.5,122.7,-18.80,Under 141.5,A,W
-2026-03-10,Oregon,Maryland,138.5,144.7,6.20,Over 138.5,C,L
-2026-03-10,Virginia Tech,Wake Forest,151.5,158.2,6.70,Over 151.5,C,W
-2026-03-10,FIU,Missouri St.,153,139.3,-13.70,Under 153.0,B,W
-2026-03-10,Wright St.,Detroit Mercy,151.5,141.1,-10.40,Under 151.5,B,W
-2026-03-10,Cincinnati,Utah,137.5,154,16.50,Over 137.5,A,W
-2026-03-10,Arizona St.,Baylor,152.5,162.1,9.60,Over 152.5,C,W
-2026-03-10,Eastern Washington,Idaho,151.5,141.2,-10.30,Under 151.5,B,W
 2026-03-09,Hofstra,Towson,132,143.6,11.60,Over 132.0,B,W
 2026-03-09,Troy,Georgia Southern,152.5,143.1,-9.40,Under 152.5,C,W
 2026-03-09,Grambling St.,Mississippi Valley St.,135.5,117.7,-17.80,Under 135.5,A,W
 2026-03-09,Wright St.,Northern Kentucky,157.50,149.00,-8.50,Under 157.5,C,L
 2026-03-09,Eastern Washington,Weber St.,154.50,146.30,-8.20,Under 154.5,C,L
 2026-03-09,Gonzaga,Oregon St.,145.00,163.00,18.00,Over 145.0,A,L
-2026-03-08,Santa Clara,Pacific,149.00,162.80,13.80,Over 149.0,A-,L
-2026-03-08,Central Arkansas,Queens,156.00,145.80,-10.20,Under 156.0,B,L
-2026-03-08,East Tennessee St.,Western Carolina,147.50,140.50,-7.00,Under 147.5,C,W
-2026-03-08,New Orleans,Houston Christian,142.50,133.80,-8.70,Under 142.5,C,W
-2026-03-08,Merrimack,Marist,125.00,137.30,12.30,Over 125.0,A-,L
 2026-03-08,Green Bay,Northern Kentucky,147.00,140.70,-6.30,Under 147.0,C,L
-2026-03-08,Lehigh,Colgate,140.00,131.10,-8.90,Under 140.0,C,L
-2026-03-08,Furman,UNC Greensboro,148.50,133.50,-15.00,Under 148.5,A,L
-2026-03-08,Rutgers,Penn St.,140.00,148.20,8.20,Over 140.0,C,L
 2026-03-08,Nicholls St.,Northwestern St.,139.00,130.60,-8.40,Under 139.0,C,W
+2026-03-08,Furman,UNC Greensboro,148.50,133.50,-15.00,Under 148.5,A,L
+2026-03-08,Lehigh,Colgate,140.00,131.10,-8.90,Under 140.0,C,L
+2026-03-08,Rutgers,Penn St.,140.00,148.20,8.20,Over 140.0,C,L
+2026-03-08,New Orleans,Houston Christian,142.50,133.80,-8.70,Under 142.5,C,W
+2026-03-08,East Tennessee St.,Western Carolina,147.50,140.50,-7.00,Under 147.5,C,W
+2026-03-08,Central Arkansas,Queens,156.00,145.80,-10.20,Under 156.0,B,L
+2026-03-08,Santa Clara,Pacific,149.00,162.80,13.80,Over 149.0,A-,L
+2026-03-08,Merrimack,Marist,125.00,137.30,12.30,Over 125.0,A-,L
+2026-03-07,Clemson,Georgia Tech,145.50,154.40,8.90,Over 145.5,C,W
+2026-03-07,DePaul,Butler,142.50,153.80,11.30,Over 142.5,B,W
+2026-03-07,Samford,Furman,147.00,133.00,-14.00,Under 147.0,A-,L
+2026-03-07,FIU,Western Kentucky,160.50,148.00,-12.50,Under 160.5,A-,W
+2026-03-07,Utah St.,New Mexico,157.00,168.00,11.00,Over 157.0,B,W
+2026-03-07,Vermont,Bryant,131.50,114.40,-17.10,Under 131.5,A,L
+2026-03-07,Baylor,Utah,149.50,155.50,6.00,Over 149.5,C,W
+2026-03-07,TCU,Cincinnati,140.00,159.90,19.90,Over 140.0,A,L
+2026-03-07,LSU,Texas A&M,159.50,166.30,6.80,Over 159.5,C,W
+2026-03-07,Central Arkansas,Florida Gulf Coast,145.50,138.30,-7.20,Under 145.5,C,W
+2026-03-07,Colorado St.,Boise St.,143.50,149.80,6.30,Over 143.5,C,W
+2026-03-07,Marquette,Connecticut,143.00,161.60,18.60,Over 143.0,A,L
+2026-03-07,Drexel,Northeastern,139.50,130.40,-9.10,Under 139.5,C,L
+2026-03-07,UTEP,Jacksonville St.,136.50,128.60,-7.90,Under 136.5,C,W
+2026-03-07,San Jose St.,Wyoming,148.50,138.90,-9.60,Under 148.5,C,L
+2026-03-07,New Mexico St.,Kennesaw St.,154.00,143.30,-10.70,Under 154.0,B,L
+2026-03-07,Ohio St.,Indiana,148.50,167.30,18.80,Over 148.5,A,W
+2026-03-07,Villanova,Xavier,153.50,160.00,6.50,Over 153.5,C,W
+2026-03-07,Syracuse,Pittsburgh,142.00,148.70,6.70,Over 142.0,C,L
+2026-03-07,Wake Forest,California,152.00,159.30,7.30,Over 152.0,C,W
+2026-03-07,Kansas,Kansas St.,152.00,168.70,16.70,Over 152.0,A,W
+2026-03-07,Winthrop,Presbyterian,145.50,132.60,-12.90,Under 145.5,A-,W
+2026-03-07,Mercer,Western Carolina,153.50,138.10,-15.40,Under 153.5,A,W
+2026-03-07,Towson,Hampton,131.00,119.80,-11.20,Under 131.0,B,L
+2026-03-07,Harvard,Columbia,143.50,128.30,-15.20,Under 143.5,A,L
+2026-03-07,Idaho,Sacramento St.,158.50,140.50,-18.00,Under 158.5,A,W
+2026-03-07,Bradley,Northern Iowa,125.50,143.50,18.00,Over 125.5,A,W
+2026-03-07,Missouri St.,Middle Tennessee,145.50,135.90,-9.60,Under 145.5,C,W
+2026-03-07,George Mason,Saint Louis,145.50,156.40,10.90,Over 145.5,B,L
+2026-03-07,Mercyhurst,Stonehill,134.50,119.30,-15.20,Under 134.5,A,W
+2026-03-07,Quinnipiac,Marist,131.00,137.60,6.60,Over 131.0,C,W
+2026-03-07,Coastal Carolina,Georgia Southern,148.50,136.00,-12.50,Under 148.5,A-,L
+2026-03-07,St. Thomas,North Dakota,151.50,140.60,-10.90,Under 151.5,B,W
+2026-03-07,Cal St. Northridge,Cal St. Fullerton,170.50,151.90,-18.60,Under 170.5,A,W
+2026-03-07,Florida St.,SMU,159.00,168.20,9.20,Over 159.0,C,W
 2026-03-07,High Point,UNC Asheville,147.50,140.80,-6.70,Under 147.5,C,W
 2026-03-07,Tennessee St.,Morehead St.,145.50,131.20,-14.30,Under 145.5,A-,L
 2026-03-07,Stony Brook,Campbell,148.50,137.10,-11.40,Under 148.5,B,L
@@ -103,147 +138,134 @@ Date,Home,Away,Market Total,Model Total,Total Edge,Total Bet,Total Confidence,To
 2026-03-07,Liberty,Sam Houston St.,155.50,148.20,-7.30,Under 155.5,C,W
 2026-03-07,Minnesota,Northwestern,132.00,150.90,18.90,Over 132.0,A,W
 2026-03-07,USC,UCLA,149.50,164.40,14.90,Over 149.5,A-,W
-2026-03-07,Grand Canyon,Fresno St.,146.50,153.80,7.30,Over 146.5,C,L
 2026-03-07,N.C. State,Stanford,152.50,165.20,12.70,Over 152.5,A-,W
 2026-03-07,Hawaii,Long Beach St.,149.00,142.70,-6.30,Under 149.0,C,L
 2026-03-07,Illinois Chicago,Drake,144.50,134.70,-9.80,Under 144.5,C,W
-2026-03-07,Cal St. Northridge,Cal St. Fullerton,170.50,151.90,-18.60,Under 170.5,A,W
+2026-03-07,Grand Canyon,Fresno St.,146.50,153.80,7.30,Over 146.5,C,L
 2026-03-07,Texas,Oklahoma,154.50,163.60,9.10,Over 154.5,C,W
-2026-03-07,NJIT,Maine,133.50,115.80,-17.70,Under 133.5,A,W
-2026-03-07,Austin Peay,Queens,162.00,143.50,-18.50,Under 162.0,A,L
-2026-03-07,Virginia,Virginia Tech,146.50,160.40,13.90,Over 146.5,A,W
-2026-03-07,Oklahoma St.,Houston,148.50,165.40,16.90,Over 148.5,A,W
-2026-03-07,LIU,Wagner,139.00,126.40,-12.60,Under 139.0,A-,W
-2026-03-07,Delaware,Louisiana Tech,132.00,124.20,-7.80,Under 132.0,C,W
 2026-03-07,Miami FL,Louisville,157.00,172.30,15.30,Over 157.0,A,W
-2026-03-07,Loyola Chicago,George Washington,149.50,141.80,-7.70,Under 149.5,C,W
-2026-03-07,BYU,Texas Tech,159.00,175.90,16.90,Over 159.0,A,L
-2026-03-07,Missouri,Arkansas,162.00,174.00,12.00,Over 162.0,A,W
-2026-03-07,East Tennessee St.,The Citadel,139.00,121.90,-17.10,Under 139.0,A,L
-2026-03-07,Purdue,Wisconsin,157.50,176.60,19.10,Over 157.5,A,W
 2026-03-07,Yale,Princeton,138.00,129.70,-8.30,Under 138.0,C,W
-2026-03-07,Florida St.,SMU,159.00,168.20,9.20,Over 159.0,C,W
-2026-03-07,St. Thomas,North Dakota,151.50,140.60,-10.90,Under 151.5,B,W
-2026-03-07,TCU,Cincinnati,140.00,159.90,19.90,Over 140.0,A,L
-2026-03-07,Quinnipiac,Marist,131.00,137.60,6.60,Over 131.0,C,W
-2026-03-07,Drexel,Northeastern,139.50,130.40,-9.10,Under 139.5,C,L
-2026-03-07,Marquette,Connecticut,143.00,161.60,18.60,Over 143.0,A,L
-2026-03-07,Colorado St.,Boise St.,143.50,149.80,6.30,Over 143.5,C,W
-2026-03-07,Central Arkansas,Florida Gulf Coast,145.50,138.30,-7.20,Under 145.5,C,W
-2026-03-07,LSU,Texas A&M,159.50,166.30,6.80,Over 159.5,C,W
-2026-03-07,Clemson,Georgia Tech,145.50,154.40,8.90,Over 145.5,C,W
-2026-03-07,Baylor,Utah,149.50,155.50,6.00,Over 149.5,C,W
-2026-03-07,Vermont,Bryant,131.50,114.40,-17.10,Under 131.5,A,L
-2026-03-07,Utah St.,New Mexico,157.00,168.00,11.00,Over 157.0,B,W
-2026-03-07,FIU,Western Kentucky,160.50,148.00,-12.50,Under 160.5,A-,W
-2026-03-07,Samford,Furman,147.00,133.00,-14.00,Under 147.0,A-,L
-2026-03-07,DePaul,Butler,142.50,153.80,11.30,Over 142.5,B,W
-2026-03-07,San Jose St.,Wyoming,148.50,138.90,-9.60,Under 148.5,C,L
-2026-03-07,UTEP,Jacksonville St.,136.50,128.60,-7.90,Under 136.5,C,W
-2026-03-07,Ohio St.,Indiana,148.50,167.30,18.80,Over 148.5,A,W
-2026-03-07,Villanova,Xavier,153.50,160.00,6.50,Over 153.5,C,W
-2026-03-07,Syracuse,Pittsburgh,142.00,148.70,6.70,Over 142.0,C,L
-2026-03-07,Wake Forest,California,152.00,159.30,7.30,Over 152.0,C,W
-2026-03-07,Kansas,Kansas St.,152.00,168.70,16.70,Over 152.0,A,W
-2026-03-07,Winthrop,Presbyterian,145.50,132.60,-12.90,Under 145.5,A-,W
-2026-03-07,Mercer,Western Carolina,153.50,138.10,-15.40,Under 153.5,A,W
-2026-03-07,Towson,Hampton,131.00,119.80,-11.20,Under 131.0,B,L
-2026-03-07,Harvard,Columbia,143.50,128.30,-15.20,Under 143.5,A,L
-2026-03-07,New Mexico St.,Kennesaw St.,154.00,143.30,-10.70,Under 154.0,B,L
-2026-03-07,Idaho,Sacramento St.,158.50,140.50,-18.00,Under 158.5,A,W
-2026-03-07,Bradley,Northern Iowa,125.50,143.50,18.00,Over 125.5,A,W
-2026-03-07,Coastal Carolina,Georgia Southern,148.50,136.00,-12.50,Under 148.5,A-,L
-2026-03-07,Missouri St.,Middle Tennessee,145.50,135.90,-9.60,Under 145.5,C,W
-2026-03-07,George Mason,Saint Louis,145.50,156.40,10.90,Over 145.5,B,L
-2026-03-07,Mercyhurst,Stonehill,134.50,119.30,-15.20,Under 134.5,A,W
-2026-03-06,Ball St.,Central Michigan,134.00,125.10,-8.90,Under 134.0,C,L
-2026-03-06,Radford,Presbyterian,146.50,129.10,-17.40,Under 146.5,A,L
+2026-03-07,Purdue,Wisconsin,157.50,176.60,19.10,Over 157.5,A,W
+2026-03-07,NJIT,Maine,133.50,115.80,-17.70,Under 133.5,A,W
+2026-03-07,Missouri,Arkansas,162.00,174.00,12.00,Over 162.0,A,W
+2026-03-07,BYU,Texas Tech,159.00,175.90,16.90,Over 159.0,A,L
+2026-03-07,Loyola Chicago,George Washington,149.50,141.80,-7.70,Under 149.5,C,W
+2026-03-07,East Tennessee St.,The Citadel,139.00,121.90,-17.10,Under 139.0,A,L
+2026-03-07,Delaware,Louisiana Tech,132.00,124.20,-7.80,Under 132.0,C,W
+2026-03-07,LIU,Wagner,139.00,126.40,-12.60,Under 139.0,A-,W
+2026-03-07,Oklahoma St.,Houston,148.50,165.40,16.90,Over 148.5,A,W
+2026-03-07,Virginia,Virginia Tech,146.50,160.40,13.90,Over 146.5,A,W
+2026-03-07,Austin Peay,Queens,162.00,143.50,-18.50,Under 162.0,A,L
+2026-03-06,West Virginia,UCF,140.00,155.30,15.30,Over 140.0,A,L
+2026-03-06,Brown,Penn,145.50,135.40,-10.10,Under 145.5,B,W
+2026-03-06,Bradley,Valparaiso,134.00,140.60,6.60,Over 134.0,C,W
+2026-03-06,Dayton,VCU,147.50,160.20,12.70,Over 147.5,A,L
+2026-03-06,Akron,Northern Illinois,155.50,140.80,-14.70,Under 155.5,B,W
+2026-03-06,Toledo,Buffalo,155.50,139.10,-16.40,Under 155.5,A,L
+2026-03-06,Austin Peay,Stetson,152.50,134.50,-18.00,Under 152.5,A,W
+2026-03-06,UNC Asheville,Longwood,140.50,128.10,-12.40,Under 140.5,A,L
+2026-03-06,Kent St.,Western Michigan,158.50,139.20,-19.30,Under 158.5,A,L
+2026-03-06,South Alabama,Georgia Southern,148.00,134.80,-13.20,Under 148.0,B,L
+2026-03-06,South Dakota,Nebraska Omaha,149.50,133.20,-16.30,Under 149.5,A,L
+2026-03-06,Seattle,San Diego,139.50,159.30,19.80,Over 139.5,A,L
+2026-03-06,San Diego St.,UNLV,153.50,161.20,7.70,Over 153.5,C,W
+2026-03-06,Washington St.,Portland,151.50,145.20,-6.30,Under 151.5,C,W
 2026-03-06,Merrimack,Sacred Heart,141.50,130.50,-11.00,Under 141.5,B,W
 2026-03-06,Ohio,Miami OH,159.60,167.80,8.18,Over 159.6,C,W
 2026-03-06,Morehead St.,Southeast Missouri St.,141.00,128.80,-12.20,Under 141.0,A,W
-2026-03-06,San Diego St.,UNLV,153.50,161.20,7.70,Over 153.5,C,W
+2026-03-06,Radford,Presbyterian,146.50,129.10,-17.40,Under 146.5,A,L
 2026-03-06,High Point,Gardner Webb,153.00,133.10,-19.90,Under 153.0,A,W
+2026-03-06,Ball St.,Central Michigan,134.00,125.10,-8.90,Under 134.0,C,L
 2026-03-06,Lipscomb,Florida Gulf Coast,150.50,135.40,-15.10,Under 150.5,A,W
 2026-03-06,Illinois St.,Northern Iowa,125.00,144.80,19.80,Over 125.0,A,W
-2026-03-06,Washington St.,Portland,151.50,145.20,-6.30,Under 151.5,C,W
-2026-03-06,Seattle,San Diego,139.50,159.30,19.80,Over 139.5,A,L
-2026-03-06,West Virginia,UCF,140.00,155.30,15.30,Over 140.0,A,L
-2026-03-06,South Alabama,Georgia Southern,148.00,134.80,-13.20,Under 148.0,B,L
-2026-03-06,Kent St.,Western Michigan,158.50,139.20,-19.30,Under 158.5,A,L
-2026-03-06,UNC Asheville,Longwood,140.50,128.10,-12.40,Under 140.5,A,L
-2026-03-06,South Dakota,Nebraska Omaha,149.50,133.20,-16.30,Under 149.5,A,L
-2026-03-06,Austin Peay,Stetson,152.50,134.50,-18.00,Under 152.5,A,W
-2026-03-06,Toledo,Buffalo,155.50,139.10,-16.40,Under 155.5,A,L
-2026-03-06,Akron,Northern Illinois,155.50,140.80,-14.70,Under 155.5,B,W
-2026-03-06,Dayton,VCU,147.50,160.20,12.70,Over 147.5,A,L
-2026-03-06,Bradley,Valparaiso,134.00,140.60,6.60,Over 134.0,C,W
-2026-03-06,Brown,Penn,145.50,135.40,-10.10,Under 145.5,B,W
-2026-03-05,Alabama A&M,Southern,145.50,139.20,-6.30,Under 145.5,C,L
-2026-03-05,Memphis,South Florida,160.50,172.90,12.40,Over 160.5,B,W
-2026-03-05,Liberty,Louisiana Tech,138.00,144.90,6.90,Over 138.0,C,W
-2026-03-05,Fairfield,Manhattan,149.00,134.00,-15.00,Under 149.0,A,W
-2026-03-05,Valparaiso,Indiana St.,136.50,148.60,12.10,Over 136.5,B,L
-2026-03-05,Northern Iowa,Evansville,125.00,143.20,18.20,Over 125.0,A,W
-2026-03-05,Lehigh,Holy Cross,142.00,129.30,-12.70,Under 142.0,B,W
-2026-03-05,Cal St. Bakersfield,Cal St. Northridge,165.00,150.40,-14.60,Under 165.0,B,L
-2026-03-05,Maryland Eastern Shore,Delaware St.,125.50,113.60,-11.90,Under 125.5,B,L
-2026-03-05,Arkansas St.,Georgia Southern,167.50,156.40,-11.10,Under 167.5,B,W
 2026-03-05,Alabama St.,Grambling St.,144.50,138.20,-6.30,Under 144.5,C,W
-2026-03-05,Texas Southern,Prairie View A&M,154.00,140.30,-13.70,Under 154.0,B,W
-2026-03-05,Norfolk St.,Howard,148.50,141.70,-6.80,Under 148.5,C,L
-2026-03-05,Colgate,Loyola MD,153.50,136.10,-17.40,Under 153.5,A,L
-2026-03-05,Southern Illinois,Drake,135.50,152.40,16.90,Over 135.5,A,L
-2026-03-05,Hawaii,UC Riverside,147.00,153.60,6.60,Over 147.0,C,W
-2026-03-05,Tarleton St.,UT Arlington,136.00,148.20,12.20,Over 136.0,B,L
-2026-03-05,Cal Baptist,Abilene Christian,135.50,149.10,13.60,Over 135.5,B,L
-2026-03-05,Southern Utah,Utah Valley,151.50,158.60,7.10,Over 151.5,C,W
-2026-03-05,Tennessee Martin,Eastern Illinois,122.50,131.40,8.90,Over 122.5,C,W
 2026-03-05,Alcorn St.,Arkansas Pine Bluff,147.00,133.00,-14.00,Under 147.0,B,W
-2026-03-04,Charlotte,UAB,145.00,133.70,-11.30,Under 145.0,B,L
-2026-03-04,Georgia Tech,California,155.50,146.90,-8.60,Under 155.5,C,W
-2026-03-04,Indiana,Minnesota,136.50,151.10,14.60,Over 136.5,B,L
+2026-03-05,Tennessee Martin,Eastern Illinois,122.50,131.40,8.90,Over 122.5,C,W
+2026-03-05,Southern Utah,Utah Valley,151.50,158.60,7.10,Over 151.5,C,W
+2026-03-05,Cal Baptist,Abilene Christian,135.50,149.10,13.60,Over 135.5,B,L
+2026-03-05,Tarleton St.,UT Arlington,136.00,148.20,12.20,Over 136.0,B,L
+2026-03-05,Hawaii,UC Riverside,147.00,153.60,6.60,Over 147.0,C,W
+2026-03-05,Colgate,Loyola MD,153.50,136.10,-17.40,Under 153.5,A,L
+2026-03-05,Norfolk St.,Howard,148.50,141.70,-6.80,Under 148.5,C,L
+2026-03-05,Texas Southern,Prairie View A&M,154.00,140.30,-13.70,Under 154.0,B,W
+2026-03-05,Southern Illinois,Drake,135.50,152.40,16.90,Over 135.5,A,L
+2026-03-05,Arkansas St.,Georgia Southern,167.50,156.40,-11.10,Under 167.5,B,W
+2026-03-05,Cal St. Bakersfield,Cal St. Northridge,165.00,150.40,-14.60,Under 165.0,B,L
+2026-03-05,Lehigh,Holy Cross,142.00,129.30,-12.70,Under 142.0,B,W
+2026-03-05,Northern Iowa,Evansville,125.00,143.20,18.20,Over 125.0,A,W
+2026-03-05,Valparaiso,Indiana St.,136.50,148.60,12.10,Over 136.5,B,L
+2026-03-05,Fairfield,Manhattan,149.00,134.00,-15.00,Under 149.0,A,W
+2026-03-05,Liberty,Louisiana Tech,138.00,144.90,6.90,Over 138.0,C,W
+2026-03-05,Memphis,South Florida,160.50,172.90,12.40,Over 160.5,B,W
+2026-03-05,Alabama A&M,Southern,145.50,139.20,-6.30,Under 145.5,C,L
+2026-03-05,Maryland Eastern Shore,Delaware St.,125.50,113.60,-11.90,Under 125.5,B,L
 2026-03-04,La Salle,Fordham,132.00,125.50,-6.50,Under 132.0,C,L
-2026-03-04,Washington,USC,150.50,157.20,6.70,Over 150.5,C,W
-2026-03-04,Northwestern,Purdue,146.50,159.40,12.90,Over 146.5,B,L
 2026-03-04,North Texas,Rice,137.50,127.70,-9.80,Under 137.5,C,W
+2026-03-04,Northwestern,Purdue,146.50,159.40,12.90,Over 146.5,B,L
+2026-03-04,Washington,USC,150.50,157.20,6.70,Over 150.5,C,W
+2026-03-04,Indiana,Minnesota,136.50,151.10,14.60,Over 136.5,B,L
+2026-03-04,Georgia Tech,California,155.50,146.90,-8.60,Under 155.5,C,W
+2026-03-04,Charlotte,UAB,145.00,133.70,-11.30,Under 145.0,B,L
+2026-03-03,Fresno St.,San Jose St.,149.50,140.10,-9.40,Under 149.5,C,L
+2026-03-03,Northern Illinois,Kent St.,148.50,134.40,-14.10,Under 148.5,B,L
+2026-03-03,Vermont,Albany,136.50,123.20,-13.30,Under 136.5,B,W
+2026-03-03,Alabama St.,Southern,153.00,134.60,-18.40,Under 153.0,A,W
+2026-03-03,Mississippi,Vanderbilt,155.00,165.60,10.60,Over 155.0,B,W
+2026-03-03,Arizona St.,Kansas,150.50,168.90,18.40,Over 150.5,A,L
+2026-03-03,Massachusetts,Ohio,156.50,143.90,-12.60,Under 156.5,B,L
+2026-03-03,UNLV,Utah St.,156.00,162.80,6.80,Over 156.0,C,W
+2026-03-03,Cincinnati,BYU,151.50,171.40,19.90,Over 151.5,A,W
+2026-03-03,Maine,UMass Lowell,134.50,120.30,-14.20,Under 134.5,B,W
+2026-03-03,Buffalo,Eastern Michigan,143.00,135.80,-7.20,Under 143.0,C,W
+2026-03-03,Texas A&M,Kentucky,160.50,175.30,14.80,Over 160.5,B,W
+2026-03-03,Utah,Colorado,146.50,154.40,7.90,Over 146.5,C,W
+2026-03-03,Central Michigan,Akron,160.50,150.20,-10.30,Under 160.5,B,W
+2026-03-03,Kansas St.,West Virginia,142.50,154.20,11.70,Over 142.5,B,L
 2026-03-03,Western Michigan,Ball St.,135.00,126.70,-8.30,Under 135.0,C,L
 2026-03-03,Wyoming,Nevada,142.00,151.00,9.00,Over 142.0,C,W
 2026-03-03,Boise St.,San Diego St.,144.00,161.00,17.00,Over 144.0,A,W
 2026-03-03,Georgia,Alabama,179.00,187.00,8.00,Over 179.0,C,W
-2026-03-03,Kansas St.,West Virginia,142.50,154.20,11.70,Over 142.5,B,L
+2026-03-03,Miami OH,Toledo,162.50,156.20,-6.30,Under 162.5,C,W
 2026-03-03,Virginia Tech,Boston College,142.50,149.70,7.20,Over 142.5,C,L
-2026-03-03,Alabama A&M,Grambling St.,139.00,125.00,-14.00,Under 139.0,B,L
 2026-03-03,NJIT,UMBC,141.00,131.90,-9.10,Under 141.0,C,L
 2026-03-03,Oklahoma,Missouri,155.00,164.60,9.60,Over 155.0,C,L
-2026-03-03,Utah,Colorado,146.50,154.40,7.90,Over 146.5,C,W
 2026-03-03,Hofstra,Drexel,133.50,139.80,6.30,Over 133.5,C,L
-2026-03-03,Miami OH,Toledo,162.50,156.20,-6.30,Under 162.5,C,W
-2026-03-03,Central Michigan,Akron,160.50,150.20,-10.30,Under 160.5,B,W
-2026-03-03,Maine,UMass Lowell,134.50,120.30,-14.20,Under 134.5,B,W
-2026-03-03,Texas A&M,Kentucky,160.50,175.30,14.80,Over 160.5,B,W
-2026-03-03,Buffalo,Eastern Michigan,143.00,135.80,-7.20,Under 143.0,C,W
-2026-03-03,Cincinnati,BYU,151.50,171.40,19.90,Over 151.5,A,W
-2026-03-03,UNLV,Utah St.,156.00,162.80,6.80,Over 156.0,C,W
-2026-03-03,Massachusetts,Ohio,156.50,143.90,-12.60,Under 156.5,B,L
-2026-03-03,Arizona St.,Kansas,150.50,168.90,18.40,Over 150.5,A,L
-2026-03-03,Mississippi,Vanderbilt,155.00,165.60,10.60,Over 155.0,B,W
-2026-03-03,Alabama St.,Southern,153.00,134.60,-18.40,Under 153.0,A,W
-2026-03-03,Vermont,Albany,136.50,123.20,-13.30,Under 136.5,B,W
-2026-03-03,Northern Illinois,Kent St.,148.50,134.40,-14.10,Under 148.5,B,L
-2026-03-03,Fresno St.,San Jose St.,149.50,140.10,-9.40,Under 149.5,C,L
+2026-03-03,Alabama A&M,Grambling St.,139.00,125.00,-14.00,Under 139.0,B,L
 2026-03-02,Delaware St.,South Carolina St.,136.50,118.90,-17.60,Under 136.5,A,W
 2026-03-02,Maryland Eastern Shore,North Carolina Central,133.50,117.70,-15.80,Under 133.5,A,L
 2026-03-02,Sacramento St.,Idaho St.,160.50,140.60,-19.90,Under 160.5,A,W
 2026-03-02,Portland St.,Weber St.,143.50,150.20,6.70,Over 143.5,C,W
-2026-03-01,Maryland,Rutgers,141.50,149.90,8.40,Over 137.5,C,L
-2026-03-01,Marquette,DePaul,142.50,157.60,15.10,Over 142.5,A,L
-2026-03-01,UTSA,Wichita St.,147.50,137.50,-10.00,Under 149.5,B,L
-2026-03-01,South Florida,Tulane,155.50,145.90,-9.60,Under 166.5,C,W
 2026-03-01,Canisius,Quinnipiac,135.50,129.00,-6.50,Under 137.5,C,W
+2026-03-01,Illinois St.,Belmont,150.50,160.00,9.50,Over 150.5,C,W
+2026-03-01,Siena,Rider,137.50,123.70,-13.80,Under 137.5,B,W
 2026-03-01,Manhattan,Iona,150.50,132.10,-18.40,Under 150.0,A,W
 2026-03-01,Fairfield,Mount St. Mary's,143.50,133.70,-9.80,Under 146.0,C,W
-2026-03-01,Siena,Rider,137.50,123.70,-13.80,Under 137.5,B,W
-2026-03-01,Illinois St.,Belmont,150.50,160.00,9.50,Over 150.5,C,W
+2026-03-01,South Florida,Tulane,155.50,145.90,-9.60,Under 166.5,C,W
+2026-03-01,UTSA,Wichita St.,147.50,137.50,-10.00,Under 149.5,B,L
+2026-03-01,Marquette,DePaul,142.50,157.60,15.10,Over 142.5,A,L
+2026-03-01,Maryland,Rutgers,141.50,149.90,8.40,Over 137.5,C,L
+2026-02-28,Pepperdine,Washington St.,146.50,134.10,-12.40,Under 160.0,B,L
+2026-02-28,Eastern Kentucky,Lipscomb,145.50,128.00,-17.50,Under 158.5,A,W
+2026-02-28,Utah Valley,Abilene Christian,133.50,143.30,9.80,Over 140.5,C,W
+2026-02-28,UC San Diego,Cal Poly,151.50,145.30,-6.20,Under 162.0,C,W
+2026-02-28,Stetson,Florida Gulf Coast,157.00,141.20,-15.80,Under 150.5,A,W
+2026-02-28,Hofstra,Stony Brook,147.50,154.90,7.40,Over 138.5,C,L
+2026-02-28,Hampton,Northeastern,138.50,125.90,-12.60,Under 146.5,B,W
+2026-02-28,UNC Asheville,Charleston Southern,149.50,139.60,-9.90,Under 149.0,C,L
+2026-02-28,Montana,Portland St.,153.50,156.60,9.10,Over 141.5,C,W
+2026-02-28,Bellarmine,Austin Peay,140.50,125.60,-14.40,Under 154.0,B,L
+2026-02-28,UCF,Baylor,152.50,167.20,14.70,Over 159.0,B,W
+2026-02-28,Loyola Marymount,Seattle,152.50,171.30,18.80,Over 137.0,A,P
+2026-02-28,Santa Clara,Oregon St.,143.50,153.20,9.70,Over 153.0,C,W
+2026-02-28,Pacific,San Francisco,164.50,172.50,8.00,Over 142.5,C,L
+2026-02-28,Southern,Bethune Cookman,157.50,150.10,-7.40,Under 152.5,C,L
+2026-02-28,Buffalo,Central Michigan,152.50,140.70,-11.80,Under 152.0,B,W
+2026-02-28,Alabama A&M,Alabama St.,153.50,141.60,-11.90,Under 143.5,B,L
+2026-02-28,Texas A&M,Texas,153.50,171.70,18.20,Over 160.0,A,L
+2026-02-28,Longwood,Radford,152.50,139.90,-12.60,Under 155.5,B,L
+2026-02-28,Saint Louis,Duquesne,137.50,151.20,13.70,Over 160.5,B,W
+2026-02-28,Texas Southern,Jackson St.,153.50,133.80,-19.70,Under 152.5,A,W
+2026-02-28,Eastern Washington,Northern Arizona,138.50,127.70,-10.80,Under 148.5,B,W
 2026-02-28,Bryant,NJIT,164.50,149.00,-14.50,Under 138.5,B,W
 2026-02-28,Samford,UNC Greensboro,149.50,129.80,-19.70,Under 157.0,A,L
 2026-02-28,Lafayette,Army,150.50,130.60,-19.90,Under 144.5,A,L
@@ -251,7 +273,6 @@ Date,Home,Away,Market Total,Model Total,Total Edge,Total Bet,Total Confidence,To
 2026-02-28,Coppin St.,Norfolk St.,143.50,123.60,-19.90,Under 141.5,A,L
 2026-02-28,Southern Utah,Utah Tech,156.50,145.20,-11.80,Under 156.5,B,W
 2026-02-28,West Georgia,North Alabama,147.50,128.20,-19.30,Under 146.0,A,W
-2026-02-28,Eastern Washington,Northern Arizona,138.50,127.70,-10.80,Under 148.5,B,W
 2026-02-28,Montana St.,Sacramento St.,159.50,148.10,-11.40,Under 158.5,B,W
 2026-02-28,Ohio,Toledo,147.50,139.00,-8.50,Under 159.0,C,W
 2026-02-28,Xavier,Georgetown,149.50,157.90,8.40,Over 154.5,C,W
@@ -261,48 +282,27 @@ Date,Home,Away,Market Total,Model Total,Total Edge,Total Bet,Total Confidence,To
 2026-02-28,Robert Morris,Cleveland St.,136.50,117.80,-18.70,Under 157.5,A,W
 2026-02-28,Delaware St.,North Carolina Central,152.50,132.60,-19.90,Under 135.5,A,W
 2026-02-28,Rhode Island,Saint Joseph's,153.50,165.00,11.50,Over 141.0,B,L
-2026-02-28,Texas Southern,Jackson St.,153.50,133.80,-19.70,Under 152.5,A,W
-2026-02-28,Saint Louis,Duquesne,137.50,151.20,13.70,Over 160.5,B,W
-2026-02-28,Loyola Marymount,Seattle,152.50,171.30,18.80,Over 137.0,A,P
-2026-02-28,Eastern Kentucky,Lipscomb,145.50,128.00,-17.50,Under 158.5,A,W
-2026-02-28,Utah Valley,Abilene Christian,133.50,143.30,9.80,Over 140.5,C,W
-2026-02-28,UC San Diego,Cal Poly,151.50,145.30,-6.20,Under 162.0,C,W
-2026-02-28,Stetson,Florida Gulf Coast,157.00,141.20,-15.80,Under 150.5,A,W
-2026-02-28,Hofstra,Stony Brook,147.50,154.90,7.40,Over 138.5,C,L
-2026-02-28,Hampton,Northeastern,138.50,125.90,-12.60,Under 146.5,B,W
-2026-02-28,UNC Asheville,Charleston Southern,149.50,139.60,-9.90,Under 149.0,C,L
-2026-02-28,Montana,Portland St.,153.50,156.60,9.10,Over 141.5,C,W
-2026-02-28,Pepperdine,Washington St.,146.50,134.10,-12.40,Under 160.0,B,L
-2026-02-28,UCF,Baylor,152.50,167.20,14.70,Over 159.0,B,W
-2026-02-28,Bellarmine,Austin Peay,140.50,125.60,-14.40,Under 154.0,B,L
-2026-02-28,Santa Clara,Oregon St.,143.50,153.20,9.70,Over 153.0,C,W
-2026-02-28,Pacific,San Francisco,164.50,172.50,8.00,Over 142.5,C,L
-2026-02-28,Southern,Bethune Cookman,157.50,150.10,-7.40,Under 152.5,C,L
-2026-02-28,Buffalo,Central Michigan,152.50,140.70,-11.80,Under 152.0,B,W
-2026-02-28,Alabama A&M,Alabama St.,153.50,141.60,-11.90,Under 143.5,B,L
-2026-02-28,Texas A&M,Texas,153.50,171.70,18.20,Over 160.0,A,L
-2026-02-28,Longwood,Radford,152.50,139.90,-12.60,Under 155.5,B,L
-2026-02-27,Princeton,Harvard,129.50,136.10,6.60,Over 131.0,C,L
-2026-02-27,Saint Peter's,Manhattan,146.50,135.70,-10.80,Under 146.0,B,W
 2026-02-27,Iona,Rider,142.50,132.40,-10.10,Under 141.5,B,W
 2026-02-27,Georgia St.,Old Dominion,147.50,140.10,-7.40,Under 149.5,C,L
-2026-02-26,Montana St.,Portland St.,140.50,157.10,16.60,Over 139.0,A,W
-2026-02-26,Charleston So,Winthrop,164.50,156.80,-7.70,Under 164.0,C,L
-2026-02-26,Memphis,Wichita St.,149.50,168.40,18.90,Over 146.5,A,W
-2026-02-26,SIUE,Western Illinois,135.50,127.50,-8.00,Under 135.5,C,W
-2026-02-26,Louisiana Tech,Missouri St.,138.50,147.10,8.60,Over 136.0,C,W
-2026-02-26,FAU,Temple,145.50,159.50,14.00,Over 146.0,B,W
-2026-02-26,North Florida,FGCU,160.50,145.10,-15.40,Under 160.0,A,W
-2026-02-26,Cal Poly,Long Beach St.,162.50,156.00,-6.50,Under 161.0,C,L
-2026-02-26,Kennesaw St.,Liberty,152.50,159.80,7.30,Over 153.5,C,L
-2026-02-26,Gardner-Webb,UNC Asheville,145.50,133.20,-12.30,Under 145.0,B,L
-2026-02-26,St Bonaventure,Rhode Island,144.50,154.50,10.00,Over 143.5,B,W
-2026-02-26,William & Mary,Northeastern,164.50,155.80,-8.70,Under 165.0,C,W
-2026-02-26,Chattanooga,UNC Greensboro,157.50,139.80,-17.70,Under 157.0,A,L
-2026-02-26,UC Santa Barbara,UC Riverside,145.00,152.30,7.30,Over 143.0,C,L
-2026-02-26,Binghamton,New Hampshire,141.50,125.40,-16.10,Under 142.0,A,W
-2026-02-26,Texas Southern,Alcorn St.,145.50,134.80,-10.70,Under 148.0,B,L
-2026-02-26,CA Baptist,UT Arlington,134.50,154.10,19.60,Over 134.0,A,L
-2026-02-26,Samford,VMI,155.50,137.30,-18.20,Under 154.5,A,W
+2026-02-27,Saint Peter's,Manhattan,146.50,135.70,-10.80,Under 146.0,B,W
+2026-02-27,Princeton,Harvard,129.50,136.10,6.60,Over 131.0,C,L
 2026-02-26,Montana,Sacramento St.,161.50,154.50,-7.00,Under 162.5,C,W
+2026-02-26,Samford,VMI,155.50,137.30,-18.20,Under 154.5,A,W
+2026-02-26,CA Baptist,UT Arlington,134.50,154.10,19.60,Over 134.0,A,L
+2026-02-26,Texas Southern,Alcorn St.,145.50,134.80,-10.70,Under 148.0,B,L
+2026-02-26,Binghamton,New Hampshire,141.50,125.40,-16.10,Under 142.0,A,W
+2026-02-26,UC Santa Barbara,UC Riverside,145.00,152.30,7.30,Over 143.0,C,L
+2026-02-26,Chattanooga,UNC Greensboro,157.50,139.80,-17.70,Under 157.0,A,L
+2026-02-26,William & Mary,Northeastern,164.50,155.80,-8.70,Under 165.0,C,W
+2026-02-26,St Bonaventure,Rhode Island,144.50,154.50,10.00,Over 143.5,B,W
+2026-02-26,Gardner-Webb,UNC Asheville,145.50,133.20,-12.30,Under 145.0,B,L
+2026-02-26,Kennesaw St.,Liberty,152.50,159.80,7.30,Over 153.5,C,L
+2026-02-26,Cal Poly,Long Beach St.,162.50,156.00,-6.50,Under 161.0,C,L
+2026-02-26,North Florida,FGCU,160.50,145.10,-15.40,Under 160.0,A,W
+2026-02-26,FAU,Temple,145.50,159.50,14.00,Over 146.0,B,W
+2026-02-26,Louisiana Tech,Missouri St.,138.50,147.10,8.60,Over 136.0,C,W
+2026-02-26,SIUE,Western Illinois,135.50,127.50,-8.00,Under 135.5,C,W
+2026-02-26,Memphis,Wichita St.,149.50,168.40,18.90,Over 146.5,A,W
+2026-02-26,Charleston So,Winthrop,164.50,156.80,-7.70,Under 164.0,C,L
+2026-02-26,Montana St.,Portland St.,140.50,157.10,16.60,Over 139.0,A,W
 2026-02-26,Utah Tech,Abilene Christan,139.50,149.00,9.50,Over 139.5,C,W
