@@ -9,12 +9,11 @@ from uuid import uuid4
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from model_config import TOTAL_EDGE_MAX, TOTAL_EDGE_MIN, spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band
+from model_config import spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band, total_bet_qualifies
 from tournament import apply_seeds_to_dataframe
 from dashboard_ui.lock_storage import build_locks_rows, make_lock_uid, parse_locks_values
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
-EDGE_THRESHOLD_TOTAL = TOTAL_EDGE_MIN
 
 st.set_page_config(page_title="The LineLab", layout="wide")
 
@@ -288,8 +287,7 @@ totals["Bet"] = totals.apply(
 
 # TOTAL FILTER UPDATED
 total_bets = totals[
-    (totals["Total Edge"].abs() >= EDGE_THRESHOLD_TOTAL)
-    & (totals["Total Edge"].abs() <= TOTAL_EDGE_MAX)
+    totals["Total Edge"].apply(total_bet_qualifies)
 ].copy()
 total_bets = total_bets.sort_values(
     by="Total Edge",
@@ -388,26 +386,34 @@ if admin_mode:
             custom_time = st.text_input("Time", placeholder="7:30 PM")
             custom_away = st.text_input("Away Team", placeholder="Duke")
             custom_home = st.text_input("Home Team", placeholder="North Carolina")
-            custom_bet_type = st.selectbox("Bet Type", ["Spread", "Total"])
-            custom_market_line = st.text_input("Market Line", placeholder="-7.5 or 142.5")
-            custom_pick = st.text_input("Pick", placeholder="North Carolina +7.5")
+            custom_bet_type = st.selectbox("Bet Type", ["Spread", "Total", "ML"])
+            custom_market_line = st.text_input("Market Line", placeholder="-7.5 / +7.5 / 142.5 / -150")
+            custom_pick = st.text_input("Pick (optional)", placeholder="If used, shown exactly as entered")
             custom_edge = st.number_input("Edge", value=0.0, step=0.1, format="%.1f")
             custom_confidence = st.selectbox("Confidence Grade", ["", "A", "B", "C"])
             custom_submit = st.form_submit_button("Add Custom Lock")
 
             if custom_submit:
+                entered_market_line = str(custom_market_line).strip()
+                entered_pick = str(custom_pick).strip()
+                custom_bet_display = entered_pick if entered_pick else entered_market_line
+
+                if not custom_bet_display:
+                    st.warning("Enter a Market Line (or Pick) before adding a custom lock.")
+                    st.stop()
+
                 custom_game = " @ ".join([x for x in [custom_away, custom_home] if x])
                 custom_lock = {
                     "source": "manual",
                     "uid": uuid4().hex[:12],
-                    "option": f"{custom_game} — {custom_pick}",
+                    "option": f"{custom_game} — {custom_bet_display}",
                     "time": custom_time,
                     "game": custom_game,
                     "bet_type": custom_bet_type,
-                    "bet": custom_pick or custom_market_line,
+                    "bet": custom_bet_display,
                     "edge": custom_edge,
                     "confidence": custom_confidence,
-                    "market_line": custom_market_line,
+                    "market_line": entered_market_line,
                 }
 
                 combined = manual_locks + [lock_card_lookup[option] for option in selected_locks] + [custom_lock]
@@ -580,10 +586,12 @@ if locks:
         st.header("🔒 Reed's Locks")
 
         def render_lock_card(lock_data):
+            line_value = str(lock_data.get("market_line", "")).strip() or str(lock_data.get("bet", "")).strip()
+            bet_value = str(lock_data.get("bet", "")).strip() or line_value
             lines = f"""
-<b>{lock_data['bet_type']}: {lock_data['bet']}</b><br>
+<b>{lock_data['bet_type']}: {line_value}</b><br>
 <b>Edge: {float(lock_data['edge']):+.2f}</b><br>
-<b>Bet: {lock_data['bet']}</b><br>
+<b>Bet: {bet_value}</b><br>
 <b>Confidence Grade: {lock_data['confidence']}</b>
 """
 
