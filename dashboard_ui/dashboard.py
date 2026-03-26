@@ -9,9 +9,24 @@ from uuid import uuid4
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from model_config import spread_bet_is_favorite, spread_bet_qualifies, spread_edge_band, total_bet_qualifies
+import model_config as _mc
 from tournament import apply_seeds_to_dataframe
 from dashboard_ui.lock_storage import build_locks_rows, make_lock_uid, parse_locks_values
+
+spread_bet_is_favorite = _mc.spread_bet_is_favorite
+spread_bet_qualifies = _mc.spread_bet_qualifies
+spread_edge_band = _mc.spread_edge_band
+
+if hasattr(_mc, "total_bet_qualifies"):
+    total_bet_qualifies = _mc.total_bet_qualifies
+else:
+    # Backward-compatible fallback for older deployed model_config variants.
+    total_edge_min = float(getattr(_mc, "TOTAL_EDGE_MIN", 6.0))
+    total_edge_max = float(getattr(_mc, "TOTAL_EDGE_MAX", 9.0))
+
+    def total_bet_qualifies(total_edge):
+        edge_abs = abs(float(total_edge))
+        return total_edge_min <= edge_abs <= total_edge_max
 
 EDGE_THRESHOLD_SPREAD, MAX_SPREAD_EDGE = spread_edge_band()
 

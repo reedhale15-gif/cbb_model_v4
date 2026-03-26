@@ -6,6 +6,17 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from tournament import apply_seeds_to_dataframe
+import model_config as _mc
+
+if hasattr(_mc, "total_bet_qualifies"):
+    total_bet_qualifies = _mc.total_bet_qualifies
+else:
+    total_edge_min = float(getattr(_mc, "TOTAL_EDGE_MIN", 6.0))
+    total_edge_max = float(getattr(_mc, "TOTAL_EDGE_MAX", 9.0))
+
+    def total_bet_qualifies(total_edge):
+        edge_abs = abs(float(total_edge))
+        return total_edge_min <= edge_abs <= total_edge_max
 
 st.set_page_config(page_title="CBB Model Dashboard", layout="wide")
 
@@ -75,6 +86,7 @@ st.header("Total Edges")
 
 totals = engine.copy()
 
+totals = totals[totals["Total Edge"].apply(total_bet_qualifies)]
 totals = totals[totals["Total Edge"].abs() >= total_edge_filter]
 
 totals = totals.sort_values(
