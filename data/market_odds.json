@@ -1,34 +1,18 @@
 [
   {
-    "HOME": "Duke",
-    "AWAY": "St. John's",
-    "COMMENCE_TIME": "2026-03-27T23:10:00Z",
-    "SPREAD": -6.5,
-    "TOTAL": 140.61,
-    "HOME_ML": -281.67
+    "HOME": "Illinois",
+    "AWAY": "Iowa",
+    "COMMENCE_TIME": "2026-03-28T22:09:00Z",
+    "SPREAD": -6.78,
+    "TOTAL": 139.11,
+    "HOME_ML": -325.89
   },
   {
-    "HOME": "Michigan",
-    "AWAY": "Alabama",
-    "COMMENCE_TIME": "2026-03-27T23:35:00Z",
-    "SPREAD": -9.06,
-    "TOTAL": 172.83,
-    "HOME_ML": -495.67
-  },
-  {
-    "HOME": "Connecticut",
-    "AWAY": "Michigan St.",
-    "COMMENCE_TIME": "2026-03-28T01:45:00Z",
-    "SPREAD": -1.5,
-    "TOTAL": 135.06,
-    "HOME_ML": -127.44
-  },
-  {
-    "HOME": "Iowa St.",
-    "AWAY": "Tennessee",
-    "COMMENCE_TIME": "2026-03-28T02:10:00Z",
-    "SPREAD": -3.89,
-    "TOTAL": 139.83,
-    "HOME_ML": -186.0
+    "HOME": "Arizona",
+    "AWAY": "Purdue",
+    "COMMENCE_TIME": "2026-03-29T00:49:00Z",
+    "SPREAD": -5.44,
+    "TOTAL": 153.61,
+    "HOME_ML": -250.33
   }
 ]

@@ -1,0 +1,49 @@
+GAME,SPREAD,VARIANT,PICK,PICK_COVER_PCT,HOME_COVER_PCT,AWAY_COVER_PCT
+Texas @ Purdue,-7.5,CURRENT_R2_Blend50,Purdue,0.5937,0.5937,0.4063
+Texas @ Purdue,-7.5,TEST_A_R2_Blend65,Purdue,0.5667,0.5667,0.4333
+Texas @ Purdue,-7.5,TEST_B_ATSCal_Blend35,Purdue,0.5187,0.5187,0.4813
+Texas @ Purdue,-7.5,TEST_C_ATSTail_Blend35,Purdue,0.5106,0.5106,0.4894
+Arkansas @ Arizona,-8.0,CURRENT_R2_Blend50,Arkansas,0.5197,0.4803,0.5197
+Arkansas @ Arizona,-8.0,TEST_A_R2_Blend65,Arkansas,0.5114,0.4885,0.5114
+Arkansas @ Arizona,-8.0,TEST_B_ATSCal_Blend35,Arkansas,0.5229,0.4771,0.5229
+Arkansas @ Arizona,-8.0,TEST_C_ATSTail_Blend35,Arkansas,0.5177,0.4824,0.5177
+Illinois @ Houston,-2.0,CURRENT_R2_Blend50,Illinois,0.5798,0.4202,0.5798
+Illinois @ Houston,-2.0,TEST_A_R2_Blend65,Illinois,0.5552,0.4448,0.5552
+Illinois @ Houston,-2.0,TEST_B_ATSCal_Blend35,Illinois,0.5523,0.4477,0.5523
+Illinois @ Houston,-2.0,TEST_C_ATSTail_Blend35,Illinois,0.5526,0.4474,0.5526
+Iowa @ Nebraska,-1.5,CURRENT_R2_Blend50,Nebraska,0.5004,0.5004,0.4996
+Iowa @ Nebraska,-1.5,TEST_A_R2_Blend65,Nebraska,0.5011,0.5011,0.4989
+Iowa @ Nebraska,-1.5,TEST_B_ATSCal_Blend35,Iowa,0.55,0.4501,0.55
+Iowa @ Nebraska,-1.5,TEST_C_ATSTail_Blend35,Iowa,0.5421,0.4579,0.5421
+Utah St. @ Arizona,-12.0,CURRENT_R2_Blend50,Arizona,0.5067,0.5067,0.4934
+Utah St. @ Arizona,-12.0,TEST_A_R2_Blend65,Arizona,0.5031,0.5031,0.4969
+Utah St. @ Arizona,-12.0,TEST_B_ATSCal_Blend35,Utah St.,0.5069,0.4931,0.5069
+Utah St. @ Arizona,-12.0,TEST_C_ATSTail_Blend35,Utah St.,0.5123,0.4876,0.5123
+Miami FL @ Purdue,-7.5,CURRENT_R2_Blend50,Purdue,0.5799,0.5799,0.42
+Miami FL @ Purdue,-7.5,TEST_A_R2_Blend65,Purdue,0.5552,0.5552,0.4448
+Miami FL @ Purdue,-7.5,TEST_B_ATSCal_Blend35,Purdue,0.5409,0.5409,0.4592
+Miami FL @ Purdue,-7.5,TEST_C_ATSTail_Blend35,Purdue,0.5319,0.5319,0.4682
+Kentucky @ Iowa St.,-5.5,CURRENT_R2_Blend50,Iowa St.,0.5501,0.5501,0.4499
+Kentucky @ Iowa St.,-5.5,TEST_A_R2_Blend65,Iowa St.,0.5332,0.5332,0.4668
+Kentucky @ Iowa St.,-5.5,TEST_B_ATSCal_Blend35,Iowa St.,0.5101,0.5101,0.4899
+Kentucky @ Iowa St.,-5.5,TEST_C_ATSTail_Blend35,Iowa St.,0.5072,0.5072,0.4928
+St. John's @ Kansas,3.5,CURRENT_R2_Blend50,Kansas,0.5075,0.5075,0.4925
+St. John's @ Kansas,3.5,TEST_A_R2_Blend65,Kansas,0.5135,0.5135,0.4864
+St. John's @ Kansas,3.5,TEST_B_ATSCal_Blend35,St. John's,0.5154,0.4846,0.5154
+St. John's @ Kansas,3.5,TEST_C_ATSTail_Blend35,St. John's,0.5122,0.4878,0.5122
+UCLA @ Connecticut,-4.5,CURRENT_R2_Blend50,UCLA,0.5085,0.4914,0.5085
+UCLA @ Connecticut,-4.5,TEST_A_R2_Blend65,UCLA,0.502,0.498,0.502
+UCLA @ Connecticut,-4.5,TEST_B_ATSCal_Blend35,UCLA,0.5205,0.4795,0.5205
+UCLA @ Connecticut,-4.5,TEST_C_ATSTail_Blend35,UCLA,0.5122,0.4878,0.5122
+Iowa @ Florida,-10.5,CURRENT_R2_Blend50,Iowa,0.5378,0.4622,0.5378
+Iowa @ Florida,-10.5,TEST_A_R2_Blend65,Iowa,0.5258,0.4742,0.5258
+Iowa @ Florida,-10.5,TEST_B_ATSCal_Blend35,Iowa,0.5184,0.4815,0.5184
+Iowa @ Florida,-10.5,TEST_C_ATSTail_Blend35,Iowa,0.5212,0.4788,0.5212
+Tennessee @ Virginia,1.0,CURRENT_R2_Blend50,Virginia,0.5159,0.5159,0.4841
+Tennessee @ Virginia,1.0,TEST_A_R2_Blend65,Virginia,0.5113,0.5113,0.4886
+Tennessee @ Virginia,1.0,TEST_B_ATSCal_Blend35,Tennessee,0.5153,0.4847,0.5153
+Tennessee @ Virginia,1.0,TEST_C_ATSTail_Blend35,Tennessee,0.5092,0.4908,0.5092
+Texas Tech @ Alabama,1.5,CURRENT_R2_Blend50,Alabama,0.5713,0.5713,0.4288
+Texas Tech @ Alabama,1.5,TEST_A_R2_Blend65,Alabama,0.5515,0.5515,0.4485
+Texas Tech @ Alabama,1.5,TEST_B_ATSCal_Blend35,Alabama,0.5541,0.5541,0.4459
+Texas Tech @ Alabama,1.5,TEST_C_ATSTail_Blend35,Alabama,0.5444,0.5444,0.4556
