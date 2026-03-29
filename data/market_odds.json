@@ -1,18 +1,18 @@
 [
   {
-    "HOME": "Illinois",
-    "AWAY": "Iowa",
-    "COMMENCE_TIME": "2026-03-28T22:09:00Z",
-    "SPREAD": -6.78,
-    "TOTAL": 139.11,
-    "HOME_ML": -325.89
+    "HOME": "Michigan",
+    "AWAY": "Tennessee",
+    "COMMENCE_TIME": "2026-03-29T18:15:00Z",
+    "SPREAD": -8.0,
+    "TOTAL": 146.11,
+    "HOME_ML": -385.22
   },
   {
-    "HOME": "Arizona",
-    "AWAY": "Purdue",
-    "COMMENCE_TIME": "2026-03-29T00:49:00Z",
-    "SPREAD": -5.44,
-    "TOTAL": 153.61,
-    "HOME_ML": -250.33
+    "HOME": "Duke",
+    "AWAY": "Connecticut",
+    "COMMENCE_TIME": "2026-03-29T21:05:00Z",
+    "SPREAD": -5.0,
+    "TOTAL": 134.61,
+    "HOME_ML": -220.67
   }
 ]
