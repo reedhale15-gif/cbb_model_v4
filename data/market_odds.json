@@ -1,34 +1,10 @@
 [
   {
-    "HOME": "Baylor",
-    "AWAY": "Oklahoma",
-    "COMMENCE_TIME": "2026-04-04T17:34:00Z",
-    "SPREAD": 8.5,
-    "TOTAL": 157.0,
-    "HOME_ML": 1800.0
-  },
-  {
-    "HOME": "Creighton",
-    "AWAY": "West Virginia",
-    "COMMENCE_TIME": "2026-04-04T20:00:00Z",
-    "SPREAD": 1.2,
-    "TOTAL": 136.5,
-    "HOME_ML": 101.2
-  },
-  {
-    "HOME": "Connecticut",
-    "AWAY": "Illinois",
-    "COMMENCE_TIME": "2026-04-04T22:09:00Z",
-    "SPREAD": 1.78,
-    "TOTAL": 139.33,
-    "HOME_ML": 111.89
-  },
-  {
-    "HOME": "Arizona",
-    "AWAY": "Michigan",
-    "COMMENCE_TIME": "2026-04-05T00:49:00Z",
-    "SPREAD": 0.67,
-    "TOTAL": 157.5,
-    "HOME_ML": -108.5
+    "HOME": "Michigan",
+    "AWAY": "Connecticut",
+    "COMMENCE_TIME": "2026-04-07T01:00:00Z",
+    "SPREAD": -6.88,
+    "TOTAL": 144.62,
+    "HOME_ML": -313.25
   }
 ]
